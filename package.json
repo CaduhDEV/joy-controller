@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "@wppconnect-team/wppconnect": "^1.24.0",
+    "moment": "^2.29.4",
+    "mysql2": "^3.2.4"
+  },
+  "name": "merchan_controller",
+  "version": "1.0.0",
+  "description": "Chatbot controller Merchan.",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "dev": "node dist/index.js"
+  },
+  "author": "Caduh.sz",
+  "license": "ISC"
+}
