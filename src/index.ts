@@ -3,7 +3,6 @@ import { User } from './entities/User';
 import { Database } from './entities/Db';
 
 let user_logged: Record<string, User> = {};
-let step_interface: { [key: string]: string } = {};
 
 create({
     session: 'joy-session',
@@ -51,7 +50,8 @@ function main(client: Whatsapp) {
                 const db = new Database();
                 const data = await db.getUserData(message.from);
                 if (!data) { 
-                    return register(client, message);
+                    // registrar membros
+                    return;
                 }
                 user_logged[message.from] = new User({
                     contact: data.contact,
@@ -72,8 +72,4 @@ function main(client: Whatsapp) {
         console.log('Mensagem de grupo recebida.')
 
     });
-}
-
-async function register(client: Whatsapp, message: Message) {
-    // interagir em modo de registro.
 }
