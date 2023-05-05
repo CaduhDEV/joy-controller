@@ -1,0 +1,24 @@
+main_menu:
+  msg:
+    - type: text
+      text: "Olá! Bem-vindo ao nosso menu principal. O que você gostaria de fazer?"
+    - type: text
+      text: "Escolha uma das opções abaixo:"
+  interacts:
+    - emoji: "1️⃣"
+      title: "Ver produtos"
+      action: "ver_produtos"
+    - emoji: "2️⃣"
+      title: "Falar com atendente"
+      action: "falar_atendente"
+    - emoji: "3️⃣"
+      title: "Sair"
+      action: "sair"
+new_user:
+  msg:
+    - type: "text"
+      text: "*Usuário novo!*\n\nDetectei que você é novo por aqui, tudo bem?"
+  interacts:
+    - emoji: "1️⃣"
+      title: "Iniciar Cadastro"
+      action: "start_register"

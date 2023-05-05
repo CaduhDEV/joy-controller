@@ -1,20 +1,81 @@
 import { Whatsapp, Message } from '@wppconnect-team/wppconnect';
+import yamljs from 'yamljs';
+import * as fs from 'fs';
 
-async function access_interface(client: Whatsapp, message: Message, c_interface: keyof typeof interfaces) {
+interface TextMessage {
+  type: 'text';
+  text: string;
+}
+
+interface ImageMessage {
+  type: 'image';
+  url: string;
+  caption?: string;
+}
+
+interface GifMessage {
+  type: 'gif';
+  url: string;
+  caption?: string;
+}
+
+interface ContactMessage {
+  type: 'contact';
+  name: string;
+  phone: string;
+}
+
+interface ContactsMessage {
+  type: 'contacts';
+  contacts: Array<{ name: string; phone: string }>;
+}
+
+interface LocationMessage {
+  type: 'location';
+  latitude: string;
+  longitude: string;
+  title?: string;
+}
+
+type MessageConfig = TextMessage | ImageMessage | GifMessage | ContactMessage | ContactsMessage | LocationMessage;
+
+interface InterfaceConfig {
+  msg: MessageConfig[];
+  interacts: Array<{ emoji: string; title: string; action: string }>;
+}
+
+const interfaces = yamljs.load(fs.readFileSync('./configs/interfaces.yaml', 'utf8')) as Record<string, InterfaceConfig>;
+
+export async function access_interface(client: Whatsapp, message: Message, c_interface: keyof typeof interfaces) {
   if (!(c_interface in interfaces)) {
     return false;
   }
 
   const { msg, interacts } = interfaces[c_interface];
-  const main_message = msg.find(msg => msg.type === 'text' && msg.text.trim() !== '');
 
-  if (!main_message) {
-    return false;
-  }
+  for (let i = 0; i < msg.length; i++) {
+    const m = msg[i];
+    let full_message = '';
+    let isFirstMsg = i === 0;
 
-  const interactOptions = interacts.map((option, index) => `${index + 1}. ${option.emoji} ${option.title}`).join('\n');
-  const full_message = `${main_message.text}\n\n${interactOptions}`;
+    if (m.type === 'text' && m.text.trim() !== '') {
+      full_message += `${m.text}`;
 
-  await client.sendText(message.from, full_message);
+      if (isFirstMsg && interacts) {
+        const interactOptions = interacts.map((option, index) => `${index + 1}. ${option.emoji} ${option.title}`).join('\n');
+        full_message += `\n\n${interactOptions}\n`;
+      }
+      await client.sendText(message.from, full_message);
 
+    } else if (m.type === 'image' && m.url) {
+      await client.sendImage(message.from, m.url, m.caption);
+    } else if (m.type === 'gif' && m.url) {
+      await client.sendImageAsStickerGif(message.from, m.url);
+    } else if (m.type === 'contact' && m.phone) {
+      await client.sendContactVcard(message.from, m.phone, m.name);
+    } else if (m.type === 'location' && m.latitude && m.longitude) {
+      await client.sendLocation(message.from, m.latitude, m.longitude, m.title || '');
+    }
+  }  
 }
+

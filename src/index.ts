@@ -1,7 +1,7 @@
 import { create, Whatsapp, Message, SocketState } from '@wppconnect-team/wppconnect';
 import { User } from './entities/User';
 import { Database } from './entities/Db';
-
+import { access_interface } from './entities/Interfaces'
 let user_logged: Record<string, User> = {};
 
 create({
@@ -49,7 +49,7 @@ function main(client: Whatsapp) {
                 const db = new Database();
                 const data = await db.getUserData(message.from);
                 if (!data) { 
-                    // registrar membros
+                    await access_interface(client, message, 'new_user');
                     return;
                 }
                 user_logged[message.from] = new User({
@@ -64,7 +64,7 @@ function main(client: Whatsapp) {
                     language: data.language
                 });
             }
-            console.log('interagir com o robô.')
+            await access_interface(client, message, 'main_menu');
             return;
         }    
         // Monitoramento dos grupos
