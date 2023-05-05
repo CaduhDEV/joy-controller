@@ -1,6 +1,5 @@
 import { Whatsapp, Message } from '@wppconnect-team/wppconnect';
-import yamljs from 'yamljs';
-import * as fs from 'fs';
+import interface_on from '../configs/interfaces.json'
 
 interface TextMessage {
   type: 'text';
@@ -44,7 +43,7 @@ interface InterfaceConfig {
   interacts: Array<{ emoji: string; title: string; action: string }>;
 }
 
-const interfaces = yamljs.load(fs.readFileSync('./configs/interfaces.yaml', 'utf8')) as Record<string, InterfaceConfig>;
+const interfaces = interface_on as Record<string, InterfaceConfig>;
 
 export async function access_interface(client: Whatsapp, message: Message, c_interface: keyof typeof interfaces) {
   if (!(c_interface in interfaces)) {

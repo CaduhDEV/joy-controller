@@ -1,0 +1,22 @@
+{
+    "main_menu": {
+      "msg": [
+        { "type": "text", "text": "Olá! Bem-vindo ao nosso chatbot." }
+      ],
+      "interacts": [
+        { "emoji": "1️⃣", "title": "Opção 1", "action": "option1" },
+        { "emoji": "2️⃣", "title": "Opção 2", "action": "option2" },
+        { "emoji": "3️⃣", "title": "Opção 3", "action": "option3" }
+      ]
+    },
+    "register": {
+        "msg": [
+          { "type": "text", "text": "Olá! Bem-vindo ao nosso chatbot, aqui 1 mensagem com imagem." },
+          { "type": "image", "url": "Omg", "caption": "texto que acompanha a imagem caso quiser."}
+        ],
+        "interacts": [
+          { "emoji": "1️⃣", "title": "Voltar", "action": "main_menu" }
+        ]
+      }
+  }
+  

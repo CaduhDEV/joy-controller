@@ -49,7 +49,7 @@ function main(client: Whatsapp) {
                 const db = new Database();
                 const data = await db.getUserData(message.from);
                 if (!data) { 
-                    await access_interface(client, message, 'new_user');
+                    await access_interface(client, message, 'main_menu');
                     return;
                 }
                 user_logged[message.from] = new User({
