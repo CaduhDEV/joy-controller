@@ -1,4 +1,4 @@
-import { create, Whatsapp, Message } from '@wppconnect-team/wppconnect';
+import { create, Whatsapp, Message, SocketState } from '@wppconnect-team/wppconnect';
 import { User } from './entities/User';
 import { Database } from './entities/Db';
 
@@ -31,9 +31,8 @@ create({
 
 function main(client: Whatsapp) {
     console.log('LOG -> Successfull loadded Joy Project v2.0.0 - DEV: @caduh.sz');
-
     // quando mudar o status do client, faça isso ->
-    client.onStateChange((state: any) => {
+    client.onStateChange((state: SocketState) => {
         if (state === 'CONFLICT') { client.useHere() };
         if (state === 'UNPAIRED') { console.error('O Whatsapp foi desconectado da sessão.') };
     });
@@ -41,7 +40,7 @@ function main(client: Whatsapp) {
     client.onIncomingCall((call: any) => {
         client.rejectCall();
     });
-    client.onReactionMessage( (react: any) => {
+    client.onReactionMessage((react: any) => {
         // Evento de reações: Usar para sistema de aprovação.
     });
     client.onMessage(async(message: Message) => { 
@@ -70,6 +69,5 @@ function main(client: Whatsapp) {
         }    
         // Monitoramento dos grupos
         console.log('Mensagem de grupo recebida.')
-
     });
 }
