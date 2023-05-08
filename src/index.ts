@@ -11,7 +11,7 @@ create({
     },
     devtools: false, 
     useChrome: true,
-    debug: false,
+    debug: true,
     logQR: false,
     browserWS: '',
     browserArgs: [''],
@@ -49,7 +49,7 @@ function main(client: Whatsapp) {
                 const db = new Database();
                 const data = await db.getUserData(message.from);
                 if (!data) { 
-                    await access_interface(client, message, 'register');
+                    await access_interface(client, message, message.body.toLowerCase(), 'ptbr');
                     return;
                 }
                 user_logged[message.from] = new User({
@@ -64,7 +64,6 @@ function main(client: Whatsapp) {
                     language: data.language
                 });
             }
-            await access_interface(client, message, 'main_menu');
             return;
         }    
         // Monitoramento dos grupos

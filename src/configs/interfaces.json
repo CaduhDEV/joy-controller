@@ -1,22 +1,41 @@
 {
-    "main_menu": {
+  "ptbr": {
+    "teste": {
       "msg": [
-        { "type": "text", "text": "Olá! Bem-vindo ao nosso chatbot." }
+        { "type": "text", "text": "*Titulo da interface*\n\nOlá aqui será todo o conteúdo da interface, etc.\n\n*Interações Disponíveis:*\n\n" },
+        { "type": "image", "url": "https://cdn.discordapp.com/attachments/344136295943241728/1102242192191410206/image.png", "caption": "texto que acompanha a imagem caso quiser."},
+        { "type": "gif", "caption": "testando gif com texto", "url": "https://media.tenor.com/H7DvxQ_tY4gAAAAC/ditto-pikachu.gif"},
+        { "type": "contact", "name": "contact name", "phone": "554384244218"},
+        { "type": "contacts", "contacts": [ 
+          { "id": "554384244218", "name": "teste1" },
+          { "id": "554384244218", "name": "teste2" },
+          { "id": "554384244218", "name": "teste3" }
+        ]},
+        { "type": "poll", "name": "Enquete Teste", "options": [ "Option 1", "Option 2", "Option 3"], "selectable": 1 },
+        { "type": "reaction", "emoji": "1️⃣"},
+        { "type": "location", "latitude": "-23.33209617637456", "longitude": "-51.13152477241781", "title": "testando localização com titulo."}
       ],
       "interacts": [
-        { "emoji": "1️⃣", "title": "Opção 1", "action": "option1" },
-        { "emoji": "2️⃣", "title": "Opção 2", "action": "option2" },
-        { "emoji": "3️⃣", "title": "Opção 3", "action": "option3" }
+        { "emoji": "1️⃣", "title": "Voltar", "action": "main_menu" },
+        { "emoji": "1️⃣", "title": "Voltar2", "action": "main_menu" },
+        { "emoji": "1️⃣", "title": "Voltar3", "action": "main_menu" },
+        { "emoji": "1️⃣", "title": "Voltar4", "action": "main_menu" }
       ]
-    },
-    "register": {
-        "msg": [
-          { "type": "text", "text": "Olá! Bem-vindo ao nosso chatbot, aqui 1 mensagem com imagem." },
-          { "type": "image", "url": "Omg", "caption": "texto que acompanha a imagem caso quiser."}
-        ],
-        "interacts": [
-          { "emoji": "1️⃣", "title": "Voltar", "action": "main_menu" }
-        ]
-      }
+    }
+  },
+  "en": {
+    "teste": {
+      "msg": [
+        { "type": "text", "text": "*Titulo da interface*\n\nOlá aqui será todo o conteúdo da interface, etc.\n\n*Interações Disponíveis:*\n\n" },
+        { "type": "image", "url": "https://cdn.discordapp.com/attachments/344136295943241728/1102242192191410206/image.png", "caption": "texto que acompanha a imagem caso quiser."},
+        { "type": "gif", "caption": "testando gif com texto", "url": "https://media.tenor.com/H7DvxQ_tY4gAAAAC/ditto-pikachu.gif"},
+        { "type": "contact", "name": "contact name", "phone": "554384244218"},
+        { "type": "location", "latitude": "-23.33209617637456", "longitude": "-51.13152477241781", "title": "testando localização com titulo."}
+      ],
+      "interacts": [
+        { "emoji": "1️⃣", "title": "Voltar", "action": "main_menu" }
+      ]
+    }
   }
+}
   

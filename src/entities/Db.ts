@@ -1,14 +1,18 @@
 import { createPool, Pool, Connection } from 'mysql2/promise';
 
+interface MySqlConnection extends Connection {
+  release(): void;
+}
+
 export class Database {
   private pool: Pool;
-  private conn: Connection | null;
+  private conn: MySqlConnection | null;
 
   constructor() {
     this.pool = createPool({
       host: 'localhost',
       user: 'root',
-      password: '258$rax',
+      password: undefined,
       database: 'joy',
       waitForConnections: true,
       connectionLimit: 10,
@@ -23,7 +27,7 @@ export class Database {
       const result = await conn.execute(query, params);
       return result;
     } finally {
-      conn.end();
+      conn.release();
     }
   }
 
@@ -37,9 +41,9 @@ export class Database {
     return rows[0];
   }
 
-  private async getConnection(): Promise<Connection> {
+  private async getConnection(): Promise<MySqlConnection> {
     if (!this.conn) {
-      this.conn = await this.pool.getConnection();
+      this.conn = await this.pool.getConnection() as MySqlConnection;
     }
     return this.conn;
   }

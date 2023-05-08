@@ -10,6 +10,7 @@ interface ImageMessage {
   type: 'image';
   url: string;
   caption?: string;
+  oneview?: boolean;
 }
 
 interface GifMessage {
@@ -26,7 +27,7 @@ interface ContactMessage {
 
 interface ContactsMessage {
   type: 'contacts';
-  contacts: Array<{ name: string; phone: string }>;
+  contacts: Array<Array<{ id: string; name: string }>>;
 }
 
 interface LocationMessage {
@@ -36,21 +37,44 @@ interface LocationMessage {
   title?: string;
 }
 
-type MessageConfig = TextMessage | ImageMessage | GifMessage | ContactMessage | ContactsMessage | LocationMessage;
+interface ReactionMessages {
+  type: 'reaction';
+  emoji: ''; 
+}
+
+interface PollMessages {
+  type: 'poll';
+  name: string;
+  options: string[];
+  selectable?: number;
+}
+
+
+type MessageConfig = TextMessage | ImageMessage | GifMessage | ContactMessage | ContactsMessage | LocationMessage | ReactionMessages | PollMessages;
+
 
 interface InterfaceConfig {
   msg: MessageConfig[];
   interacts: Array<{ emoji: string; title: string; action: string }>;
 }
 
-const interfaces = interface_on as Record<string, InterfaceConfig>;
+interface LanguageConfig {
+  [interfaceName: string]: InterfaceConfig;
+}
 
-export async function access_interface(client: Whatsapp, message: Message, c_interface: keyof typeof interfaces) {
-  if (!(c_interface in interfaces)) {
+interface InterfacesConfig {
+  [language: string]: LanguageConfig;
+}
+
+const interfaces = interface_on as InterfacesConfig;
+
+export async function access_interface(client: Whatsapp, message: Message, c_interface: keyof typeof interfaces, lang: keyof typeof interface_on) {
+
+  if (!(c_interface in interfaces[lang])) {
     return false;
   }
 
-  const { msg, interacts } = interfaces[c_interface];
+  const { msg, interacts } = interfaces[lang][c_interface];
 
   for (let i = 0; i < msg.length; i++) {
     const m = msg[i];
@@ -65,16 +89,21 @@ export async function access_interface(client: Whatsapp, message: Message, c_int
         full_message += `\n\n${interactOptions}\n`;
       }
       await client.sendText(message.from, full_message);
-
     } else if (m.type === 'image' && m.url) {
-      await client.sendImage(message.from, m.url, m.caption);
+      await client.sendImage(message.from, m.url, 'joy_controller', m.caption, undefined, m.oneview );
     } else if (m.type === 'gif' && m.url) {
-      await client.sendImageAsStickerGif(message.from, m.url);
+      await client.sendGif(message.from, m.url, 'joy_controller', m.caption)
     } else if (m.type === 'contact' && m.phone) {
       await client.sendContactVcard(message.from, m.phone, m.name);
+    } else if (m.type === 'contacts' && Array.isArray(m.contacts)) {
+      const contacts = m.contacts.flat();
+      await client.sendContactVcardList(message.from, contacts);
     } else if (m.type === 'location' && m.latitude && m.longitude) {
       await client.sendLocation(message.from, m.latitude, m.longitude, m.title || '');
+    } else if (m.type === 'reaction' && m.emoji) {
+      await client.sendReactionToMessage(message.id, m.emoji);
+    } else if (m.type === "poll") {
+      await client.sendPollMessage(message.from, m.name, m.options, { selectableCount: m.selectable })
     }
   }  
 }
-
