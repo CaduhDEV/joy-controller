@@ -6,17 +6,18 @@ Os membros da igreja podem escanear um QR Code na entrada do culto, permitindo q
 
 Além disso, JOY oferece aos membros da igreja algumas ferramentas importantes para sua vida espiritual, como a possibilidade de enviar um pedido de oração, receber devocionais diários e estar atualizado sobre anúncios das redes sociais da igreja. Isso torna JOY uma ferramenta de comunicação eficaz e valiosa para os membros, que se sentem mais conectados à igreja e seus líderes.
 
-![Status](https://img.shields.io/badge/Projeto%20JOY-Em%20BETA-brightgreen)
-![version](https://img.shields.io/badge/Version-v1.2.5-red)
-![Author](https://img.shields.io/badge/Author-%40Caduh.sz-important)
+![Status](https://img.shields.io/badge/Joy%20Controller-Online-brightgreen)
+![version](https://img.shields.io/badge/Version-v2.0.0-red)
+![Author](https://img.shields.io/badge/Author-%40caduh.sz-important)
+![npm type definitions](https://img.shields.io/npm/types/typescript)
 
 ## Instalação
 
-Para instalar o Projeto Joy, é necessário ter o Node.js instalado no computador. Em seguida, execute os seguintes comandos:
+Para instalar o Projeto Joy, é necessário ter o Node.js e a superset Typescript instalado no computador. Em seguida, execute os seguintes comandos:
 
 ```console
-git clone https://github.com/Mix-Church/Mix-bot.git
-cd Mix-bot
+git clone https://github.com/CaduhDEV/joy-controller.git
+cd joy-controller
 npm install
 ```
 
@@ -42,43 +43,36 @@ O Projeto Joy utiliza as seguintes APIs:
 - `axios`: API para fazer requisições HTTP.
 - `moment`: API para manipular datas e horários em JavaScript.
 
-## Configurações de mensagens
-O arquivo messages.json contém as frases utilizadas pelo bot para a interação com os usuários. Segue abaixo um exemplo de sua estrutura:
+## Configurações de JOY
+O arquivo interfaces.json contém a extrutura de interpretação de etapa de conversa de joy com o usuário, é totalmente configurável.
 
 ```json
-{
-"text": "Aqui é o texto que o bot irá enviar",
-"buttons": {
-    "useTemplateButtons": false,
-    "buttons": [ { "text": "Texto do botão" } ]
-    }
+"interface_name": {
+    "msg": [
+        { "type": "text", "text": "conteúdo da mensagem." },
+        { "type": "image", "url": "https://your-image.com/image.png", "caption": "Descrição da imagem."},
+        { "type": "gif", "caption": "gif com texto.", "url": "https://your-gif.com/yourgif.gif"},
+        { "type": "contact", "name": "contact name", "phone": "559xxxxxxxx"},
+        { "type": "location", "latitude": "-00.00", "longitude": "-00.000", "title": "titlo da localização"},
+        { "type": "poll", "name": "Enquete Teste", "options": [ "Option 1", "Option 2", "Option 3"], "selectable": 1 },
+        { "type": "reaction", "emoji": "1️⃣"},
+        { "type": "contacts", "contacts": [ 
+            { "id": "554384244218", "name": "teste1" },
+            { "id": "554384244218", "name": "teste2" },
+            { "id": "554384244218", "name": "teste3" }
+        ]},
+    ],
+    "interacts": [
+        { "emoji": "1️⃣", "title": "Voltar", "action": "main_menu" },
+        { "emoji": "2️⃣", "title": "Voltar novamente", "action": "main_menu2" }
+    ]
 }
-```
-## Criar banco de dados no SQL
-Executar esse comando no mysql para criar as tabelas utilizadas pelo JOY:
-```sql
-CREATE DATABASE IF NOT EXISTS `mix`
-USE `mix`;
-
-CREATE TABLE IF NOT EXISTS `members` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `contact` varchar(255) NOT NULL,
-  `name` text NOT NULL,
-  `instagram` varchar(255) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `address` varchar(255) NOT NULL,
-  `birthday` varchar(255) NOT NULL,
-  `staff` tinyint(4) NOT NULL DEFAULT 0,
-  `createdin` varchar(255) NOT NULL,
-  `picture` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Contribuidores
 
-- `Gabriela`: responsável pelas falas, designer do avatar e personalidade de JOY.
-- `Edvanda`: supervisora e apoiadora do projeto joy.
+- `Gabriela Castro`: responsável pelas falas, designer do avatar e personalidade de JOY.
+- `Edvanda Camargo`: supervisora e apoiadora do projeto joy.
 
 ## Autor
 
