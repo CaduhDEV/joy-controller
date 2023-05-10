@@ -2,6 +2,7 @@ import { create, Whatsapp, Message, SocketState } from '@wppconnect-team/wppconn
 import { User } from './entities/User';
 import { Database } from './entities/Db';
 import { access_interface } from './entities/Interfaces'
+
 let user_logged: Record<string, User> = {};
 
 create({

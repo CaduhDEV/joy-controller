@@ -9,14 +9,14 @@ interface TextMessage {
 interface ImageMessage {
   type: 'image';
   url: string;
-  caption?: string;
+  text?: string;
   oneview?: boolean;
 }
 
 interface GifMessage {
   type: 'gif';
   url: string;
-  caption?: string;
+  text?: string;
 }
 
 interface ContactMessage {
@@ -68,7 +68,16 @@ interface InterfacesConfig {
 
 const interfaces = interface_on as InterfacesConfig;
 
-export async function access_interface(client: Whatsapp, message: Message, c_interface: keyof typeof interfaces, lang: keyof typeof interface_on) {
+export async function replaceKeywordsWithVariables(translate: string, variables: string[]) {
+  let newStr = translate;
+  for (let i = 0; i < variables.length; i++) {
+      let regex = new RegExp('%%');
+      newStr = newStr.replace(regex, variables[i]);
+  }
+  return newStr;
+}
+
+export async function access_interface(client: Whatsapp, message: Message, c_interface: keyof typeof interfaces, lang: keyof typeof interface_on, variables?: string[]) {
 
   if (!(c_interface in interfaces[lang])) {
     return false;
@@ -80,6 +89,10 @@ export async function access_interface(client: Whatsapp, message: Message, c_int
     const m = msg[i];
     let full_message = '';
     let isFirstMsg = i === 0;
+    
+    if ('text' in m && m.text && variables) {
+      await replaceKeywordsWithVariables(m.text, variables)
+    }
 
     if (m.type === 'text' && m.text.trim() !== '') {
       full_message += `${m.text}`;
@@ -90,9 +103,9 @@ export async function access_interface(client: Whatsapp, message: Message, c_int
       }
       await client.sendText(message.from, full_message);
     } else if (m.type === 'image' && m.url) {
-      await client.sendImage(message.from, m.url, 'joy_controller', m.caption, undefined, m.oneview );
+      await client.sendImage(message.from, m.url, 'joy_controller', m.text, undefined, m.oneview );
     } else if (m.type === 'gif' && m.url) {
-      await client.sendGif(message.from, m.url, 'joy_controller', m.caption)
+      await client.sendGif(message.from, m.url, 'joy_controller', m.text)
     } else if (m.type === 'contact' && m.phone) {
       await client.sendContactVcard(message.from, m.phone, m.name);
     } else if (m.type === 'contacts' && Array.isArray(m.contacts)) {
