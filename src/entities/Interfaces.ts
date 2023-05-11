@@ -4,7 +4,7 @@ import { User } from './User';
 import { Database } from './Db';
 
 let user_logged: Record<string, User> = {};
-let current_interface: { [key: string]: string }
+let current_interface: { [key: string]: string } = {};
 
 interface TextMessage {
   type: 'text';
@@ -92,12 +92,12 @@ export async function access_interface(client: Whatsapp, message: Message, c_int
   const { msg, interacts } = interfaces[lang][c_interface];
 
   for (let i = 0; i < msg.length; i++) {
-    const m = msg[i];
+    let m = msg[i];
     let full_message = '';
     let isFirstMsg = i === 0;
     
     if ('text' in m && m.text && variables) {
-      await replaceKeywordsWithVariables(m.text, variables)
+      m.text = await replaceKeywordsWithVariables(m.text, variables);
     }
 
     if (m.type === 'text' && m.text.trim() !== '') {
@@ -133,8 +133,7 @@ export async function interact_interface(client: Whatsapp, message: Message) {
       const db = new Database();
       const data = await db.getUserData(message.from);
       if (!data) { 
-          // perguntar a linguagem
-          await access_interface(client, message, 'not_user_select_language', 'ptbr');
+          await access_interface(client, message, 'not_user_select_language', 'ptbr'); // perguntar linguagem 
           return;
       }
       user_logged[message.from] = new User({
@@ -149,12 +148,24 @@ export async function interact_interface(client: Whatsapp, message: Message) {
           language: data.language
       });
       // enviar para o menu
-      return await access_interface(client, message, 'main_menu', user_logged[message.from].language as keyof typeof interface_on);
+      return await access_interface(client, message, 'main_menu', user_logged[message.from].language as keyof typeof interface_on, [data.name, 'Nenhum.', '19:00 às 07:00', 'Provérbios', 'Israel Natural que reflete na espiritual.']);
     }
   } else {
     // lista de interações disponíveis:
-    const language = user_logged[message.from].language || 'ptbr';
+    const language = user_logged[message.from]?.language || 'ptbr';
     const interacts = interfaces[language][current_interface[message.from]].interacts;
-    console.log(interacts)
+    
+    for (const interact of interacts) {
+      if (message.body === interact.title || message.body === interact.emoji || message.body === String(interacts.indexOf(interact) + 1)) { 
+        switch (interact.action) { //lidar com as ações
+          case 'select_language':
+            
+          break;
+          case 'main_menu':
+          break;
+        }
+        break;
+      }
+    }
   }
 }

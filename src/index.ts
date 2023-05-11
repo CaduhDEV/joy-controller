@@ -41,6 +41,7 @@ function main(client: Whatsapp) {
         // Evento de reações: Usar para sistema de aprovação.
     });
     client.onMessage(async(message: Message) => { 
+        if (message.from !== '554391847843@c.us') { return; }
         if (message.isGroupMsg === false) {
             return interact_interface(client, message);
         }    

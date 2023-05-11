@@ -2,18 +2,37 @@
   "ptbr": {
     "not_user_select_language": {
       "msg": [
-          { "type": "text", "text": "*Titulo da interface*\n\nOlá aqui será todo o conteúdo da interface, etc.\n\n*Interações Disponíveis:*\n\n" }
+          { "type": "text", "text": "🗣️ *Selecionar Idioma*\n\n💁🏻‍♂️ Shalom!! para interagir comigo você poderá utilizar a *numeração*, o *emoji* ou a *frase correspondente* a interação que deseja executar, agora que você já sabe vamos começar!\n\n🗺️ Em qual idioma você gostaria de conversar comigo?\n\n*Interações Disponíveis:*" }
       ],
       "interacts": [
-        { "emoji": "1️⃣", "title": "Voltar", "action": "main_menu" }
+        { "emoji": "🇧🇷", "title": "Português Brasil", "action": "select_language" },
+        { "emoji": "🇵🇹", "title": "Português Portugal", "action": "select_language" },
+        { "emoji": "🇪🇸", "title": "Espanhol", "action": "select_language" },
+        { "emoji": "🇺🇸", "title": "Inglês", "action": "select_language" },
+        { "emoji": "🇫🇷", "title": "Francês", "action": "select_language" },
+        { "emoji": "🇮🇹", "title": "Italiano", "action": "select_language" },
+        { "emoji": "🇯🇵", "title": "Japonês", "action": "select_language" }
       ]
     },
     "main_menu": {
       "msg": [
-          { "type": "text", "text": "*Titulo da interface*\n\nOlá aqui será todo o conteúdo da interface, etc.\n\n*Interações Disponíveis:*\n\n" }
+          { "type": "text", "text": "🖥️ *Menu Principal*\n\nOlá *%%*, bom ver você, aqui estão todas as minhas funções que você possui acesso, fique a vontade para explorar.\n\n👩🏼‍🏫 *Quadro Semanal:*\n\n*Propósito*: %%\n*Jejum:* %%.\n*Livro:* %%.\n*Oração:* %%\n\n*Interações Disponíveis:*" }
       ],
       "interacts": [
-        { "emoji": "1️⃣", "title": "Voltar", "action": "main_menu" }
+        { "emoji": "🙏🏻", "title": "Pedidos de Oração", "action": "main_menu" },
+        { "emoji": "🏕️", "title": "Missionários", "action": "main_menu" },
+        { "emoji": "🚸", "title": "Mix Street", "action": "main_menu" },
+        { "emoji": "🗂️", "title": "Ministérios", "action": "main_menu" },
+        { "emoji": "📚", "title": "Biblioteca MIX", "action": "main_menu" },
+        { "emoji": "🫂", "title": "Liderança", "action": "main_menu" },
+        { "emoji": "🎉", "title": "Eventos", "action": "main_menu" },
+        { "emoji": "⚙️", "title": "Sobre Nós", "action": "main_menu" },
+        { "emoji": "🤖", "title": "Feedbacks", "action": "main_menu" },
+        { "emoji": "🎧", "title": "Playlists", "action": "main_menu" },
+        { "emoji": "🕹️", "title": "Idioma", "action": "main_menu" },
+        { "emoji": "🛒", "title": "Loja Oficial", "action": "main_menu" },
+        { "emoji": "🎟️", "title": "MIX Check-in", "action": "main_menu" },
+        { "emoji": "🪪", "title": "Perfil Pessoal ", "action": "main_menu" }
       ]
     }
   }
