@@ -1,5 +1,10 @@
 import { Whatsapp, Message } from '@wppconnect-team/wppconnect';
 import interface_on from '../configs/interfaces.json'
+import { User } from './User';
+import { Database } from './Db';
+
+let user_logged: Record<string, User> = {};
+let current_interface: { [key: string]: string }
 
 interface TextMessage {
   type: 'text';
@@ -78,10 +83,11 @@ export async function replaceKeywordsWithVariables(translate: string, variables:
 }
 
 export async function access_interface(client: Whatsapp, message: Message, c_interface: keyof typeof interfaces, lang: keyof typeof interface_on, variables?: string[]) {
-
   if (!(c_interface in interfaces[lang])) {
-    return false;
+    return;
   }
+
+  current_interface[message.from] = `${c_interface}`
 
   const { msg, interacts } = interfaces[lang][c_interface];
 
@@ -119,4 +125,36 @@ export async function access_interface(client: Whatsapp, message: Message, c_int
       await client.sendPollMessage(message.from, m.name, m.options, { selectableCount: m.selectable })
     }
   }  
+}
+
+export async function interact_interface(client: Whatsapp, message: Message) {
+  if (!current_interface[message.from]) {
+    if (!(message.from in user_logged)) {
+      const db = new Database();
+      const data = await db.getUserData(message.from);
+      if (!data) { 
+          // perguntar a linguagem
+          await access_interface(client, message, 'not_user_select_language', 'ptbr');
+          return;
+      }
+      user_logged[message.from] = new User({
+          contact: data.contact,
+          name: data.name,
+          age: data.age,
+          birthday: data.birthday,
+          instagram: data.instagram,
+          email: data.email,
+          address: data.address,
+          role: data.role,
+          language: data.language
+      });
+      // enviar para o menu
+      return await access_interface(client, message, 'main_menu', user_logged[message.from].language as keyof typeof interface_on);
+    }
+  } else {
+    // lista de interações disponíveis:
+    const language = user_logged[message.from].language || 'ptbr';
+    const interacts = interfaces[language][current_interface[message.from]].interacts;
+    console.log(interacts)
+  }
 }

@@ -1,10 +1,6 @@
 import { create, Whatsapp, Message, SocketState } from '@wppconnect-team/wppconnect';
-import { User } from './entities/User';
-import { Database } from './entities/Db';
-import { access_interface } from './entities/Interfaces'
+import { interact_interface, access_interface } from './entities/Interfaces'
 
-let user_logged: Record<string, User> = {};
-let current_interface: { [key: string]: string }
 create({
     session: 'joy-session',
     catchQR: (base64Qrimg, asciiQR, attempts, usrlCode) => {
@@ -46,29 +42,7 @@ function main(client: Whatsapp) {
     });
     client.onMessage(async(message: Message) => { 
         if (message.isGroupMsg === false) {
-            if (!(message.from in user_logged)) {
-                const db = new Database();
-                const data = await db.getUserData(message.from);
-                if (!data) { 
-                    current_interface[message.from] = 'not_user_select_language';
-                    await access_interface(client, message, 'not_user_select_language', 'ptbr');
-                    return;
-                }
-                user_logged[message.from] = new User({
-                    contact: data.contact,
-                    name: data.name,
-                    age: data.age,
-                    birthday: data.birthday,
-                    instagram: data.instagram,
-                    email: data.email,
-                    address: data.address,
-                    role: data.role,
-                    language: data.language
-                });
-                current_interface[message.from] = 'main_menu';
-                await access_interface(client, message, 'main_menu', 'ptbr');
-            }
-            return;
+            return interact_interface(client, message);
         }    
         // Monitoramento dos grupos
         console.log('Mensagem de grupo recebida.')
