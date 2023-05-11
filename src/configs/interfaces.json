@@ -5,13 +5,13 @@
           { "type": "text", "text": "🗣️ *Selecionar Idioma*\n\n💁🏻‍♂️ Shalom!! para interagir comigo você poderá utilizar a *numeração*, o *emoji* ou a *frase correspondente* a interação que deseja executar, agora que você já sabe vamos começar!\n\n🗺️ Em qual idioma você gostaria de conversar comigo?\n\n*Interações Disponíveis:*" }
       ],
       "interacts": [
-        { "emoji": "🇧🇷", "title": "Português Brasil", "action": "select_language" },
-        { "emoji": "🇵🇹", "title": "Português Portugal", "action": "select_language" },
-        { "emoji": "🇪🇸", "title": "Espanhol", "action": "select_language" },
-        { "emoji": "🇺🇸", "title": "Inglês", "action": "select_language" },
-        { "emoji": "🇫🇷", "title": "Francês", "action": "select_language" },
-        { "emoji": "🇮🇹", "title": "Italiano", "action": "select_language" },
-        { "emoji": "🇯🇵", "title": "Japonês", "action": "select_language" }
+        { "emoji": "🇧🇷", "title": "Português Brasil", "action": "selected_lang", "value": "ptbr" },
+        { "emoji": "🇵🇹", "title": "Português Portugal", "action": "selected_lang", "value": "pt" },
+        { "emoji": "🇪🇸", "title": "Espanhol", "action": "selected_lang", "value": "es" },
+        { "emoji": "🇺🇸", "title": "Inglês", "action": "selected_lang", "value": "en" },
+        { "emoji": "🇫🇷", "title": "Francês", "action": "selected_lang", "value": "fr" },
+        { "emoji": "🇮🇹", "title": "Italiano", "action": "selected_lang", "value": "it" },
+        { "emoji": "🇯🇵", "title": "Japonês", "action": "selected_lang", "value": "jp" }
       ]
     },
     "main_menu": {

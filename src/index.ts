@@ -39,7 +39,7 @@ function main(client: Whatsapp) {
             console.log('     ██║██║   ██║ ╚████╔╝      █████╔╝   ██║██╔██║');
             console.log('██   ██║██║   ██║  ╚██╔╝      ██╔═══╝    ████╔╝██║');
             console.log('╚█████╔╝╚██████╔╝   ██║       ███████╗██╗╚██████╔╝');
-            console.log('╚════╝  ╚═════╝    ╚═╝       ╚══════╝╚═╝ ╚═════╝');
+            console.log(' ╚════╝  ╚═════╝    ╚═╝       ╚══════╝╚═╝ ╚═════╝');
             console.log('                                                     ');
             console.log('LOG -> Successfull loadded Joy Project v2.0.0 - DEV: @caduh.sz');
         }
@@ -52,11 +52,10 @@ function main(client: Whatsapp) {
         // Evento de reações: Usar para sistema de aprovação.
     });
     client.onMessage(async(message: Message) => { 
-        if (message.from !== '554391847843@c.us') { return; }
+        if (message.from !== '554391847843@c.us') { return; } // dev mode
         if (message.isGroupMsg === false) {
             return interact_interface(client, message);
         }    
         // Monitoramento dos grupos
-        console.log('Mensagem de grupo recebida.')
     });
 }

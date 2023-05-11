@@ -60,7 +60,7 @@ type MessageConfig = TextMessage | ImageMessage | GifMessage | ContactMessage | 
 
 interface InterfaceConfig {
   msg: MessageConfig[];
-  interacts: Array<{ emoji: string; title: string; action: string }>;
+  interacts: Array<{ emoji: string; title: string; action: string;  value?: string }>;
 }
 
 interface LanguageConfig {
@@ -151,21 +151,38 @@ export async function interact_interface(client: Whatsapp, message: Message) {
       return await access_interface(client, message, 'main_menu', user_logged[message.from].language as keyof typeof interface_on, [data.name, 'Nenhum.', '19:00 às 07:00', 'Provérbios', 'Israel Natural que reflete na espiritual.']);
     }
   } else {
-    // lista de interações disponíveis:
     const language = user_logged[message.from]?.language || 'ptbr';
     const interacts = interfaces[language][current_interface[message.from]].interacts;
     
     for (const interact of interacts) {
       if (message.body === interact.title || message.body === interact.emoji || message.body === String(interacts.indexOf(interact) + 1)) { 
-        switch (interact.action) { //lidar com as ações
-          case 'select_language':
-            
-          break;
-          case 'main_menu':
-          break;
+        const actionFunction = actionFunctions[interact.action];
+        if (actionFunction) {
+          await actionFunction(client, message, interact, String(interacts.indexOf(interact) + 1));
+        } else {
+          console.error(`ERROR: Action "${interact.action}" not implemented`);
         }
         break;
       }
     }
   }
 }
+
+// Define uma interface para as funções de ação
+interface ActionFunction {
+  (client: Whatsapp, message: Message, interact: { emoji: string; title: string; action: string; }, id: string): Promise<void>;
+}
+
+// Define as funções para cada ação
+const actionFunctions: Record<string, ActionFunction> = {
+  selected_lang: async (client, message, interact, id) => {
+    switch (message.body) {
+      case interact.emoji: case interact.title: case id:
+        console.log(interact.emoji, interact.title, id);
+      break;
+    }
+  },
+  main_menu: async (client, message, interact) => {
+    console.log('executar logica da interface main_menu.')
+  },
+};
