@@ -1,6 +1,6 @@
 {
   "ptbr": {
-    "main_menu": {
+    "not_user_select_language": {
       "msg": [
           { "type": "text", "text": "*Titulo da interface*\n\nOlá aqui será todo o conteúdo da interface, etc.\n\n*Interações Disponíveis:*\n\n" }
       ],
@@ -8,7 +8,7 @@
         { "emoji": "1️⃣", "title": "Voltar", "action": "main_menu" }
       ]
     },
-    "start_register": {
+    "main_menu": {
       "msg": [
           { "type": "text", "text": "*Titulo da interface*\n\nOlá aqui será todo o conteúdo da interface, etc.\n\n*Interações Disponíveis:*\n\n" }
       ],

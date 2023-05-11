@@ -4,7 +4,7 @@ import { Database } from './entities/Db';
 import { access_interface } from './entities/Interfaces'
 
 let user_logged: Record<string, User> = {};
-
+let current_interface: { [key: string]: string }
 create({
     session: 'joy-session',
     catchQR: (base64Qrimg, asciiQR, attempts, usrlCode) => {
@@ -50,7 +50,8 @@ function main(client: Whatsapp) {
                 const db = new Database();
                 const data = await db.getUserData(message.from);
                 if (!data) { 
-                    await access_interface(client, message, message.body.toLowerCase(), 'ptbr');
+                    current_interface[message.from] = 'not_user_select_language';
+                    await access_interface(client, message, 'not_user_select_language', 'ptbr');
                     return;
                 }
                 user_logged[message.from] = new User({
@@ -64,6 +65,8 @@ function main(client: Whatsapp) {
                     role: data.role,
                     language: data.language
                 });
+                current_interface[message.from] = 'main_menu';
+                await access_interface(client, message, 'main_menu', 'ptbr');
             }
             return;
         }    
