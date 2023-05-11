@@ -27,11 +27,22 @@ create({
 }).then((client: Whatsapp) => main(client)).catch((error) => console.log(error));
 
 function main(client: Whatsapp) {
-    console.log('LOG -> Successfull loadded Joy Project v2.0.0 - DEV: @caduh.sz');
+                                                                                                                                       
     // quando mudar o status do client, faça isso ->
     client.onStateChange((state: SocketState) => {
         if (state === 'CONFLICT') { client.useHere() };
         if (state === 'UNPAIRED') { console.error('O Whatsapp foi desconectado da sessão.') };
+        if (state === 'CONNECTED') { 
+            console.log('                                                     ');
+            console.log('     ██╗ ██████╗ ██╗   ██╗    ██████╗     ██████╗');
+            console.log('     ██║██╔═══██╗╚██╗ ██╔╝    ╚════██╗   ██╔═████╗');
+            console.log('     ██║██║   ██║ ╚████╔╝      █████╔╝   ██║██╔██║');
+            console.log('██   ██║██║   ██║  ╚██╔╝      ██╔═══╝    ████╔╝██║');
+            console.log('╚█████╔╝╚██████╔╝   ██║       ███████╗██╗╚██████╔╝');
+            console.log('╚════╝  ╚═════╝    ╚═╝       ╚══════╝╚═╝ ╚═════╝');
+            console.log('                                                     ');
+            console.log('LOG -> Successfull loadded Joy Project v2.0.0 - DEV: @caduh.sz');
+        }
     });
     // Rejeitar chamadas.
     client.onIncomingCall((call: any) => {
