@@ -34,6 +34,59 @@
         { "emoji": "🎟️", "title": "MIX Check-in", "action": "main_menu" },
         { "emoji": "🪪", "title": "Perfil Pessoal ", "action": "main_menu" }
       ]
+    },
+    "start_register": {
+      "msg": [
+        { "type": "text", "text": "🕵 *Novato Detectado*:\n\nOlá como vai? Você é novo(a) por aqui não éh?! Muito prazer eu sou o *Joy*, já me salva no seus contatos ai!\n\n🫂 Bem, aqui no *Culto MIX* nós temos uma equipe preparada para cuidar e recepcionar a todos, por isso preciso coletar algumas informações sobre você.\n\n📁 Mas fique tranquilo(a), todas as informações solicitadas não são divulgadas e ficam em um banco de dados *privado* do MIX.\n\n🗣️ A partir de hoje estarei encarregado em te deixar a par tudo, assim após finalizar o cadastro estarei disponível a qualquer momento, caso queira falar comigo.\n\nVamos começar o seu cadastro então?!\n\n*Interações Disponíveis:*" }
+      ],
+      "interacts": [ 
+        { "emoji": "🚩", "title": "Iniciar Cadastro", "action": "what_your_name" }
+      ]
+    }
+  },
+  "en": {
+    "not_user_select_language": {
+      "msg": [
+          { "type": "text", "text": "🗣️ *Select Language*\n\n💁🏻‍♂️ Shalom!! to interact with me you can use the *number*, the *emoji* or the *corresponding phrase* to the interaction you want to execute, now that you know, let's get started!\n\n🗺️ In which language would you like to talk to me?\n\n*Available Interactions:*" }
+      ],
+      "interacts": [
+        { "emoji": "🇧🇷", "title": "Portuguese Brazil", "action": "selected_lang", "value": "ptbr" },
+        { "emoji": "🇵🇹", "title": "Portuguese Portugal", "action": "selected_lang", "value": "pt" },
+        { "emoji": "🇪🇸", "title": "Spanish", "action": "selected_lang", "value": "es" },
+        { "emoji": "🇺🇸", "title": "English", "action": "selected_lang", "value": "en" },
+        { "emoji": "🇫🇷", "title": "French", "action": "selected_lang", "value": "fr" },
+        { "emoji": "🇮🇹", "title": "Italian", "action": "selected_lang", "value": "it" },
+        { "emoji": "🇯🇵", "title": "Japanese", "action": "selected_lang", "value": "jp" }
+      ]
+    },
+    "main_menu": {
+      "msg": [
+          { "type": "text", "text": "🖥️ *Main Menu*\n\nHello *%%*, good to see you, here are all my functions that you have access to, feel free to explore.\n\n👩🏼‍🏫 *Weekly Schedule:*\n\n*Purpose*: %%\n*Fasting:* %%.\n*Book:* %%.\n*Prayer:* %%\n\n*Available Interactions:*" }
+      ],
+      "interacts": [
+        { "emoji": "🙏🏻", "title": "Prayer Requests", "action": "main_menu" },
+        { "emoji": "🏕️", "title": "Missionaries", "action": "main_menu" },
+        { "emoji": "🚸", "title": "Mix Street", "action": "main_menu" },
+        { "emoji": "🗂️", "title": "Ministries", "action": "main_menu" },
+        { "emoji": "📚", "title": "MIX Library", "action": "main_menu" },
+        { "emoji": "🫂", "title": "Leadership", "action": "main_menu" },
+        { "emoji": "🎉", "title": "Events", "action": "main_menu" },
+        { "emoji": "⚙️", "title": "About Us", "action": "main_menu" },
+        { "emoji": "🤖", "title": "Feedbacks", "action": "main_menu" },
+        { "emoji": "🎧", "title": "Playlists", "action": "main_menu" },
+        { "emoji": "🕹️", "title": "Language", "action": "main_menu" },
+        { "emoji": "🛒", "title": "Official Store", "action": "main_menu" },
+        { "emoji": "🎟️", "title": "MIX Check-in", "action": "main_menu" },
+        { "emoji": "🪪", "title": "Personal Profile", "action": "main_menu" }
+      ]
+    },
+    "start_register": {
+      "msg": [
+        { "type": "text", "text": "🕵️‍♂️ *Newcomer Detected:*\n\nHello, how are you? You're new here, aren't you?! Nice to meet you, I'm *Joy*. Save my contact, please!\n\n🫂 Well, here at *Culto MIX* we have a team prepared to take care of and welcome everyone, so I need to collect some information about you.\n\n📁 But don't worry, all the requested information is not disclosed and remains in a *private* MIX database.\n\n🗣️ From now on, I'll be in charge of keeping you informed, so after completing the registration, I'll be available anytime you want to talk to me.\n\nLet's start your registration then?! \n\n*Available Interactions:*" }
+      ],
+      "interacts": [ 
+        { "emoji": "🚩", "title": "Start Sign in", "action": "what_your_name" }
+      ]
     }
   }
 }

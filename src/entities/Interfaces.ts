@@ -5,6 +5,19 @@ import { Database } from './Db';
 
 let user_logged: Record<string, User> = {};
 let current_interface: { [key: string]: string } = {};
+let temp_data: { [key: string]: register_temp } = {};
+
+interface register_temp {
+  name?: string;
+  contact?: string;
+  birthday?: string;
+  age?: number;
+  instagram?: string;
+  email?: string;
+  address?: string;
+  role?: number;
+  language?: string;
+}
 
 interface TextMessage {
   type: 'text';
@@ -60,7 +73,7 @@ type MessageConfig = TextMessage | ImageMessage | GifMessage | ContactMessage | 
 
 interface InterfaceConfig {
   msg: MessageConfig[];
-  interacts: Array<{ emoji: string; title: string; action: string;  value?: string }>;
+  interacts: Array<{ emoji: string; title: string; action: string;  value?: string | 'ptbr' }>;
 }
 
 interface LanguageConfig {
@@ -158,7 +171,7 @@ export async function interact_interface(client: Whatsapp, message: Message) {
       if (message.body === interact.title || message.body === interact.emoji || message.body === String(interacts.indexOf(interact) + 1)) { 
         const actionFunction = actionFunctions[interact.action];
         if (actionFunction) {
-          await actionFunction(client, message, interact, String(interacts.indexOf(interact) + 1));
+          await actionFunction(client, message, interact);
         } else {
           console.error(`ERROR: Action "${interact.action}" not implemented`);
         }
@@ -170,17 +183,16 @@ export async function interact_interface(client: Whatsapp, message: Message) {
 
 // Define uma interface para as funções de ação
 interface ActionFunction {
-  (client: Whatsapp, message: Message, interact: { emoji: string; title: string; action: string; }, id: string): Promise<void>;
+  (client: Whatsapp, message: Message, interact: { emoji: string; title: string; action: string; value?: string | 'ptbr' }): Promise<void>;
 }
 
 // Define as funções para cada ação
 const actionFunctions: Record<string, ActionFunction> = {
-  selected_lang: async (client, message, interact, id) => {
-    switch (message.body) {
-      case interact.emoji: case interact.title: case id:
-        console.log(interact.emoji, interact.title, id);
-      break;
-    }
+  selected_lang: async (client, message, interact) => {
+    temp_data[message.from] = {}
+    temp_data[message.from].language = interact.value as keyof typeof interface_on
+    console.log(temp_data[message.from])
+    access_interface(client, message, 'start_register', interact.value as keyof typeof interface_on)
   },
   main_menu: async (client, message, interact) => {
     console.log('executar logica da interface main_menu.')
