@@ -42,6 +42,18 @@
       "interacts": [ 
         { "emoji": "🚩", "title": "Iniciar Cadastro", "action": "what_your_name" }
       ]
+    },
+    "what_your_name": {
+      "msg": [
+        { "type": "text", "text": "🪪 *Etapa 1/6: - Nome Sobrenome*\n\nQual seu *nome* e *sobrenome*?\nLembrando que são apenas os dois primeiros nomes e sem carácteres especiais, okay?!\n"}
+      ],
+      "interacts":[]
+    },
+    "what_your_birthday": {
+      "msg": [
+        { "type": "text", "text": "🪪 *Etapa 2/6: - Nome Sobrenome*\n\nQual seu *nome* e *sobrenome*?\nLembrando que são apenas os dois primeiros nomes e sem carácteres especiais, okay?!\n"}
+      ],
+      "interacts":[]
     }
   },
   "en": {

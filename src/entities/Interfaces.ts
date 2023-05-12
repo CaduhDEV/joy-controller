@@ -2,6 +2,7 @@ import { Whatsapp, Message } from '@wppconnect-team/wppconnect';
 import interface_on from '../configs/interfaces.json'
 import { User } from './User';
 import { Database } from './Db';
+import { capitalizeFirstLetter } from './Snippets';
 
 let user_logged: Record<string, User> = {};
 let current_interface: { [key: string]: string } = {};
@@ -116,7 +117,7 @@ export async function access_interface(client: Whatsapp, message: Message, c_int
     if (m.type === 'text' && m.text.trim() !== '') {
       full_message += `${m.text}`;
 
-      if (isFirstMsg && interacts) {
+      if (isFirstMsg && interacts && interacts.length >= 1) {
         const interactOptions = interacts.map((option, index) => `${index + 1}. ${option.emoji} ${option.title}`).join('\n');
         full_message += `\n\n${interactOptions}\n`;
       }
@@ -191,8 +192,20 @@ const actionFunctions: Record<string, ActionFunction> = {
   selected_lang: async (client, message, interact) => {
     temp_data[message.from] = {}
     temp_data[message.from].language = interact.value as keyof typeof interface_on
-    console.log(temp_data[message.from])
     access_interface(client, message, 'start_register', interact.value as keyof typeof interface_on)
+  },
+  what_your_name: async(client, message, interact) => {
+    const rule = new RegExp(/\b[A-Za-zÀ-ú][A-Za-zÀ-ú]+,?\s[A-Za-zÀ-ú][A-Za-zÀ-ú]{2,19}\b/, "gi")
+    if (rule.test(message.body) === false || message.body.trim().split(' ').length > 2) {
+      return;
+      //return send_error(client, message, 'errors', temp_data[message.from].language as keyof typeof interface_on);
+    }
+    temp_data[message.from].name = capitalizeFirstLetter(message.body.toLowerCase());
+    console.log(temp_data[message.from])
+    access_interface(client, message, 'what_your_birthday', temp_data[message.from].language as keyof typeof interface_on, [ temp_data[message.from].name as keyof typeof temp_data.name ])
+  },
+  what_your_birthday: async(client, message, interact) => {
+    console.log('perguntar data de aniversário.')
   },
   main_menu: async (client, message, interact) => {
     console.log('executar logica da interface main_menu.')
