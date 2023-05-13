@@ -1,5 +1,5 @@
 import { create, Whatsapp, Message, SocketState } from '@wppconnect-team/wppconnect';
-import { interact_interface, access_interface } from './entities/Interfaces'
+import { interact_interface } from './entities/Interfaces'
 
 create({
     session: 'joy-session',
@@ -14,7 +14,7 @@ create({
     browserArgs: [''],
     puppeteerOptions: { headless: "new" },
     disableWelcome: true,
-    updatesLog: false,
+    updatesLog: true,
     autoClose: 60000,
     tokenStore: 'file',
     folderNameToken: './tokens',

@@ -1,6 +1,6 @@
 {
   "ptbr": {
-    "not_user_select_language": {
+    "select_language": {
       "msg": [
           { "type": "text", "text": "🗣️ *Selecionar Idioma*\n\n💁🏻‍♂️ Shalom!! para interagir comigo você poderá utilizar a *numeração*, o *emoji* ou a *frase correspondente* a interação que deseja executar, agora que você já sabe vamos começar!\n\n🗺️ Em qual idioma você gostaria de conversar comigo?\n\n*Interações Disponíveis:*" }
       ],
@@ -35,29 +35,36 @@
         { "emoji": "🪪", "title": "Perfil Pessoal ", "action": "main_menu" }
       ]
     },
-    "start_register": {
+    "try_register": {
       "msg": [
         { "type": "text", "text": "🕵 *Novato Detectado*:\n\nOlá como vai? Você é novo(a) por aqui não éh?! Muito prazer eu sou o *Joy*, já me salva no seus contatos ai!\n\n🫂 Bem, aqui no *Culto MIX* nós temos uma equipe preparada para cuidar e recepcionar a todos, por isso preciso coletar algumas informações sobre você.\n\n📁 Mas fique tranquilo(a), todas as informações solicitadas não são divulgadas e ficam em um banco de dados *privado* do MIX.\n\n🗣️ A partir de hoje estarei encarregado em te deixar a par tudo, assim após finalizar o cadastro estarei disponível a qualquer momento, caso queira falar comigo.\n\nVamos começar o seu cadastro então?!\n\n*Interações Disponíveis:*" }
       ],
       "interacts": [ 
-        { "emoji": "🚩", "title": "Iniciar Cadastro", "action": "what_your_name" }
+        { "emoji": "🚩", "title": "Iniciar", "action": "register", "value": "start" },
+        { "emoji": "🔙", "title": "Voltar", "action": "register", "value": "back" }
       ]
     },
-    "what_your_name": {
+    "register_name": {
       "msg": [
-        { "type": "text", "text": "🪪 *Etapa 1/6: - Nome Sobrenome*\n\nQual seu *nome* e *sobrenome*?\nLembrando que são apenas os dois primeiros nomes e sem carácteres especiais, okay?!\n"}
+        { "type": "text", "text": "🪪 *Etapa 1/6: - Nome Sobrenome*\n\nFicamos felizes por aceitar, vamos começar!\n\nQual seu *nome* e *sobrenome*?\nSão apenas os dois primeiros nomes e sem carácteres especiais, okay?!" }
       ],
-      "interacts":[]
+      "interacts": []
     },
-    "what_your_birthday": {
+    "register_birthday": {
       "msg": [
-        { "type": "text", "text": "🪪 *Etapa 2/6: - Nome Sobrenome*\n\nQual seu *nome* e *sobrenome*?\nLembrando que são apenas os dois primeiros nomes e sem carácteres especiais, okay?!\n"}
+        { "type": "text", "text": "📅 *Etapa: 2/6 - Data: xx/xx/xxxx*'\n\n*%%*, que nome mais especial, creio que Deus tem grandes propósitos para sua vida ❤️.\n\nPode me dizer sua *data de nascimento*?"}
       ],
-      "interacts":[]
+      "interacts": []
+    },
+    "register_email": {
+      "msg": [
+        { "type": "text", "text": "📧 *Etapa 3/6 - Email*\n\nNossa %%, você tem *%%* anos?! Que incrível. A partir de hoje vai ser uma data muito especial para mim e para a igreja 🥰.\n\nSei que parece meio antiquado, mas também preciso do seu *e-mail* kkkk."}
+      ],
+      "interacts": []
     }
   },
   "en": {
-    "not_user_select_language": {
+    "select_language": {
       "msg": [
           { "type": "text", "text": "🗣️ *Select Language*\n\n💁🏻‍♂️ Shalom!! to interact with me you can use the *number*, the *emoji* or the *corresponding phrase* to the interaction you want to execute, now that you know, let's get started!\n\n🗺️ In which language would you like to talk to me?\n\n*Available Interactions:*" }
       ],
@@ -92,13 +99,32 @@
         { "emoji": "🪪", "title": "Personal Profile", "action": "main_menu" }
       ]
     },
-    "start_register": {
+    "try_register": {
       "msg": [
         { "type": "text", "text": "🕵️‍♂️ *Newcomer Detected:*\n\nHello, how are you? You're new here, aren't you?! Nice to meet you, I'm *Joy*. Save my contact, please!\n\n🫂 Well, here at *Culto MIX* we have a team prepared to take care of and welcome everyone, so I need to collect some information about you.\n\n📁 But don't worry, all the requested information is not disclosed and remains in a *private* MIX database.\n\n🗣️ From now on, I'll be in charge of keeping you informed, so after completing the registration, I'll be available anytime you want to talk to me.\n\nLet's start your registration then?! \n\n*Available Interactions:*" }
       ],
       "interacts": [ 
-        { "emoji": "🚩", "title": "Start Sign in", "action": "what_your_name" }
+        { "emoji": "🚩", "title": "Start", "action": "register", "value": "start" },
+        { "emoji": "🔙", "title": "Back", "action": "register", "value": "back" }
       ]
+    },
+    "register_name": {
+      "msg": [
+        { "type": "text", "text": "🪪 *Step 1/6: - First and Last Name*\n\nWe are happy that you accepted, let's start!\n\nWhat is your *first name* and *last name*?\nOnly the first two names without special characters, okay?!" }
+      ],
+      "interacts": []
+    },
+    "register_birthday": {
+      "msg": [
+        { "type": "text", "text": "📅 *Step: 2/6 - Date: xx/xx/xxxx*\n\n*%%*, what a special name, I believe God has great purposes for your life ❤️.\n\nCan you tell me your *date of birth*?"}
+      ],
+      "interacts": []
+    },
+    "register_email": {
+      "msg": [
+        { "type": "text", "text": "📧 *Step 3/6 - Email*\n\nWow *%%*, you're *%%* years old?! That's amazing. From now on, this date will be very special for me and the church 🥰.\n\nI know it may seem a bit old-fashioned, but I also need your *email* lol."}
+      ],
+      "interacts": []
     }
   }
 }
