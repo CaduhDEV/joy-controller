@@ -1,3 +1,4 @@
+import axios from "axios";
 import moment from "moment";
 
 export function capitalizeFirstLetter(str: string) {
@@ -25,4 +26,23 @@ export function isValidDate(dateString: string) {
       }
     }
     return false;
+}
+
+export async function collectAddressByCode(input: string) {
+  const cep = input.replace(/[^\d]/g, "")
+  if (cep.length !== 8) { return false; }
+  const collect = await axios.get(`https://viacep.com.br/ws/${cep}/json/`)
+  return collect.data
+}
+
+
+
+
+export function formatAddress(address: {[key: string]: string} | string, number: string | '0'): string {
+  if (typeof(address) === 'string') {
+    return "Zona rural";
+  }
+
+  const logradouro = address.logradouro ?? "";
+  return `${logradouro}, ${number} - ${address.bairro} ${address.localidade} ${address.uf} - ${address.cep ?? ""}`;
 }

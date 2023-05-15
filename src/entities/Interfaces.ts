@@ -2,7 +2,7 @@ import { Whatsapp, Message } from '@wppconnect-team/wppconnect';
 import interface_on from '../configs/interfaces.json'
 import { User } from './User';
 import { Database } from './Db';
-import { calculateAge, capitalizeFirstLetter, isValidDate } from './Snippets';
+import { calculateAge, capitalizeFirstLetter, collectAddressByCode, formatAddress, isValidDate } from './Snippets';
 
 let user_logged: Record<string, User> = {};
 let current_stage: { [key: string]: string } = {}; // estágio atual.
@@ -16,8 +16,9 @@ interface register_temp {
   age?: number;
   instagram?: string;
   email?: string;
-  address?: string;
+  address?: { [key: string]: string } | string;
   role?: number;
+  cep?: string;
   language?: string;
 }
 
@@ -190,15 +191,46 @@ export async function interact_interface(client: Whatsapp, message: Message) {
           access_interface(client, message, 'register_email', temp_data[message.from].language as keyof typeof interface_on, [ temp_data[message.from].name as keyof typeof temp_data.name, `${temp_data[message.from].age}` ])
         break;
         case 4:
-          console.log('coletar email e perguntar instagam.')
+          const checkMail = new RegExp(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/, "gi");
+          if (checkMail.test(message.body) == false) { return console.log('email inválido') }
+          temp_data[message.from].email = message.body.toLowerCase();
+          access_interface(client, message, 'register_instagram', temp_data[message.from].language as keyof typeof interface_on)
+        break;
+        case 5:
+          const interacts = interfaces[temp_data[message.from].language as keyof typeof interface_on][current_interface[message.from]].interacts;
+          if (message.body.normalize().toLowerCase() === interacts[0].title.normalize().toLowerCase() || message.body === interacts[0].emoji || message.body === '1') {
+            temp_data[message.from].instagram = 'N/A';
+          } else {
+            const instagramRegex = /^[a-zA-Z0-9_]+$/;
+            if (!instagramRegex.test(message.body)) {
+              return console.log('Nickname do Instagram inválido!');
+            }
+            temp_data[message.from].instagram = message.body.toLowerCase();
+          } 
+          access_interface(client, message, 'register_address', temp_data[message.from].language as keyof typeof interface_on, [ message.body.toLocaleLowerCase() ])
+        break;
+        case 6:
+          const cepWithoutHyphen = message.body.replace('-', '');
+          const address = await collectAddressByCode(cepWithoutHyphen);
+          if (address.erro === true || address.logradouro === "") { return console.log('Pedir para a pessoa descrever o nome da rua, numero etc.') }
+          temp_data[message.from].address = address
+          access_interface(client, message, 'register_number', temp_data[message.from].language as keyof typeof interface_on);
+      break;
+        case 7:
+          if (!message.body.match(/\d/)) { return console.log('n é number'); }
+          const address_format = formatAddress(temp_data[message.from].address || 'Zona Rural', message.body);
+          temp_data[message.from].address = address_format
+          // access_interface(client, message, 'profile', temp_data[message.from].language as keyof typeof interface_on, [
+          //   temp_data[message.from].name || '',
+          // ]);
         break;
       }
     break;
     case 'interact':
-      const interacts = interfaces[temp_data[message.from].language][current_interface[message.from]].interacts;
-      
+      const lang = user_logged[message.from]?.language || temp_data[message.from]?.language || 'ptbr';
+      console.log('interact', lang);
+      const interacts = interfaces[lang][current_interface[message.from]].interacts;
       for (const interact of interacts) {
-        console.log(message.body.normalize().toLowerCase(), interact.title.normalize().toLowerCase())
         if (message.body.normalize().toLowerCase() === interact.title.normalize().toLowerCase() || message.body === interact.emoji || message.body === String(interacts.indexOf(interact) + 1)) { 
           const actionFunction = actionFunctions[interact.action];
           if (actionFunction) {
@@ -223,10 +255,10 @@ const actionFunctions: Record<string, ActionFunction> = {
   selected_lang: async (client, message, interact) => {
     temp_data[message.from] = {}
     temp_data[message.from].language = interact.value as keyof typeof interface_on;
-    console.log(temp_data[message.from].language)
     access_interface(client, message, 'try_register', temp_data[message.from].language  as keyof typeof interface_on);
   },
   register: async(client, message, interact) => {
+    // not_instagram e finish
     if (interact.value === 'back' ) {
       current_stage[message.from] = 'interact';
       await access_interface(client, message, 'select_language', temp_data[message.from].language as keyof typeof interface_on);

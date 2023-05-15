@@ -61,6 +61,41 @@
         { "type": "text", "text": "📧 *Etapa 3/6 - Email*\n\nNossa %%, você tem *%%* anos?! Que incrível. A partir de hoje vai ser uma data muito especial para mim e para a igreja 🥰.\n\nSei que parece meio antiquado, mas também preciso do seu *e-mail* kkkk."}
       ],
       "interacts": []
+    },
+    "register_instagram": {
+      "msg": [
+        { "type": "text", "text": "📷 *Etapa 4/6 - Instagram*\n\nOkay, e qual é o seu *nome de usuário* do Instagram, para te seguirmos?\n\nAh por favor nos siga também, as redes sociais estão no menu principal\n\nE sempre que postar algo com ou sobre nós, não esqueça de nos marcar 🤭.\n\n*Interações Disponíveis:*" }
+      ],
+      "interacts": [
+        { "emoji": "⛔", "title": "Pular etapa", "action": "register", "value": "not_instagram" }
+      ]
+    },
+    "register_address": {
+      "msg": [
+        { "type": "text", "text": "📍 *Etapa 5/6 - Endereço*\n\nVocê pode me dizer seu o *CEP*?? \nVocê pode encontrá-lo na sua conta de água ou luz."}
+      ],
+      "interacts": []
+    },
+    "register_number": {
+      "msg": [
+        { "type": "text", "text": "📍 *Etapa 5/6 - Endereço*\n\nMuito bem! Só mais uma coisa tá bom, prometo kkkkk.\nPreciso do *número* da sua residência."}
+      ],
+      "interacts": []
+    },
+    "profile": {
+      "msg": [
+        { "type": "text", "text": "👤 *%%*\n\n🪪 *Aniversário:* %%\n🚩 *Idade:* %% anos\n\n📧 *Email:*\n%%\n\n📮 *Endereço registrado:*\n%%\n\n*Redes sociais:*\n\n📷 *Instagram:* %%\n\n📱 Whatsapp: %%\n\n*Interações Disponíveis:*"}
+      ],
+      "interacts": [
+        { "emoji": "✅", "title": "Finalizar", "action": "register", "value": "finish" },
+        { "emoji": "⛔", "title": "Cancelar", "action": "register", "value": "back" }
+      ]
+    },
+    "finish_register": {
+      "msg": [ 
+        { "type": "text", "text": "finalizado com sucesso." }
+      ],
+      "interacts": []
     }
   },
   "en": {
@@ -125,6 +160,35 @@
         { "type": "text", "text": "📧 *Step 3/6 - Email*\n\nWow *%%*, you're *%%* years old?! That's amazing. From now on, this date will be very special for me and the church 🥰.\n\nI know it may seem a bit old-fashioned, but I also need your *email* lol."}
       ],
       "interacts": []
+    },
+    "register_instagram": {
+      "msg": [
+        { "type": "text", "text": "📷 *Step 4/6 - Instagram*\n\nAlright, what's your Instagram *username* so we can follow you??\n\nOh, please follow us too, our social media accounts are in the main menu.\n\nAnd whenever you post something with or about us, don't forget to tag us 🤭. \n\n*Available interactions:*" }
+      ],
+      "interacts": [
+        { "emoji": "⛔", "title": "Skip", "action": "" }
+      ]
+    },
+    "register_address": {
+      "msg": [
+        { "type": "text", "text": "📍 *Step 5/6 - Address*\n\nCan you tell me your *ZIP code*?? \nYou can find it on your water or electricity bill."}
+      ],
+      "interacts": []
+    },
+    "register_number": {
+      "msg": [
+        { "type": "text", "text": "📍 *Step 5/6 - Address*\n\nGreat! Just one more thing, I promise kkkkk.\nI need the *number* of your house."}
+      ],
+      "interacts": []
+    },
+    "profile": {
+      "msg": [
+        { "type": "text", "text": "👤 *%%*\n\n🪪 *Birthday:* %%\n🚩 *Age:* %% years old\n\n📧 *Email:*\n%%\n\n📮 *Registered Address:*\n%%\n\n*Social Media:*\n\n📷 *Instagram:* %%\n\n📱 Whatsapp: %%\n\n*Available Interactions:*"}
+      ],
+      "interacts": [
+        { "emoji": "✅", "title": "Finish", "action": "register", "value": "finish"},
+        { "emoji": "⛔", "title": "Cancel", "action": "register", "value": "back" }
+      ]
     }
   }
 }
