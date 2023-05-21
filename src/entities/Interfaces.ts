@@ -13,13 +13,14 @@ interface register_temp {
   name?: string;
   contact?: string;
   birthday?: string;
-  age?: number;
+  age?: string;
   instagram?: string;
   email?: string;
   address?: { [key: string]: string } | string;
   role?: number;
   cep?: string;
   language?: string;
+  confirm?: boolean;
 }
 
 interface TextMessage {
@@ -187,7 +188,7 @@ export async function interact_interface(client: Whatsapp, message: Message) {
           let date = isValidDate(message.body);
           if (date === false || calculateAge(message.body) < 10) { return console.error('data inválida.'); }
           temp_data[message.from].birthday = date;
-          temp_data[message.from].age = calculateAge(message.body);
+          temp_data[message.from].age = calculateAge(message.body).toString();
           access_interface(client, message, 'register_email', temp_data[message.from].language as keyof typeof interface_on, [ temp_data[message.from].name as keyof typeof temp_data.name, `${temp_data[message.from].age}` ])
         break;
         case 4:
@@ -215,14 +216,28 @@ export async function interact_interface(client: Whatsapp, message: Message) {
           if (address.erro === true || address.logradouro === "") { return console.log('Pedir para a pessoa descrever o nome da rua, numero etc.') }
           temp_data[message.from].address = address
           access_interface(client, message, 'register_number', temp_data[message.from].language as keyof typeof interface_on);
-      break;
+        break;
         case 7:
           if (!message.body.match(/\d/)) { return console.log('n é number'); }
           const address_format = formatAddress(temp_data[message.from].address || 'Zona Rural', message.body);
           temp_data[message.from].address = address_format
-          // access_interface(client, message, 'profile', temp_data[message.from].language as keyof typeof interface_on, [
-          //   temp_data[message.from].name || '',
-          // ]);
+          access_interface(client, message, 'profile', temp_data[message.from].language as keyof typeof interface_on, [
+            temp_data[message.from].name || '',
+            temp_data[message.from].birthday || '',
+            temp_data[message.from].age || '',
+            temp_data[message.from].email || '',
+            address_format,
+            temp_data[message.from].instagram || ''
+          ]);
+          temp_data[message.from].confirm = true;
+        break;
+        case 8:
+          const interact = interfaces[temp_data[message.from].language as keyof typeof interface_on][current_interface[message.from]].interacts;
+          if (message.body.normalize().toLowerCase() === interact[0].title.normalize().toLowerCase() || message.body === interact[0].emoji || message.body === '1') {
+            console.log('conta criada, criar função de avisar da nova conta e abrir menu principal ao usuário.')
+          } else if (message.body.normalize().toLowerCase() === interact[1].title.normalize().toLowerCase() || message.body === interact[1].emoji || message.body === '2') {
+            console.log('cancelar cadastro dos usuários.')
+          }
         break;
       }
     break;
