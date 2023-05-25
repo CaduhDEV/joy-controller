@@ -2,7 +2,7 @@
   "ptbr": {
     "select_language": {
       "msg": [
-          { "type": "text", "text": "🗣️ *Selecionar Idioma*\n\n💁🏻‍♂️ Shalom!! para interagir comigo você poderá utilizar a *numeração*, o *emoji* ou a *frase correspondente* a interação que deseja executar, agora que você já sabe vamos começar!\n\n🗺️ Em qual idioma você gostaria de conversar comigo?\n\n*Interações Disponíveis:*" }
+          { "type": "text", "text": "🗣️ *Selecionar Idioma*\n\n💁🏻‍♂️ Saudações!! para interagir comigo você poderá utilizar a *numeração*, o *emoji* ou a *frase correspondente* a interação que deseja executar, agora que você já sabe vamos começar!\n\n🗺️ Em qual idioma você gostaria de conversar comigo?\n\n*Interações Disponíveis:*" }
       ],
       "interacts": [
         { "emoji": "🇧🇷", "title": "Português Brasil", "action": "selected_lang", "value": "ptbr" },
@@ -84,7 +84,7 @@
     },
     "profile": {
       "msg": [
-        { "type": "text", "text": "👤 *%%*\n\n🪪 *Aniversário:* %%\n🚩 *Idade:* %% anos\n\n📧 *Email:*\n%%\n\n📮 *Endereço registrado:*\n%%\n\n*Redes sociais:*\n\n📷 *Instagram:* %%\n\n📱 Whatsapp: %%\n\n*Interações Disponíveis:*"}
+        { "type": "text", "text": "👤 *%%*\n\n🪪 *Aniversário:* %%\n🚩 *Idade:* %% anos\n\n📧 *Email:*\n%%\n\n📮 *Endereço registrado:*\n%%\n\n*Redes sociais:*\n\n📷 *Instagram:* %%\n\n*Interações Disponíveis:*"}
       ],
       "interacts": [
         { "emoji": "✅", "title": "Finalizar", "action": "register", "value": "finish" },
@@ -93,7 +93,13 @@
     },
     "finish_register": {
       "msg": [ 
-        { "type": "text", "text": "finalizado com sucesso." }
+        { "type": "text", "text": "✅*Etapa 6/6 - Cadastro Finalizado*\n\nSeja bem vindo(a) ao *Culto MIX*, agora que já nos conhecemos você pode conversar comigo sempre que quiser!\n\n⌚ Seu cadastro foi realizado, para acessar suas ferramentas basta me chamar a qualquer momento do seu dia.\n" }
+      ],
+      "interacts": []
+    },
+    "cancel_register": {
+      "msg": [ 
+        { "type": "text", "text": "⛔ *Cadastro Cancelado*\n\nSeu Cadastro foi cancelado com sucesso, para fazer novamente, entre em contato comigo." }
       ],
       "interacts": []
     }

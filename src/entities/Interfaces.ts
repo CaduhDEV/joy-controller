@@ -202,7 +202,7 @@ export async function interact_interface(client: Whatsapp, message: Message) {
           if (message.body.normalize().toLowerCase() === interacts[0].title.normalize().toLowerCase() || message.body === interacts[0].emoji || message.body === '1') {
             temp_data[message.from].instagram = 'N/A';
           } else {
-            const instagramRegex = /^[a-zA-Z0-9_]+$/;
+            const instagramRegex = /^[a-zA-Z0-9_.]+$/;
             if (!instagramRegex.test(message.body)) {
               return console.log('Nickname do Instagram inválido!');
             }
@@ -233,11 +233,16 @@ export async function interact_interface(client: Whatsapp, message: Message) {
         break;
         case 8:
           const interact = interfaces[temp_data[message.from].language as keyof typeof interface_on][current_interface[message.from]].interacts;
-          if (message.body.normalize().toLowerCase() === interact[0].title.normalize().toLowerCase() || message.body === interact[0].emoji || message.body === '1') {
-            console.log('conta criada, criar função de avisar da nova conta e abrir menu principal ao usuário.')
+          if (message.body.normalize().toLowerCase() === interact[0].title.normalize().toLowerCase() || message.body === interact[0].emoji || message.body === '1') {          
+            const db = new Database();
+            await db.createUser(message.from, temp_data[message.from]);
+            access_interface(client, message, 'finish_register', temp_data[message.from].language as keyof typeof interface_on);
           } else if (message.body.normalize().toLowerCase() === interact[1].title.normalize().toLowerCase() || message.body === interact[1].emoji || message.body === '2') {
-            console.log('cancelar cadastro dos usuários.')
+            access_interface(client, message, 'cancel_register',  temp_data[message.from].language as keyof typeof interface_on);
           }
+          delete current_stage[message.from];
+          delete current_interface[message.from];
+          delete temp_data[message.from];
         break;
       }
     break;

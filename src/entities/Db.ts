@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { createPool, Pool, Connection } from 'mysql2/promise';
 
 interface MySqlConnection extends Connection {
@@ -40,6 +41,21 @@ export class Database {
     
     return rows[0];
   }
+  
+  async createUser(from: string, data: any): Promise<void> {
+    
+    const query = `INSERT INTO users (contact, name, birthday, age, email, instagram, address, language, createdin) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);`;
+    console.log(data)
+    const params = [from, data.name, data.birthday, data.age, data.email, data.instagram, data.address, data.language, moment().format('DD/MM/YYYY') ];
+  
+    try {
+      const [rows, fields] = await this.execute(query, params);
+      console.log('User created successfully.');
+    } catch (error) {
+      console.error('Error creating user:', error);
+    }
+  }
+  
 
   private async getConnection(): Promise<MySqlConnection> {
     if (!this.conn) {
