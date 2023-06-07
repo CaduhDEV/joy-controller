@@ -1,8 +1,9 @@
-import { Whatsapp, Message } from '@wppconnect-team/wppconnect';
+import { Whatsapp, Message, create } from '@wppconnect-team/wppconnect';
 import interface_on from '../configs/interfaces.json'
+import errors_on from '../configs/errors.json'
 import { User } from './User';
 import { Database } from './Db';
-import { calculateAge, capitalizeFirstLetter, collectAddressByCode, formatAddress, isValidDate } from './Snippets';
+import { calculateAge, capitalizeFirstLetter, collectAddressByCode, formatAddress, isValidDate, sendEmail } from './Snippets';
 
 let user_logged: Record<string, User> = {};
 let current_stage: { [key: string]: string } = {}; // estágio atual.
@@ -16,6 +17,7 @@ interface register_temp {
   age?: string;
   instagram?: string;
   email?: string;
+  gender?: string;
   address?: { [key: string]: string } | string;
   role?: number;
   cep?: string;
@@ -88,7 +90,29 @@ interface InterfacesConfig {
   [language: string]: LanguageConfig;
 }
 
+interface errors_config {
+  [interfaceName: string]: string;
+}
+
+interface LangConfig {
+  [language: string]: errors_config;
+}
+
+interface a {
+  [language: string]: LanguageConfig;
+}
 const interfaces = interface_on as InterfacesConfig;
+const errors_lang = errors_on as LangConfig;
+
+
+interface EmailConfig<T> {
+  woman: T;
+  man: T;
+}
+
+interface EmailConfigs<T> {
+  [key: string]: EmailConfig<T>;
+}
 
 export async function replaceKeywordsWithVariables(translate: string, variables: string[]) {
   let newStr = translate;
@@ -163,10 +187,11 @@ export async function interact_interface(client: Whatsapp, message: Message) {
             email: data.email,
             address: data.address,
             role: data.role,
-            language: data.language
+            language: data.language,
+            createdin: data.createdin,
         });
         // enviar para o menu
-        await access_interface(client, message, 'main_menu', user_logged[message.from].language as keyof typeof interface_on, [data.name, 'Nenhum.', '19:00 às 07:00', 'Provérbios', 'Israel Natural que reflete na espiritual.']);
+        await access_interface(client, message, 'main_menu', user_logged[message.from].language as keyof typeof interface_on, [data.name, 'Nenhum.', '19:00 às 07:00', 'Provérbios', 'Nenhuma.']);
         return current_stage[message.from] = 'interact';
       }
     break;
@@ -178,7 +203,7 @@ export async function interact_interface(client: Whatsapp, message: Message) {
         case 1:
           const rule = new RegExp(/\b[A-Za-zÀ-ú][A-Za-zÀ-ú]+,?\s[A-Za-zÀ-ú][A-Za-zÀ-ú]{2,19}\b/, "gi")
           if (rule.test(message.body) === false || message.body.trim().split(' ').length > 2) {
-            return console.error('Nome inválido.')
+            return error(client, message, temp_data[message.from].language as keyof typeof interface_on, 'invalid_name')
           }
           delete user_logged[message.from];
           temp_data[message.from].name = capitalizeFirstLetter(message.body.toLowerCase());
@@ -186,14 +211,14 @@ export async function interact_interface(client: Whatsapp, message: Message) {
         break;
         case 2:
           let date = isValidDate(message.body);
-          if (date === false || calculateAge(message.body) < 10) { return console.error('data inválida.'); }
+          if (date === false || calculateAge(message.body) < 10) { return error(client, message, temp_data[message.from].language as keyof typeof interface_on, 'invalid_birthday') }
           temp_data[message.from].birthday = date;
           temp_data[message.from].age = calculateAge(message.body).toString();
           access_interface(client, message, 'register_email', temp_data[message.from].language as keyof typeof interface_on, [ temp_data[message.from].name as keyof typeof temp_data.name, `${temp_data[message.from].age}` ])
         break;
         case 4:
           const checkMail = new RegExp(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/, "gi");
-          if (checkMail.test(message.body) == false) { return console.log('email inválido') }
+          if (checkMail.test(message.body) == false) { return error(client, message, temp_data[message.from].language as keyof typeof interface_on, 'invalid_email') }
           temp_data[message.from].email = message.body.toLowerCase();
           access_interface(client, message, 'register_instagram', temp_data[message.from].language as keyof typeof interface_on)
         break;
@@ -204,21 +229,32 @@ export async function interact_interface(client: Whatsapp, message: Message) {
           } else {
             const instagramRegex = /^[a-zA-Z0-9_.]+$/;
             if (!instagramRegex.test(message.body)) {
-              return console.log('Nickname do Instagram inválido!');
+              return error(client, message, temp_data[message.from].language as keyof typeof interface_on, 'invalid_instagram');
             }
             temp_data[message.from].instagram = message.body.toLowerCase();
           } 
-          access_interface(client, message, 'register_address', temp_data[message.from].language as keyof typeof interface_on, [ message.body.toLocaleLowerCase() ])
+          access_interface(client, message, 'register_gender', temp_data[message.from].language as keyof typeof interface_on)
         break;
         case 6:
+          const select_gender = interfaces[temp_data[message.from].language as keyof typeof interface_on][current_interface[message.from]].interacts;
+          if (message.body.normalize().toLowerCase() === select_gender[0].title.normalize().toLowerCase() || message.body === select_gender[0].emoji || message.body === '1') {
+            temp_data[message.from].gender = 'man';
+          } else {
+            temp_data[message.from].gender = 'woman';
+          }
+          access_interface(client, message, 'register_address', temp_data[message.from].language as keyof typeof interface_on, [ message.body.toLocaleLowerCase() ])
+        break;
+        case 7:
           const cepWithoutHyphen = message.body.replace('-', '');
           const address = await collectAddressByCode(cepWithoutHyphen);
-          if (address.erro === true || address.logradouro === "") { return console.log('Pedir para a pessoa descrever o nome da rua, numero etc.') }
+          console.log(address)
+          if (address.erro === true || address === false) { return error(client, message, temp_data[message.from].language as keyof typeof interface_on, 'invalid_address')}
+          console.log('ok')
           temp_data[message.from].address = address
           access_interface(client, message, 'register_number', temp_data[message.from].language as keyof typeof interface_on);
         break;
-        case 7:
-          if (!message.body.match(/\d/)) { return console.log('n é number'); }
+        case 8:
+          if (!message.body.match(/\d/)) { error(client, message, temp_data[message.from].language as keyof typeof interface_on, 'invalid_number') }
           const address_format = formatAddress(temp_data[message.from].address || 'Zona Rural', message.body);
           temp_data[message.from].address = address_format
           access_interface(client, message, 'profile', temp_data[message.from].language as keyof typeof interface_on, [
@@ -231,12 +267,14 @@ export async function interact_interface(client: Whatsapp, message: Message) {
           ]);
           temp_data[message.from].confirm = true;
         break;
-        case 8:
+        case 9:
           const interact = interfaces[temp_data[message.from].language as keyof typeof interface_on][current_interface[message.from]].interacts;
           if (message.body.normalize().toLowerCase() === interact[0].title.normalize().toLowerCase() || message.body === interact[0].emoji || message.body === '1') {          
             const db = new Database();
             await db.createUser(message.from, temp_data[message.from]);
             access_interface(client, message, 'finish_register', temp_data[message.from].language as keyof typeof interface_on);
+            const gender: keyof EmailConfig<string> = temp_data[message.from].gender as keyof EmailConfig<string> || 'man';
+            sendEmail(temp_data[message.from].email || '', temp_data[message.from].name || '', temp_data[message.from].language as keyof typeof interface_on, gender);
           } else if (message.body.normalize().toLowerCase() === interact[1].title.normalize().toLowerCase() || message.body === interact[1].emoji || message.body === '2') {
             access_interface(client, message, 'cancel_register',  temp_data[message.from].language as keyof typeof interface_on);
           }
@@ -286,5 +324,72 @@ const actionFunctions: Record<string, ActionFunction> = {
       current_stage[message.from] = 'register';
       await access_interface(client, message, 'register_name', temp_data[message.from].language as keyof typeof interface_on);
     }
-  }
+  },
+  main_menu: async (client, message, interact) => {   
+    await access_interface(client, message, interact.action, user_logged[message.from].language as keyof typeof interface_on);
+  },
+  mix_street: async (client, message, interact) => {   
+    await access_interface(client, message, interact.action, user_logged[message.from].language as keyof typeof interface_on);
+  },
+  leaders: async (client, message, interact) => {   
+    await access_interface(client, message, interact.action, user_logged[message.from].language as keyof typeof interface_on);
+  },
+  about_us: async (client, message, interact) => {
+    await access_interface(client, message, interact.action, user_logged[message.from].language as keyof typeof interface_on);
+  },
+  library:  async (client, message, interact) => {
+    await access_interface(client, message, interact.action, user_logged[message.from].language as keyof typeof interface_on);
+  },
+  missionaries:  async (client, message, interact) => {
+    await access_interface(client, message, interact.action, user_logged[message.from].language as keyof typeof interface_on);
+  },
+  mission_elisa:  async (client, message, interact) => {
+    await access_interface(client, message, interact.action, user_logged[message.from].language as keyof typeof interface_on);
+  },
+  playlists: async(client, message, interact) => {
+    await access_interface(client, message, interact.action, user_logged[message.from].language as keyof typeof interface_on);
+  },
+  user_profile: async(client, message, interact) => {
+    const user = user_logged[message.from]
+    await access_interface(client, message, interact.action, user_logged[message.from].language as keyof typeof interface_on, [
+      user.name,
+      user.birthday,
+      user.age.toString(),
+      user.address, 
+      user.instagram,
+      user.email,
+      getRoleName(user.role),
+      user.createdin
+    ]);
+  },
+  warning: async (client, message, interact) => {   
+    switch (interact.value) {
+      case 'mix_street': 
+        client.sendReactionToMessage(message.id, '🔥');
+        console.log("Avisar no grupo que essa pessoa tem interesse em participar!");
+      break;
+    }
+    await access_interface(client, message, 'main_menu', user_logged[message.from].language as keyof typeof interface_on);
+  },
 };
+
+async function error(client: Whatsapp, message: Message,language: keyof typeof errors_on, error_name: keyof typeof errors_lang) {
+  if (!(error_name in errors_lang[language])) {
+    return console.log('Error not found, please contact support.');
+  }
+
+  await client.sendText(message.from, errors_lang[language][error_name]);
+}
+
+function getRoleName(role: number): string {
+  switch (role) {
+    case 0:
+      return 'Membro';
+    case 1:
+      return 'Líder';
+    case 2:
+      return 'Administrador';
+    default:
+      return 'Novato';
+  }
+}

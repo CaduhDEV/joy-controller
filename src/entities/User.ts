@@ -8,6 +8,7 @@ interface UserData {
   address: string;
   role: number;
   language: string;
+  createdin: string;
 }
 
 export class User {
@@ -20,6 +21,7 @@ export class User {
   address: string;
   role: number;
   language: string;
+  createdin: string;
 
   constructor(props: UserData) {
     this.name = props.name;
@@ -31,5 +33,6 @@ export class User {
     this.address = props.address;
     this.role = props.role;
     this.language = props.language;
+    this.createdin = props.createdin;
   }
 }

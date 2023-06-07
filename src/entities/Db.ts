@@ -44,9 +44,9 @@ export class Database {
   
   async createUser(from: string, data: any): Promise<void> {
     
-    const query = `INSERT INTO users (contact, name, birthday, age, email, instagram, address, language, createdin) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);`;
+    const query = `INSERT INTO users (contact, name, birthday, age, email, gender, instagram, address, language, createdin) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
     console.log(data)
-    const params = [from, data.name, data.birthday, data.age, data.email, data.instagram, data.address, data.language, moment().format('DD/MM/YYYY') ];
+    const params = [from, data.name, data.birthday, data.age, data.email, data.gender, data.instagram, data.address, data.language, moment().format('DD/MM/YYYY') ];
   
     try {
       const [rows, fields] = await this.execute(query, params);

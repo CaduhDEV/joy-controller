@@ -19,20 +19,103 @@
           { "type": "text", "text": "🖥️ *Menu Principal*\n\nOlá *%%*, bom ver você, aqui estão todas as minhas funções que você possui acesso, fique a vontade para explorar.\n\n👩🏼‍🏫 *Quadro Semanal:*\n\n*Propósito*: %%\n*Jejum:* %%.\n*Livro:* %%.\n*Oração:* %%\n\n*Interações Disponíveis:*" }
       ],
       "interacts": [
-        { "emoji": "🙏🏻", "title": "Pedidos de Oração", "action": "main_menu" },
-        { "emoji": "🏕️", "title": "Missionários", "action": "main_menu" },
-        { "emoji": "🚸", "title": "Mix Street", "action": "main_menu" },
-        { "emoji": "🗂️", "title": "Ministérios", "action": "main_menu" },
-        { "emoji": "📚", "title": "Biblioteca MIX", "action": "main_menu" },
-        { "emoji": "🫂", "title": "Liderança", "action": "main_menu" },
-        { "emoji": "🎉", "title": "Eventos", "action": "main_menu" },
-        { "emoji": "⚙️", "title": "Sobre Nós", "action": "main_menu" },
-        { "emoji": "🤖", "title": "Feedbacks", "action": "main_menu" },
-        { "emoji": "🎧", "title": "Playlists", "action": "main_menu" },
-        { "emoji": "🕹️", "title": "Idioma", "action": "main_menu" },
-        { "emoji": "🛒", "title": "Loja Oficial", "action": "main_menu" },
-        { "emoji": "🎟️", "title": "MIX Check-in", "action": "main_menu" },
-        { "emoji": "🪪", "title": "Perfil Pessoal ", "action": "main_menu" }
+        { "emoji": "🙏🏻", "title": "Pedidos de Oração", "action": "" },
+        { "emoji": "🏕️", "title": "Missionários", "action": "missionaries" },
+        { "emoji": "🚸", "title": "Mix Street", "action": "mix_street" },
+        { "emoji": "🗂️", "title": "Ministérios", "action": "" },
+        { "emoji": "📚", "title": "Biblioteca MIX", "action": "library" },
+        { "emoji": "🫂", "title": "Liderança", "action": "leaders" },
+        { "emoji": "🎉", "title": "Eventos", "action": "" },
+        { "emoji": "⚙️", "title": "Sobre Nós", "action": "about_us" },
+        { "emoji": "🤖", "title": "Feedbacks", "action": "" },
+        { "emoji": "🎧", "title": "Playlists", "action": "playlists" },
+        { "emoji": "🕹️", "title": "Idioma", "action": "" },
+        { "emoji": "🛒", "title": "Loja Oficial", "action": "" },
+        { "emoji": "🎟️", "title": "MIX Check-in", "action": "" },
+        { "emoji": "🪪", "title": "Perfil Pessoal ", "action": "user_profile" }
+      ]
+    },
+    "mix_street": {
+      "msg": [
+        { "type": "text", "text": "🚸 *MIX Street*\n\nQue maneiro saber que você está interessado no Mix Street, vou te explicar como funciona:\n\nSomos um grupo de pessoas que organizam rolês às *sexta-feiras* com o objetivo de expandir o reino através do amor de Jesus aqui na terra.\n\nAgora vem minha parte Favorita! Nós só descobrimos para onde vamos durante a fase de preparação, onde tudo começa em casa: oramos para o Espirito de Deus nos dar direção de roupas, acessórios e até mesmo penteados estratégicos. Ao chegar na igreja as *19:00*, nós temos um momento de confissão de pecados, adoração e direcionamento do Espirito Santo, nos concentramos na voz Dele para saber onde vamos ir, quem vamos encontrar e o que iremos dizer para as pessoas. Isso não é maneiro?\n\n*Interações Disponíveis:*" }
+      ],
+      "interacts": [
+        { "emoji": "🔥", "title": "Quero Participar", "action": "warning", "value": "mix_street"  },
+        { "emoji": "🔙", "title": "Voltar", "action": "main_menu"  }
+      ]
+    },
+    "leaders": {
+      "msg": [
+        { "type": "text", "text": "🫂 *Liderança*\n\n🧩 *Provérbios 11:14* - 'Onde não há conselho, o povo cai; mas na multidão de conselheiros há segurança.' Esse versículo destaca a importância da sabedoria e do aconselhamento na liderança.\n\nEsses são os líderes do Culto MIX, sempre que você quiser tirar alguma dúvida ou desabafar, essas pessoas estarão a sua disposição.\n\n*Interações Disponíveis:*" },
+        { "type": "contacts", "contacts": [ 
+            { "id": "554391288610@c.us", "name": "Apóstolo Tito" },
+            { "id": "554384423698@c.us", "name": "Apóstola Joana" },
+            { "id": "554384079458@c.us", "name": "Edvanda: Supervisora Geral" },
+            { "id": "554384315463@c.us", "name": "Victória: Supervisora Louvor" },
+            { "id": "554388694019@c.us", "name": "Eduardo: Líder" },
+            { "id": "554384320678@c.us", "name": "Adrielle: Líder" },
+            { "id": "554384027717@c.us", "name": "Fernanda: Líder" },
+            { "id": "554399019197@c.us", "name": "Gabriela: Líder" },
+            { "id": "554384244218@c.us", "name": "Carlos: Líder" },
+            { "id": "554384530767@c.us", "name": "Felipe: Líder" },
+            { "id": "554388371429@c.us", "name": "Matheus: Líder" },
+            { "id": "554396966772@c.us", "name": "Isabelly: Líder" },
+            { "id": "554384532648@c.us", "name": "Breno: Líder" }
+          ]
+        }
+      ],
+      "interacts": [
+        { "emoji": "🔙", "title": "Voltar", "action": "main_menu"  }
+      ]
+    },
+    "about_us": {
+      "msg": [
+        { "type": "text", "text": "⚙️ *Sobre Nós*\n\n🪖 O *Ministério MIX* da Igreja Viva busca incentivar a geração de jovens e adolescentes a buscar transformação em suas vidas através do amor de Deus, estabelecendo o reino em seu meio para impactar positivamente a sociedade. A nossa missão é baseada em Romanos 12:2 ('Não vos conformeis com este mundo, mas transformai-vos pela renovação da vossa mente, para que experimenteis qual seja a boa, agradável e perfeita vontade de Deus.').\n\n👀 Nossa visão é baseada em Joel 2:13 ('Rasgai o vosso coração, e não as vossas vestes; e convertei-vos ao Senhor vosso Deus; porque ele é misericordioso e compassivo, tardio em irar-se e grande em benignidade, e se arrepende do mal.') e em 1Timóteo 4:12 ('Ninguém despreze a tua mocidade; mas sê o exemplo dos fiéis, na palavra, no trato, no amor, no espírito, na fé, na pureza').\n\n🔥 *Igreja Viva*\n www.instagram.com/igrejavivaoficial\nwww.igrejaviva.com.br _(Em breve)_\nigrejaviva2023@gmail.com\n+55 (43) 33545715\n\n🪖 *Culto MIX*\nwww.instagram.com/culto.mix\nwww.cultomix.com.br _(Em breve)_\ncontato@cultomix.com.br\n\n📍 *Endereço:*\nAvenida da Liberdade, 545 - Londrina PR\n\n*Interações Disponíveis:*" }
+      ],
+      "interacts": [
+        { "emoji": "🔙", "title": "Voltar", "action": "main_menu"  }
+      ]
+    },
+    "playlists": {
+      "msg": [
+        { "type": "text", "text": "🎧 *MIX Memories - Spotify*\n\nCuidadosamente escolhidas para te conectar com Deus e te levar a momentos especiais.\n\nAs músicas escolhidas são aquelas que nos marcaram como ministério e nos lembram de momentos especiais em nossos eventos e encontros.\n\n*OBS:* Todas as músicas foram selecionadas com base em critérios como letra, melodia e mensagem, para que possa aproveitar de forma segura e impactante.\n\nwww.spotify.link/FLJlmqoTbzb\n\n*Interações Disponíveis*" }
+      ],
+      "interacts": [
+        { "emoji": "🔙", "title": "Voltar", "action": "main_menu"  }
+      ]
+    },
+    "library": {
+      "msg": [
+        { "type": "text", "text": "📚 *Biblioteca MIX*\n\nUau, bom saber que você está interessado na biblioteca oficial do ministério *MIX*, gostaria de te dizer que falta pouco! Nós estamos conferindo o material, lendo e analisando para disponibilizar para vocês!\n\n*OBS*: Todos os livros disponibilizados são passados por avaliação apostólica e da liderança do MIX, como estamos cientes que só existe *UMA* verdade, queremos ter certeza de que não contradizem as escrituras para a segurança de todos os membros, para que não haja confusão.\n\n*Interações Disponíveis*" }
+      ],
+      "interacts": [
+        { "emoji": "🔙", "title": "Voltar", "action": "main_menu"  }
+      ]
+    },
+    "user_profile": {
+      "msg": [
+        { "type": "text", "text": "👤 *Perfil Pessoal*\n\n📕 Aqui estão os seus dados cadastrais, para efetuar alguma mudança entre em contato com o *Ministério Ágape*.\n\n🪪 *Nome:* %%\n🥳 *Aniversário:* %%\n🗓️ *Idade:* %%\n\n📍*Endereço Registrado:*\n%%\n\n📷 *Instagram:* %%\n✉️ *Email:*\n%%\n\n🧳 *Cargo:* %%\n🚪*Membro desde:* %%\n\n*Interações Disponíveis:*" }
+      ],
+      "interacts": [
+        { "emoji": "🔙", "title": "Voltar", "action": "main_menu" }
+      ]
+    },
+    "missionaries": {
+      "msg": [
+        { "type": "text", "text": "🏕️ *Missionários*\n\nEsses são os missionários em campo atualmente, para ver mais detalhes e atualizações, como relatório de missões, dentre outras maravilhas que o senhor tem feito através da vida dessas pessoas, fique a vontade para interagir!\n\n_''E disse-lhes: Ide por todo o mundo, pregai o evangelho a toda criatura.''_ *Marcos 16:15*\n\n*Interações Disponíveis:*" }
+      ],
+      "interacts": [
+        { "emoji": "🇧🇷", "title": "Elisa Maria", "action": "mission_elisa" },
+        { "emoji": "🔙", "title": "Voltar", "action": "main_menu" }
+      ]
+    },
+    "mission_elisa": {
+      "msg": [
+        { "type": "text", "text": "🇧🇷 *Elisa Maria - Missão Norte*\n\nMeu nome é *Elisa Maria*, tenho 26 anos, sou missionária e congrego na Igreja Viva há 19 anos.\n\nServi no Ministério de louvor e liderança de jovens por muitos anos, em 2018 recebi uma palavra sobre eu ser enviada às nações, então senti a necessidade de me capacitar me dedicando totalmente ao ministério.\n\nNo final do ano de 2022 senti de Deus em iniciar o *Metanoia School*, atualmente hoje estou morando e estudando na *Dunamis Farm*, sendo discipulada e treinada para para viver o estilo de vida da grande comissão.\n\nNo final do mês de abril farei uma viagem missionária para o *Norte do Brasil*, onde vou colocar em prática tudo o que tenho aprendido, creio que missões é um chamado para todos, portanto, quero convidar você para fazer parte disso: orando por mim, ofertando um valor ou ser um mantenedor mensal.\n\n📷 *Instagram:* www.instagram.com/elisabiguetti/\n\n*Chave PIX:* (43) 984771103\n\n*Interações Disponíveis:*" },
+        { "type": "gif", "url": "https://i.imgur.com/ZGWtbe9.gif" }
+      ],
+      "interacts": [
+        { "emoji": "🔙", "title": "Voltar", "action": "missionaries" }
       ]
     },
     "try_register": {
@@ -46,39 +129,48 @@
     },
     "register_name": {
       "msg": [
-        { "type": "text", "text": "🪪 *Etapa 1/6: - Nome Sobrenome*\n\nFicamos felizes por aceitar, vamos começar!\n\nQual seu *nome* e *sobrenome*?\nSão apenas os dois primeiros nomes e sem carácteres especiais, okay?!" }
+        { "type": "text", "text": "🪪 *Etapa 1/7: - Nome Sobrenome*\n\nFicamos felizes por aceitar, vamos começar!\n\nQual seu *nome* e *sobrenome*?\nSão apenas os dois primeiros nomes e sem carácteres especiais, okay?!" }
       ],
       "interacts": []
     },
     "register_birthday": {
       "msg": [
-        { "type": "text", "text": "📅 *Etapa: 2/6 - Data: xx/xx/xxxx*'\n\n*%%*, que nome mais especial, creio que Deus tem grandes propósitos para sua vida ❤️.\n\nPode me dizer sua *data de nascimento*?"}
+        { "type": "text", "text": "📅 *Etapa: 2/7 - Data: xx/xx/xxxx*'\n\n*%%*, que nome mais especial, creio que Deus tem grandes propósitos para sua vida ❤️.\n\nPode me dizer sua *data de nascimento*?"}
       ],
       "interacts": []
     },
     "register_email": {
       "msg": [
-        { "type": "text", "text": "📧 *Etapa 3/6 - Email*\n\nNossa %%, você tem *%%* anos?! Que incrível. A partir de hoje vai ser uma data muito especial para mim e para a igreja 🥰.\n\nSei que parece meio antiquado, mas também preciso do seu *e-mail* kkkk."}
+        { "type": "text", "text": "📧 *Etapa 3/7 - Email*\n\nNossa %%, você tem *%%* anos?! Que incrível. A partir de hoje vai ser uma data muito especial para mim e para a igreja 🥰.\n\nSei que parece meio antiquado, mas também preciso do seu *e-mail* kkkk."}
       ],
       "interacts": []
     },
     "register_instagram": {
       "msg": [
-        { "type": "text", "text": "📷 *Etapa 4/6 - Instagram*\n\nOkay, e qual é o seu *nome de usuário* do Instagram, para te seguirmos?\n\nAh por favor nos siga também, as redes sociais estão no menu principal\n\nE sempre que postar algo com ou sobre nós, não esqueça de nos marcar 🤭.\n\n*Interações Disponíveis:*" }
+        { "type": "text", "text": "📷 *Etapa 4/7 - Instagram*\n\nOkay, e qual é o seu *nome de usuário* do Instagram, para te seguirmos?\n\nAh por favor nos siga também, as redes sociais estão no menu principal\n\nE sempre que postar algo com ou sobre nós, não esqueça de nos marcar 🤭.\n\n*Interações Disponíveis:*" }
       ],
       "interacts": [
         { "emoji": "⛔", "title": "Pular etapa", "action": "register", "value": "not_instagram" }
       ]
     },
+    "register_gender": {
+      "msg": [
+        { "type": "text", "text": "⛔ *Etapa 5/7 - Seu Gênero*\n\nEscolhe uma opção abaixo:\n\n*Interações Disponíveis:*" }
+      ],
+      "interacts": [
+        { "emoji": "🚹", "title": "Homem", "action": "" },
+        { "emoji": "🚺", "title": "Mulher", "action": "" }
+      ]
+    },
     "register_address": {
       "msg": [
-        { "type": "text", "text": "📍 *Etapa 5/6 - Endereço*\n\nVocê pode me dizer seu o *CEP*?? \nVocê pode encontrá-lo na sua conta de água ou luz."}
+        { "type": "text", "text": "📍 *Etapa 6/7 - Endereço*\n\nVocê pode me dizer seu o *CEP*?? \nVocê pode encontrá-lo na sua conta de água ou luz."}
       ],
       "interacts": []
     },
     "register_number": {
       "msg": [
-        { "type": "text", "text": "📍 *Etapa 5/6 - Endereço*\n\nMuito bem! Só mais uma coisa tá bom, prometo kkkkk.\nPreciso do *número* da sua residência."}
+        { "type": "text", "text": "📍 *Etapa 6/7 - Endereço*\n\nMuito bem! Só mais uma coisa tá bom, prometo kkkkk.\nPreciso do *número* da sua residência."}
       ],
       "interacts": []
     },
@@ -93,7 +185,7 @@
     },
     "finish_register": {
       "msg": [ 
-        { "type": "text", "text": "✅*Etapa 6/6 - Cadastro Finalizado*\n\nSeja bem vindo(a) ao *Culto MIX*, agora que já nos conhecemos você pode conversar comigo sempre que quiser!\n\n⌚ Seu cadastro foi realizado, para acessar suas ferramentas basta me chamar a qualquer momento do seu dia.\n" }
+        { "type": "text", "text": "✅*Etapa 7/7 - Cadastro Finalizado*\n\nSeja bem vindo(a) ao *Culto MIX*, agora que já nos conhecemos você pode conversar comigo sempre que quiser!\n\n⌚ Seu cadastro foi realizado, para acessar suas ferramentas basta me chamar a qualquer momento do seu dia.\n" }
       ],
       "interacts": []
     },
@@ -126,10 +218,10 @@
       "interacts": [
         { "emoji": "🙏🏻", "title": "Prayer Requests", "action": "main_menu" },
         { "emoji": "🏕️", "title": "Missionaries", "action": "main_menu" },
-        { "emoji": "🚸", "title": "Mix Street", "action": "main_menu" },
+        { "emoji": "🚸", "title": "Mix Street", "action": "mix_street" },
         { "emoji": "🗂️", "title": "Ministries", "action": "main_menu" },
         { "emoji": "📚", "title": "MIX Library", "action": "main_menu" },
-        { "emoji": "🫂", "title": "Leadership", "action": "main_menu" },
+        { "emoji": "🫂", "title": "Leadership", "action": "leaders" },
         { "emoji": "🎉", "title": "Events", "action": "main_menu" },
         { "emoji": "⚙️", "title": "About Us", "action": "main_menu" },
         { "emoji": "🤖", "title": "Feedbacks", "action": "main_menu" },
@@ -151,39 +243,61 @@
     },
     "register_name": {
       "msg": [
-        { "type": "text", "text": "🪪 *Step 1/6: - First and Last Name*\n\nWe are happy that you accepted, let's start!\n\nWhat is your *first name* and *last name*?\nOnly the first two names without special characters, okay?!" }
+        { "type": "text", "text": "🪪 *Step 1/7: - First and Last Name*\n\nWe are happy that you accepted, let's start!\n\nWhat is your *first name* and *last name*?\nOnly the first two names without special characters, okay?!" }
       ],
       "interacts": []
     },
     "register_birthday": {
       "msg": [
-        { "type": "text", "text": "📅 *Step: 2/6 - Date: xx/xx/xxxx*\n\n*%%*, what a special name, I believe God has great purposes for your life ❤️.\n\nCan you tell me your *date of birth*?"}
+        { "type": "text", "text": "📅 *Step: 2/7 - Date: xx/xx/xxxx*\n\n*%%*, what a special name, I believe God has great purposes for your life ❤️.\n\nCan you tell me your *date of birth*?"}
       ],
       "interacts": []
     },
     "register_email": {
       "msg": [
-        { "type": "text", "text": "📧 *Step 3/6 - Email*\n\nWow *%%*, you're *%%* years old?! That's amazing. From now on, this date will be very special for me and the church 🥰.\n\nI know it may seem a bit old-fashioned, but I also need your *email* lol."}
+        { "type": "text", "text": "📧 *Step 3/7 - Email*\n\nWow *%%*, you're *%%* years old?! That's amazing. From now on, this date will be very special for me and the church 🥰.\n\nI know it may seem a bit old-fashioned, but I also need your *email* lol."}
       ],
       "interacts": []
     },
     "register_instagram": {
       "msg": [
-        { "type": "text", "text": "📷 *Step 4/6 - Instagram*\n\nAlright, what's your Instagram *username* so we can follow you??\n\nOh, please follow us too, our social media accounts are in the main menu.\n\nAnd whenever you post something with or about us, don't forget to tag us 🤭. \n\n*Available interactions:*" }
+        { "type": "text", "text": "📷 *Step 4/7 - Instagram*\n\nAlright, what's your Instagram *username* so we can follow you??\n\nOh, please follow us too, our social media accounts are in the main menu.\n\nAnd whenever you post something with or about us, don't forget to tag us 🤭. \n\n*Available interactions:*" }
       ],
       "interacts": [
         { "emoji": "⛔", "title": "Skip", "action": "" }
       ]
     },
+    "register_gender": {
+      "msg": [
+        { "type": "text", "text": "⛔ *Etapa 5/7 - Your Gender*\n\nSelect an option below:\n\n*Interações Disponíveis:*" }
+      ],
+      "interacts": [
+        { "emoji": "🚹", "title": "Man", "action": "" },
+        { "emoji": "🚺", "title": "Woman", "action": "" }
+      ]
+    },
     "register_address": {
       "msg": [
-        { "type": "text", "text": "📍 *Step 5/6 - Address*\n\nCan you tell me your *ZIP code*?? \nYou can find it on your water or electricity bill."}
+        { "type": "text", "text": "📍 *Step 6/7 - Address*\n\nCan you tell me your *ZIP code*?? \nYou can find it on your water or electricity bill."}
       ],
       "interacts": []
     },
     "register_number": {
       "msg": [
-        { "type": "text", "text": "📍 *Step 5/6 - Address*\n\nGreat! Just one more thing, I promise kkkkk.\nI need the *number* of your house."}
+        { "type": "text", "text": "📍 *Step 6/7 - Address*\n\nGreat! Just one more thing, I promise kkkkk.\nI need the *number* of your house."}
+      ],
+      "interacts": []
+    },
+    "finish_register": {
+      "msg": [
+        { "type": "text", "text": "✅ Step 7/7 - Registration Completed\n\nWelcome to Culto MIX, now that we have gotten to know each other, you can chat with me anytime you want!\n\n⌚ Your registration has been completed, to access your tools, just call me anytime during your day.\n" }
+      ],
+      "interacts": []
+    },
+    "cancel_register": {
+      "msg": [
+        { "type": "text", "text": "⛔ *Registration Canceled*\n\nYour registration has been successfully canceled. To register again, please contact me."
+        }
       ],
       "interacts": []
     },
