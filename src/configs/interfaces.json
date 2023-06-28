@@ -5,13 +5,7 @@
           { "type": "text", "text": "🗣️ *Selecionar Idioma*\n\n💁🏻‍♂️ Saudações!! para interagir comigo você poderá utilizar a *numeração*, o *emoji* ou a *frase correspondente* a interação que deseja executar, agora que você já sabe vamos começar!\n\n🗺️ Em qual idioma você gostaria de conversar comigo?\n\n*Interações Disponíveis:*" }
       ],
       "interacts": [
-        { "emoji": "🇧🇷", "title": "Português Brasil", "action": "selected_lang", "value": "ptbr" },
-        { "emoji": "🇵🇹", "title": "Português Portugal", "action": "selected_lang", "value": "pt" },
-        { "emoji": "🇪🇸", "title": "Espanhol", "action": "selected_lang", "value": "es" },
-        { "emoji": "🇺🇸", "title": "Inglês", "action": "selected_lang", "value": "en" },
-        { "emoji": "🇫🇷", "title": "Francês", "action": "selected_lang", "value": "fr" },
-        { "emoji": "🇮🇹", "title": "Italiano", "action": "selected_lang", "value": "it" },
-        { "emoji": "🇯🇵", "title": "Japonês", "action": "selected_lang", "value": "jp" }
+        { "emoji": "🇧🇷", "title": "Português", "action": "selected_lang", "value": "ptbr" }
       ]
     },
     "main_menu": {
@@ -19,29 +13,18 @@
           { "type": "text", "text": "🖥️ *Menu Principal*\n\nOlá *%%*, bom ver você, aqui estão todas as minhas funções que você possui acesso, fique a vontade para explorar.\n\n👩🏼‍🏫 *Quadro Semanal:*\n\n*Propósito*: %%\n*Jejum:* %%.\n*Livro:* %%.\n*Oração:* %%\n\n*Interações Disponíveis:*" }
       ],
       "interacts": [
-        { "emoji": "🙏🏻", "title": "Pedidos de Oração", "action": "" },
+        { "emoji": "🙏🏻", "title": "Pedidos de Oração", "action": "pray_request" },
         { "emoji": "🏕️", "title": "Missionários", "action": "missionaries" },
-        { "emoji": "🚸", "title": "Mix Street", "action": "mix_street" },
-        { "emoji": "🗂️", "title": "Ministérios", "action": "" },
+        { "emoji": "🗂️", "title": "Ministérios", "action": "ministeries" },
         { "emoji": "📚", "title": "Biblioteca MIX", "action": "library" },
         { "emoji": "🫂", "title": "Liderança", "action": "leaders" },
         { "emoji": "🎉", "title": "Eventos", "action": "" },
         { "emoji": "⚙️", "title": "Sobre Nós", "action": "about_us" },
-        { "emoji": "🤖", "title": "Feedbacks", "action": "" },
+        { "emoji": "🤖", "title": "Feedbacks", "action": "feedback_request" },
         { "emoji": "🎧", "title": "Playlists", "action": "playlists" },
         { "emoji": "🕹️", "title": "Idioma", "action": "" },
-        { "emoji": "🛒", "title": "Loja Oficial", "action": "" },
         { "emoji": "🎟️", "title": "MIX Check-in", "action": "" },
         { "emoji": "🪪", "title": "Perfil Pessoal ", "action": "user_profile" }
-      ]
-    },
-    "mix_street": {
-      "msg": [
-        { "type": "text", "text": "🚸 *MIX Street*\n\nQue maneiro saber que você está interessado no Mix Street, vou te explicar como funciona:\n\nSomos um grupo de pessoas que organizam rolês às *sexta-feiras* com o objetivo de expandir o reino através do amor de Jesus aqui na terra.\n\nAgora vem minha parte Favorita! Nós só descobrimos para onde vamos durante a fase de preparação, onde tudo começa em casa: oramos para o Espirito de Deus nos dar direção de roupas, acessórios e até mesmo penteados estratégicos. Ao chegar na igreja as *19:00*, nós temos um momento de confissão de pecados, adoração e direcionamento do Espirito Santo, nos concentramos na voz Dele para saber onde vamos ir, quem vamos encontrar e o que iremos dizer para as pessoas. Isso não é maneiro?\n\n*Interações Disponíveis:*" }
-      ],
-      "interacts": [
-        { "emoji": "🔥", "title": "Quero Participar", "action": "warning", "value": "mix_street"  },
-        { "emoji": "🔙", "title": "Voltar", "action": "main_menu"  }
       ]
     },
     "leaders": {
@@ -194,120 +177,93 @@
         { "type": "text", "text": "⛔ *Cadastro Cancelado*\n\nSeu Cadastro foi cancelado com sucesso, para fazer novamente, entre em contato comigo." }
       ],
       "interacts": []
-    }
-  },
-  "en": {
-    "select_language": {
+    },
+    "pray_request": {
       "msg": [
-          { "type": "text", "text": "🗣️ *Select Language*\n\n💁🏻‍♂️ Shalom!! to interact with me you can use the *number*, the *emoji* or the *corresponding phrase* to the interaction you want to execute, now that you know, let's get started!\n\n🗺️ In which language would you like to talk to me?\n\n*Available Interactions:*" }
+        { "type": "text", "text": "🙏 *Pedido de Oração*\n\n🔒 Antes de tudo gostaria de dizer que aqui é um ambiente *seguro*, todos os seus pedidos são mantidos em sigilo entre a equipe do Ágape/Intersessão.\n\nAgora que você já sabe, *escrava* detalhes sobre o seu pedido de oração.\n" }
+      ],
+      "interacts": []
+    },
+    "pray_request_confirm": {
+      "msg": [
+        { "type": "text", "text": "🙏 *Pedido de Oração*\n\nConfirme seu pedido de oração abaixo:\n\n%%\n" }
       ],
       "interacts": [
-        { "emoji": "🇧🇷", "title": "Portuguese Brazil", "action": "selected_lang", "value": "ptbr" },
-        { "emoji": "🇵🇹", "title": "Portuguese Portugal", "action": "selected_lang", "value": "pt" },
-        { "emoji": "🇪🇸", "title": "Spanish", "action": "selected_lang", "value": "es" },
-        { "emoji": "🇺🇸", "title": "English", "action": "selected_lang", "value": "en" },
-        { "emoji": "🇫🇷", "title": "French", "action": "selected_lang", "value": "fr" },
-        { "emoji": "🇮🇹", "title": "Italian", "action": "selected_lang", "value": "it" },
-        { "emoji": "🇯🇵", "title": "Japanese", "action": "selected_lang", "value": "jp" }
+        { "emoji": "✅", "title": "Confirmar", "action": "check_pray", "value": "finish" },
+        { "emoji": "⛔", "title": "Cancelar", "action": "main_menu", "value": "main_menu" }
       ]
     },
-    "main_menu": {
+    "feedback_request": {
       "msg": [
-          { "type": "text", "text": "🖥️ *Main Menu*\n\nHello *%%*, good to see you, here are all my functions that you have access to, feel free to explore.\n\n👩🏼‍🏫 *Weekly Schedule:*\n\n*Purpose*: %%\n*Fasting:* %%.\n*Book:* %%.\n*Prayer:* %%\n\n*Available Interactions:*" }
+        { "type": "text", "text": "🤖 *Feedbacks*\n\n*%%* você pode compartilhar um relatório sobre mim?\n\n😱Nota de *0* a *10*\n\n🤯 Algum *Bug* ou pane no sistema?\n\n🙍 Alguma crítica construtiva para que eu possa evoluir?\n" }
+      ],
+      "interacts": []
+    },
+    "feedback_request_confirm": {
+      "msg": [
+        { "type": "text", "text": "🤖 *Feedbacks*\n\nConfirme seu feedback abaixo:\n\n%%\n" }
       ],
       "interacts": [
-        { "emoji": "🙏🏻", "title": "Prayer Requests", "action": "main_menu" },
-        { "emoji": "🏕️", "title": "Missionaries", "action": "main_menu" },
-        { "emoji": "🚸", "title": "Mix Street", "action": "mix_street" },
-        { "emoji": "🗂️", "title": "Ministries", "action": "main_menu" },
-        { "emoji": "📚", "title": "MIX Library", "action": "main_menu" },
-        { "emoji": "🫂", "title": "Leadership", "action": "leaders" },
-        { "emoji": "🎉", "title": "Events", "action": "main_menu" },
-        { "emoji": "⚙️", "title": "About Us", "action": "main_menu" },
-        { "emoji": "🤖", "title": "Feedbacks", "action": "main_menu" },
-        { "emoji": "🎧", "title": "Playlists", "action": "main_menu" },
-        { "emoji": "🕹️", "title": "Language", "action": "main_menu" },
-        { "emoji": "🛒", "title": "Official Store", "action": "main_menu" },
-        { "emoji": "🎟️", "title": "MIX Check-in", "action": "main_menu" },
-        { "emoji": "🪪", "title": "Personal Profile", "action": "main_menu" }
+        { "emoji": "✅", "title": "Confirmar", "action": "check_feedback", "value": "finish" },
+        { "emoji": "⛔", "title": "Cancelar", "action": "main_menu", "value": "main_menu" }
       ]
     },
-    "try_register": {
+    "ministeries": {
       "msg": [
-        { "type": "text", "text": "🕵️‍♂️ *Newcomer Detected:*\n\nHello, how are you? You're new here, aren't you?! Nice to meet you, I'm *Joy*. Save my contact, please!\n\n🫂 Well, here at *Culto MIX* we have a team prepared to take care of and welcome everyone, so I need to collect some information about you.\n\n📁 But don't worry, all the requested information is not disclosed and remains in a *private* MIX database.\n\n🗣️ From now on, I'll be in charge of keeping you informed, so after completing the registration, I'll be available anytime you want to talk to me.\n\nLet's start your registration then?! \n\n*Available Interactions:*" }
-      ],
-      "interacts": [ 
-        { "emoji": "🚩", "title": "Start", "action": "register", "value": "start" },
-        { "emoji": "🔙", "title": "Back", "action": "register", "value": "back" }
-      ]
-    },
-    "register_name": {
-      "msg": [
-        { "type": "text", "text": "🪪 *Step 1/7: - First and Last Name*\n\nWe are happy that you accepted, let's start!\n\nWhat is your *first name* and *last name*?\nOnly the first two names without special characters, okay?!" }
-      ],
-      "interacts": []
-    },
-    "register_birthday": {
-      "msg": [
-        { "type": "text", "text": "📅 *Step: 2/7 - Date: xx/xx/xxxx*\n\n*%%*, what a special name, I believe God has great purposes for your life ❤️.\n\nCan you tell me your *date of birth*?"}
-      ],
-      "interacts": []
-    },
-    "register_email": {
-      "msg": [
-        { "type": "text", "text": "📧 *Step 3/7 - Email*\n\nWow *%%*, you're *%%* years old?! That's amazing. From now on, this date will be very special for me and the church 🥰.\n\nI know it may seem a bit old-fashioned, but I also need your *email* lol."}
-      ],
-      "interacts": []
-    },
-    "register_instagram": {
-      "msg": [
-        { "type": "text", "text": "📷 *Step 4/7 - Instagram*\n\nAlright, what's your Instagram *username* so we can follow you??\n\nOh, please follow us too, our social media accounts are in the main menu.\n\nAnd whenever you post something with or about us, don't forget to tag us 🤭. \n\n*Available interactions:*" }
+        { "type": "text", "text": "🗂️ *Ministérios*\n\n🕊️ Todos os ministérios do MIX foram gerados em ambiente profético, em oração, jejum e direção do Espírito Santo.\n\n*Interações Disponíveis:*" }
       ],
       "interacts": [
-        { "emoji": "⛔", "title": "Skip", "action": "" }
+        { "emoji": "❤️‍🔥", "title": "Ministério Ágape", "action": "ministeries_agape" },
+        { "emoji": "🎉", "title": "Ministério de Eventos", "action": "ministeries_events" },
+        { "emoji": "🚸", "title": "MIX Street", "action": "ministeries_mixstreet" },
+        { "emoji": "🎸", "title": "MIX Praise", "action": "ministeries_mixpraise" },
+        { "emoji": "🍞", "title": "Ministério de Comunhão", "action": "ministeries_comunhao" },
+        { "emoji": "🔙", "title": "Voltar", "action": "main_menu" }
       ]
     },
-    "register_gender": {
+    "ministeries_agape": {
       "msg": [
-        { "type": "text", "text": "⛔ *Etapa 5/7 - Your Gender*\n\nSelect an option below:\n\n*Interações Disponíveis:*" }
+        { "type": "text", "text": "❤️‍🔥 *Ministério Ágape*\n\n*Líderes:* Carlos e Gabriela\n\n*Introdução:*\n\nSomos o ministério de gestão de pessoas, responsáveis por gerenciar, cuidar e atender as necessidades dos membros e visitantes da igreja, nossa missão é conectar as pessoas umas com as outras em unidade em alinhamento com o poder explosivo do Espírito Santo.\n\n*Interações Disponíveis:*" }
       ],
       "interacts": [
-        { "emoji": "🚹", "title": "Man", "action": "" },
-        { "emoji": "🚺", "title": "Woman", "action": "" }
+        { "emoji": "❤️‍🔥", "title": "Tenho Interesse!", "action": "warning", "value": "agape" },
+        { "emoji": "🔙", "title": "Voltar", "action": "ministeries" }
       ]
     },
-    "register_address": {
+    "ministeries_events": {
       "msg": [
-        { "type": "text", "text": "📍 *Step 6/7 - Address*\n\nCan you tell me your *ZIP code*?? \nYou can find it on your water or electricity bill."}
-      ],
-      "interacts": []
-    },
-    "register_number": {
-      "msg": [
-        { "type": "text", "text": "📍 *Step 6/7 - Address*\n\nGreat! Just one more thing, I promise kkkkk.\nI need the *number* of your house."}
-      ],
-      "interacts": []
-    },
-    "finish_register": {
-      "msg": [
-        { "type": "text", "text": "✅ Step 7/7 - Registration Completed\n\nWelcome to Culto MIX, now that we have gotten to know each other, you can chat with me anytime you want!\n\n⌚ Your registration has been completed, to access your tools, just call me anytime during your day.\n" }
-      ],
-      "interacts": []
-    },
-    "cancel_register": {
-      "msg": [
-        { "type": "text", "text": "⛔ *Registration Canceled*\n\nYour registration has been successfully canceled. To register again, please contact me."
-        }
-      ],
-      "interacts": []
-    },
-    "profile": {
-      "msg": [
-        { "type": "text", "text": "👤 *%%*\n\n🪪 *Birthday:* %%\n🚩 *Age:* %% years old\n\n📧 *Email:*\n%%\n\n📮 *Registered Address:*\n%%\n\n*Social Media:*\n\n📷 *Instagram:* %%\n\n📱 Whatsapp: %%\n\n*Available Interactions:*"}
+        { "type": "text", "text": "🎉 *Ministério de Eventos*\n\n*Líderes:* Felipe Moreira\n\n*Introdução:*\n\nEsse ministério é responsável pelos eventos do *MIX*, intencionado a fazer todo tipo de evento conforme o coração e a vontade de Deus com o foco em Jesus e no que Ele faria.\n\n*Interações Disponíveis:*" }
       ],
       "interacts": [
-        { "emoji": "✅", "title": "Finish", "action": "register", "value": "finish"},
-        { "emoji": "⛔", "title": "Cancel", "action": "register", "value": "back" }
+        { "emoji": "🎉", "title": "Tenho Interesse!", "action": "warning", "value": "m_events" },
+        { "emoji": "🔙", "title": "Voltar", "action": "ministeries" }
+      ]
+    },
+    "ministeries_mixstreet": {
+      "msg": [
+        { "type": "text", "text": "🚸 *MIX Street*\n\n*Líderes:* Matheus e Isabelly\n\nSomos o ministério de evangelismo, nossa principal missão é levar Jesus para as pessoas, com amor aos perdidos e necessitados, tendo como base a palavra de Deus.\n\nQue maneiro saber que você está interessado no Mix Street, vou te explicar como funciona:\n\nSomos um grupo de pessoas que organizam rolês às *sexta-feiras* com o objetivo de expandir o reino através do amor de Jesus aqui na terra.\n\nAgora vem minha parte Favorita! Nós só descobrimos para onde vamos durante a fase de preparação, onde tudo começa em casa: oramos para o Espirito de Deus nos dar direção de roupas, acessórios e até mesmo penteados estratégicos. Ao chegar na igreja as *19:00*, nós temos um momento de confissão de pecados, adoração e direcionamento do Espirito Santo, nos concentramos na voz Dele para saber onde vamos ir, quem vamos encontrar e o que iremos dizer para as pessoas. Isso não é maneiro?\n\n*Interações Disponíveis:*" }
+      ],
+      "interacts": [
+        { "emoji": "🚸", "title": "Quero Participar", "action": "warning", "value": "mix_street"  },
+        { "emoji": "🔙", "title": "Voltar", "action": "ministeries"  }
+      ]
+    },
+    "ministeries_mixpraise": {
+      "msg": [
+        { "type": "text", "text": "🎸 *MIX Praise*\n\n*Lideres:* Breno\n\nSomos o ministério de louvor do MIX, nosso principal objetivo é glorificar e exaltar o nome de Deus (O todo poderoso), levando a igreja a fazer o mesmo.\n\n*Interações Disponíveis:*" }
+      ],
+      "interacts": [
+        { "emoji": "🎸", "title": "Quero Participar", "action": "warning", "value": "mix_praise"  },
+        { "emoji": "🔙", "title": "Voltar", "action": "ministeries"  }
+      ]
+    },
+    "ministeries_comunhao": {
+      "msg": [
+        { "type": "text", "text": "🍞 *Ministério de Comunhão*\n\n*Líderes:* Fernanda e Adrielle\n\nO Ministério de Comunhão é responsável por promover a conexão entre as pessoas durante as refeições, compartilhando as bênçãos de Deus. Inspirados pelo louvor 'A Tua Mesa Cura', entendemos que a comunhão à mesa é um momento sagrado de partilha e união entre irmãos em Cristo. Através desse ministério, podemos nutrir nosso espírito e fortalecer nossos laços de amor e fraternidade.\n\n*Interações Disponíveis:*" }
+      ],
+      "interacts": [
+        { "emoji": "🍞", "title": "Quero Participar", "action": "warning", "value": "mix_comunhao"  },
+        { "emoji": "🔙", "title": "Voltar", "action": "ministeries"  }
       ]
     }
   }

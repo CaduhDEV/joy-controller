@@ -52,10 +52,14 @@ function main(client: Whatsapp) {
         // Evento de reações: Usar para sistema de aprovação.
     });
     client.onMessage(async(message: Message) => { 
-        if (message.from !== '554391847843@c.us' && message.from !== '554399019197@c.us') { return; } // dev mode
+        console.log(message.from)
+        if (message.from !== '554391847843@c.us' && message.from !== '554399019197@c.us'
+        && message.from !== '554388694019@c.us') { return; } // dev mode
         if (message.isGroupMsg === false) {
+            if (message.isMedia === true) { return; }
             return interact_interface(client, message);
         }    
         // Monitoramento dos grupos
+        console.log(message.chatId, message.from)
     });
 }

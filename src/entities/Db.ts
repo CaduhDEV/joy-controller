@@ -33,7 +33,7 @@ export class Database {
   }
 
   async getUserData(phone: string) {
-    const [rows, fields] = await this.execute(`SELECT * FROM users WHERE contact = ?`, [phone]);
+    let [rows, fields] = await this.execute(`SELECT * FROM users WHERE contact = ?`, [phone]);
 
     if (rows.length === 0) {
       return null;
@@ -44,12 +44,12 @@ export class Database {
   
   async createUser(from: string, data: any): Promise<void> {
     
-    const query = `INSERT INTO users (contact, name, birthday, age, email, gender, instagram, address, language, createdin) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
+    let query = `INSERT INTO users (contact, name, birthday, age, email, gender, instagram, address, language, createdin) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
     console.log(data)
-    const params = [from, data.name, data.birthday, data.age, data.email, data.gender, data.instagram, data.address, data.language, moment().format('DD/MM/YYYY') ];
+    let params = [from, data.name, data.birthday, data.age, data.email, data.gender, data.instagram, data.address, data.language, moment().format('DD/MM/YYYY') ];
   
     try {
-      const [rows, fields] = await this.execute(query, params);
+      let [rows, fields] = await this.execute(query, params);
       console.log('User created successfully.');
     } catch (error) {
       console.error('Error creating user:', error);
