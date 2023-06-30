@@ -44,9 +44,9 @@ export class Database {
   
   async createUser(from: string, data: any): Promise<void> {
     
-    let query = `INSERT INTO users (contact, name, birthday, age, email, gender, instagram, address, language, createdin) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
-    console.log(data)
-    let params = [from, data.name, data.birthday, data.age, data.email, data.gender, data.instagram, data.address, data.language, moment().format('DD/MM/YYYY') ];
+    let query = `INSERT INTO users (contact, name, full_name, birthday, age, email, gender, instagram, address, complement, language, createdin) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
+    console.log(data);
+    let params = [from, data.name, data.full_name, data.birthday, data.age, data.email, data.gender, data.instagram, data.address, data.complement, data.language, moment().format('DD/MM/YYYY') ];
   
     try {
       let [rows, fields] = await this.execute(query, params);
@@ -55,7 +55,16 @@ export class Database {
       console.error('Error creating user:', error);
     }
   }
-  
+
+  async CheckIn(contact: string, date: string): Promise<void> {
+    let query = `INSERT INTO checkin (user_id, date) VALUES (?, ?);`
+    let params = [ contact, date ]
+    try {
+      let [ rows, fields ] = await this.execute(query, params);
+    } catch (error) {
+      console.error('Error register Checkin:', error);
+    }
+  }
 
   private async getConnection(): Promise<MySqlConnection> {
     if (!this.conn) {

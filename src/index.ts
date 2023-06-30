@@ -54,7 +54,7 @@ function main(client: Whatsapp) {
     client.onMessage(async(message: Message) => { 
         console.log(message.from)
         if (message.from !== '554391847843@c.us' && message.from !== '554399019197@c.us'
-        && message.from !== '554388694019@c.us') { return; } // dev mode
+        && message.from !== '554388694019@c.us' && message.from !== '554384079458@c.us') { return; } // dev mode
         if (message.isGroupMsg === false) {
             if (message.isMedia === true) { return; }
             return interact_interface(client, message);

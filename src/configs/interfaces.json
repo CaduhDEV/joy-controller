@@ -23,7 +23,7 @@
         { "emoji": "🤖", "title": "Feedbacks", "action": "feedback_request" },
         { "emoji": "🎧", "title": "Playlists", "action": "playlists" },
         { "emoji": "🕹️", "title": "Idioma", "action": "" },
-        { "emoji": "🎟️", "title": "MIX Check-in", "action": "" },
+        { "emoji": "🎟️", "title": "MIX Check-in", "action": "checkin" },
         { "emoji": "🪪", "title": "Perfil Pessoal ", "action": "user_profile" }
       ]
     },
@@ -53,7 +53,7 @@
     },
     "about_us": {
       "msg": [
-        { "type": "text", "text": "⚙️ *Sobre Nós*\n\n🪖 O *Ministério MIX* da Igreja Viva busca incentivar a geração de jovens e adolescentes a buscar transformação em suas vidas através do amor de Deus, estabelecendo o reino em seu meio para impactar positivamente a sociedade. A nossa missão é baseada em Romanos 12:2 ('Não vos conformeis com este mundo, mas transformai-vos pela renovação da vossa mente, para que experimenteis qual seja a boa, agradável e perfeita vontade de Deus.').\n\n👀 Nossa visão é baseada em Joel 2:13 ('Rasgai o vosso coração, e não as vossas vestes; e convertei-vos ao Senhor vosso Deus; porque ele é misericordioso e compassivo, tardio em irar-se e grande em benignidade, e se arrepende do mal.') e em 1Timóteo 4:12 ('Ninguém despreze a tua mocidade; mas sê o exemplo dos fiéis, na palavra, no trato, no amor, no espírito, na fé, na pureza').\n\n🔥 *Igreja Viva*\n www.instagram.com/igrejavivaoficial\nwww.igrejaviva.com.br _(Em breve)_\nigrejaviva2023@gmail.com\n+55 (43) 33545715\n\n🪖 *Culto MIX*\nwww.instagram.com/culto.mix\nwww.cultomix.com.br _(Em breve)_\ncontato@cultomix.com.br\n\n📍 *Endereço:*\nAvenida da Liberdade, 545 - Londrina PR\n\n*Interações Disponíveis:*" }
+        { "type": "text", "text": "⚙️ *Sobre Nós*\n\n🪖 O *Ministério MIX* da Igreja Viva busca incentivar a geração de jovens e adolescentes a buscar transformação em suas vidas através do amor de Deus, estabelecendo o reino em seu meio para impactar positivamente a sociedade. A nossa missão é baseada em Romanos 12:2 ('Não vos conformeis com este mundo, mas transformai-vos pela renovação da vossa mente, para que experimenteis qual seja a boa, agradável e perfeita vontade de Deus.').\n\n👀 Nossa visão é baseada em Joel 2:13 ('Rasgai o vosso coração, e não as vossas vestes; e convertei-vos ao Senhor vosso Deus; porque ele é misericordioso e compassivo, tardio em irar-se e grande em benignidade, e se arrepende do mal.') e em 1Timóteo 4:12 ('Ninguém despreze a tua mocidade; mas sê o exemplo dos fiéis, na palavra, no trato, no amor, no espírito, na fé, na pureza').\n\n🔥 *Igreja Viva*\nwww.instagram.com/igrejavivaoficial\nwww.igrejaviva.com.br _(Em breve)_\nigrejaviva2023@gmail.com\n+55 (43) 33545715\n\n🪖 *Culto MIX*\nwww.instagram.com/culto.mix\nwww.cultomix.com.br _(Em breve)_\ncontato@cultomix.com.br\n\n📍 *Endereço:*\nAvenida da Liberdade, 545 - Londrina PR\n\n*Interações Disponíveis:*" }
       ],
       "interacts": [
         { "emoji": "🔙", "title": "Voltar", "action": "main_menu"  }
@@ -112,25 +112,25 @@
     },
     "register_name": {
       "msg": [
-        { "type": "text", "text": "🪪 *Etapa 1/7: - Nome Sobrenome*\n\nFicamos felizes por aceitar, vamos começar!\n\nQual seu *nome* e *sobrenome*?\nSão apenas os dois primeiros nomes e sem carácteres especiais, okay?!" }
+        { "type": "text", "text": "🪪 *Etapa 2/8: - Nome Sobrenome*\n\nQual seu *nome completo*?\n\nLembrando que não pode ter dígitos especiais ou números, okay?" }
       ],
       "interacts": []
     },
     "register_birthday": {
       "msg": [
-        { "type": "text", "text": "📅 *Etapa: 2/7 - Data: xx/xx/xxxx*'\n\n*%%*, que nome mais especial, creio que Deus tem grandes propósitos para sua vida ❤️.\n\nPode me dizer sua *data de nascimento*?"}
+        { "type": "text", "text": "📅 *Etapa: 3/8 - Data: xx/xx/xxxx*'\n\n*%%*, que nome mais especial, creio que Deus tem grandes propósitos para sua vida ❤️.\n\nPode me dizer sua *data de nascimento*?"}
       ],
       "interacts": []
     },
     "register_email": {
       "msg": [
-        { "type": "text", "text": "📧 *Etapa 3/7 - Email*\n\nNossa %%, você tem *%%* anos?! Que incrível. A partir de hoje vai ser uma data muito especial para mim e para a igreja 🥰.\n\nSei que parece meio antiquado, mas também preciso do seu *e-mail* kkkk."}
+        { "type": "text", "text": "📧 *Etapa 4/8 - Email*\n\nNossa %%, você tem *%%* anos?! Que incrível. A partir de hoje vai ser uma data muito especial para mim e para a igreja 🥰.\n\nSei que parece meio antiquado, mas também preciso do seu *e-mail* kkkk."}
       ],
       "interacts": []
     },
     "register_instagram": {
       "msg": [
-        { "type": "text", "text": "📷 *Etapa 4/7 - Instagram*\n\nOkay, e qual é o seu *nome de usuário* do Instagram, para te seguirmos?\n\nAh por favor nos siga também, as redes sociais estão no menu principal\n\nE sempre que postar algo com ou sobre nós, não esqueça de nos marcar 🤭.\n\n*Interações Disponíveis:*" }
+        { "type": "text", "text": "📷 *Etapa 5/8 - Instagram*\n\nOkay, e qual é o seu *nome de usuário* do Instagram, para te seguirmos?\n\nAh por favor nos siga também, as redes sociais estão no menu principal\n\nE sempre que postar algo com ou sobre nós, não esqueça de nos marcar 🤭.\n\n*Interações Disponíveis:*" }
       ],
       "interacts": [
         { "emoji": "⛔", "title": "Pular etapa", "action": "register", "value": "not_instagram" }
@@ -138,7 +138,7 @@
     },
     "register_gender": {
       "msg": [
-        { "type": "text", "text": "⛔ *Etapa 5/7 - Seu Gênero*\n\nEscolhe uma opção abaixo:\n\n*Interações Disponíveis:*" }
+        { "type": "text", "text": "⛔ *Etapa 1/8 - Seu Gênero*\n\nFicamos felizes por aceitar, vamos começar! Escolha um gênero abaixo utilizando as interações, please.\n\n*Interações Disponíveis:*" }
       ],
       "interacts": [
         { "emoji": "🚹", "title": "Homem", "action": "" },
@@ -147,13 +147,19 @@
     },
     "register_address": {
       "msg": [
-        { "type": "text", "text": "📍 *Etapa 6/7 - Endereço*\n\nVocê pode me dizer seu o *CEP*?? \nVocê pode encontrá-lo na sua conta de água ou luz."}
+        { "type": "text", "text": "📍 *Etapa 6/8 - Endereço*\n\nVocê pode me dizer seu o *CEP*?? \nVocê pode encontrá-lo na sua conta de água ou luz."}
       ],
       "interacts": []
     },
     "register_number": {
       "msg": [
-        { "type": "text", "text": "📍 *Etapa 6/7 - Endereço*\n\nMuito bem! Só mais uma coisa tá bom, prometo kkkkk.\nPreciso do *número* da sua residência."}
+        { "type": "text", "text": "📍 *Etapa 7/8 - Número*\n\nMuito bem! Está acabando, prometo kkkkk.\nPreciso do *número* da sua residência."}
+      ],
+      "interacts": []
+    },
+    "register_complement": {
+      "msg": [
+        { "type": "text", "text": "📍 *Etapa 8/8 - Complemento*\n\nUma última coisa, tá bomm?! \n\nVocê tem algum complemento de sua residência??\n\nPor exemplo se for apartamento, digite o número do bloco e do apt. Se não houver apenas digite *casa*, okay ?!"}
       ],
       "interacts": []
     },
@@ -168,7 +174,7 @@
     },
     "finish_register": {
       "msg": [ 
-        { "type": "text", "text": "✅*Etapa 7/7 - Cadastro Finalizado*\n\nSeja bem vindo(a) ao *Culto MIX*, agora que já nos conhecemos você pode conversar comigo sempre que quiser!\n\n⌚ Seu cadastro foi realizado, para acessar suas ferramentas basta me chamar a qualquer momento do seu dia.\n" }
+        { "type": "text", "text": "✅ *Cadastro Finalizado*\n\nSeja bem vindo(a) ao *Culto MIX*, agora que já nos conhecemos você pode conversar comigo sempre que quiser!\n\n⌚ Seu cadastro foi realizado, para acessar suas ferramentas basta me chamar a qualquer momento do seu dia.\n" }
       ],
       "interacts": []
     },
@@ -264,6 +270,23 @@
       "interacts": [
         { "emoji": "🍞", "title": "Quero Participar", "action": "warning", "value": "mix_comunhao"  },
         { "emoji": "🔙", "title": "Voltar", "action": "ministeries"  }
+      ]
+    },
+    "checkin": {
+      "msg": [
+        { "type": "text", "text": "🎟️ *Sistema de Check-in*\n\n🎫 Olá *%%*, esse sistema serve para registrar a presença dos participantes através da geolocalização via Whatsapp, prossiga para marcar *presença*!\n\nℹ️ *Mas o que eu ganho marcando presença no check-in?*\n\nEm alguns eventos os participantes recebem mimos, e ainda contabiliza a quantidade de cultos que você já fez check-in, você pode acompanhar no seu perfil.\n\n*Interações Disponíveis:*" }
+      ],
+      "interacts": [
+        { "emoji": "🎟️", "title": "Marcar Presença", "action": "register_checkin"  },
+        { "emoji": "🔙", "title": "Voltar", "action": "main_menu"  }
+      ]
+    },
+    "register_checkin": {
+      "msg": [
+        { "type": "text", "text": "🗺️ *Validando Geolocalização*\n\n🕵️ Por favor, envie sua localização em *tempo real*, com duração de *15 minutos* para validar a sua geolocalização, caso você mudar de ideia utilize as interações disponíveis.\n\n*Interações disponíveis:*"}
+      ],
+      "interacts": [
+        { "emoji": "🔙", "title": "Voltar", "action": "checkin"  }
       ]
     }
   }

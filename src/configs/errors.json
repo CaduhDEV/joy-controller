@@ -1,11 +1,15 @@
 {
     "ptbr": {
-        "invalid_name": "⛔ *Algo deu Errado*\n\n*Nome* ou *Sobrenome* inválido, certifique de que está inserindo apenas 2 nomes e que não está utilizando números ou dígitos especiais.",
+        "invalid_name": "⛔ *Algo deu Errado*\n\n*Nome* inválido, certifique de que não está utilizando números ou dígitos especiais.",
         "invalid_birthday": "⛔ *Algo deu Errado*\n\n*Data de nascimento* é inválida, certifique de que está inserindo dentro dos formatos permitidos.",
         "invalid_email": "⛔ *Algo deu Errado*\n\n*Email* é inválido, certifique que está utilizando o padrão your_email@yourdomain.com e tente novamente.",
         "invalid_instagram": "⛔ *Algo deu Errado*\n\n*Nome de usuário* inválido, certifique de que você está inserindo um nome nos padrões do instagram.",
         "invalid_address": "⛔ *Algo deu Errado*\n\n*CEP* é inválido, por favor certifique de que está inserindo no formato correto e de que esse cep realmente é válido.",
         "invalid_number": "⛔ *Algo deu Errado*\n\n*Número* inválido, por favor certifique de que está inserindo um número válido.",
-        "invalid_gender": "⛔ *Algo deu Errado*\n\nPor favor, escolha um *gênero* válido para prosseguir."
+        "invalid_gender": "⛔ *Algo deu Errado*\n\nPor favor, escolha um *gênero* válido para prosseguir.",
+        "invalid_day": "⛔ *Algo deu Errado*\n\nO Check-in só fica liberado para ser utilizável aos *Sábados* das *19:00 às 19:00*.",
+        "invalid_location": "⛔ *Algo deu Errado*\n\nPor favor envie uma localização válida para prosseguirmos com o seu check-in.",
+        "invalid_coords": "⛔ *Algo deu Errado*\n\nSua localização está fora do raio da Igreja Viva, caso isso for um erro contate um líder do MIX.",
+        "invalid_complement": "⛔ *Algo deu Errado*\n\nSeu complemento está muito grande, escreva algo com no máximo 15 dígitos."
     }
 }
