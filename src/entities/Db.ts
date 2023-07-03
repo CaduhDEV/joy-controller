@@ -41,7 +41,15 @@ export class Database {
     
     return rows[0];
   }
-  
+  async changeLanguage(from: string, language: string): Promise<void> {
+    let query = ` UPDATE users SET language = ? WHERE contact = ?`;
+    let params = [language, from];
+    try {
+      let [rows, fields ] = await this.execute(query, params);
+    } catch(error){
+      console.log(error);
+    }
+  }
   async createUser(from: string, data: any): Promise<void> {
     
     let query = `INSERT INTO users (contact, name, full_name, birthday, age, email, gender, instagram, address, complement, language, createdin) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
@@ -53,6 +61,26 @@ export class Database {
       console.log('User created successfully.');
     } catch (error) {
       console.error('Error creating user:', error);
+    }
+  }
+  async getBirthday(): Promise<any> {
+      let query = `SELECT contact,full_name,birthday,age FROM users;`
+      try {
+        let [ rows, fields ] = await this.execute(query);
+        return rows
+      } catch (error){
+        console.log(error);
+      }
+  }
+  
+  async getDevotional(date: string): Promise<any> {
+    const query = `SELECT * FROM devotionals WHERE date = ?`;
+    const params = [ date ];
+    try {
+      let [ rows, fields ] = await this.execute(query, params);
+      return rows;
+    } catch (error) {
+      console.log(error);
     }
   }
 

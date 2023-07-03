@@ -1,5 +1,7 @@
 import { create, Whatsapp, Message, SocketState } from '@wppconnect-team/wppconnect';
-import { interact_interface } from './entities/Interfaces'
+import { interact_interface, reset_chats } from './entities/Interfaces'
+import { sendDailyDevotional } from './entities/Devotionals';
+import { dataBirthdays } from './entities/Birthdays';
 
 create({
     session: 'joy-session',
@@ -27,7 +29,8 @@ create({
 }).then((client: Whatsapp) => main(client)).catch((error) => console.log(error));
 
 function main(client: Whatsapp) {
-                                                                                                                                       
+    sendDailyDevotional(client, reset_chats);  
+    dataBirthdays(client);                                                                                        
     // quando mudar o status do client, faça isso ->
     client.onStateChange((state: SocketState) => {
         if (state === 'CONFLICT') { client.useHere() };
@@ -53,8 +56,8 @@ function main(client: Whatsapp) {
     });
     client.onMessage(async(message: Message) => { 
         console.log(message.from)
-        if (message.from !== '554391847843@c.us' && message.from !== '554399019197@c.us'
-        && message.from !== '554388694019@c.us' && message.from !== '554384079458@c.us') { return; } // dev mode
+        if (message.from !== '554391847843@c.us') { return; } // dev mode message.from !== '554399019197@c.us'
+        // && message.from !== '554388694019@c.us' && message.from !== '554384079458@c.us')
         if (message.isGroupMsg === false) {
             if (message.isMedia === true) { return; }
             return interact_interface(client, message);

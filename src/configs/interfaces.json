@@ -18,11 +18,11 @@
         { "emoji": "🗂️", "title": "Ministérios", "action": "ministeries" },
         { "emoji": "📚", "title": "Biblioteca MIX", "action": "library" },
         { "emoji": "🫂", "title": "Liderança", "action": "leaders" },
-        { "emoji": "🎉", "title": "Eventos", "action": "" },
+        { "emoji": "🎉", "title": "Eventos", "action": "calendary_events" },
         { "emoji": "⚙️", "title": "Sobre Nós", "action": "about_us" },
         { "emoji": "🤖", "title": "Feedbacks", "action": "feedback_request" },
         { "emoji": "🎧", "title": "Playlists", "action": "playlists" },
-        { "emoji": "🕹️", "title": "Idioma", "action": "" },
+        { "emoji": "🕹️", "title": "Idioma", "action": "language_change" },
         { "emoji": "🎟️", "title": "MIX Check-in", "action": "checkin" },
         { "emoji": "🪪", "title": "Perfil Pessoal ", "action": "user_profile" }
       ]
@@ -283,10 +283,29 @@
     },
     "register_checkin": {
       "msg": [
-        { "type": "text", "text": "🗺️ *Validando Geolocalização*\n\n🕵️ Por favor, envie sua localização em *tempo real*, com duração de *15 minutos* para validar a sua geolocalização, caso você mudar de ideia utilize as interações disponíveis.\n\n*Interações disponíveis:*"}
+        { "type": "text", "text": "🗺️ *Validando Coordenadas*\n\n🕵️ Por favor, envie sua localização em *tempo real*, com duração de *15 minutos* para validar a suas coordenadas, caso você mudar de ideia utilize as interações disponíveis.\n\n*Interações disponíveis:*"}
       ],
       "interacts": [
         { "emoji": "🔙", "title": "Voltar", "action": "checkin"  }
+      ]
+    },
+    "language_change": {
+      "msg": [
+        { "type": "text", "text": "🕹️ *Trocar Idioma*\n\n🗺️ Pensando a nível mundial resolvemos fornecer suporte a diferentes idiomas com o intuito de expandir e trazer a justiça de Deus na Terra.\n\n🌎 Aqui estão os idiomas disponíveis até o momento, lembrando que qualquer um de vocês que desejam contribuir com as traduções, podem entrar em contato com a liderança.\n\n*Idiomas Disponíveis:*" }
+      ],
+      "interacts": [
+        { "emoji": "🇧🇷", "title": "Português", "action": "change_lang", "value": "ptbr" },
+        { "emoji": "🇺🇸", "title": "Inglês (0% Traduzido)", "action": "change_lang", "value": "ptbr" },
+        { "emoji": "🇪🇸", "title": "Espanhol (0% Traduzido)", "action": "change_lang", "value": "ptbr" },
+        { "emoji": "🔙", "title": "Voltar", "action": "main_menu"  }
+      ]
+    },
+    "calendary_events": {
+      "msg": [
+        { "type": "text", "text": "🎉 *Eventos*\n\n📅 *%%*, aqui está nosso calendário de eventos programados do *MIX*, aqui você encontra todos os próximos eventos.\n\nAcessem as interações para mais detalhes dos eventos programados.\n\n*Interações Disponíveis:*" }
+      ], 
+      "interacts": [
+        { "emoji": "🔙", "title": "Voltar", "action": "main_menu"  } 
       ]
     }
   }

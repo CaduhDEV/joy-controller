@@ -96,7 +96,7 @@ export async function sendEmail(email: string, name: string, language: keyof typ
     let info = await transporter.sendMail(mailOptions);
     console.log('E-mail enviado:', info.messageId);
   } catch (error) {
-    console.error('Erro ao enviar o e-mail:', error);
+    console.log('Erro ao enviar o e-mail.');
   }
 
 }
@@ -126,4 +126,25 @@ export async function calculateDistance(lat1: number, lon1: number, lat2: number
 
 function toRadians(degrees: number): number {
   return degrees * (Math.PI / 180);
+}
+
+export function calculateTimeRemaining(hour: number, minute: number) {
+  const now = new Date();
+  const currentHour = now.getHours();
+  const currentMinute = now.getMinutes();
+  const currentSecond = now.getSeconds();
+
+  let target = new Date();
+  target.setHours(hour);
+  target.setMinutes(minute);
+  target.setSeconds(0);
+
+  // retorna tempo restante do mesmo dia se for 00:01 até 5:29
+  if (currentHour < target.getHours() || (currentHour === target.getHours() && currentMinute < target.getMinutes()) ||
+    (currentHour === target.getHours() && currentMinute === target.getMinutes() && currentSecond < target.getSeconds())) {
+    return target.getTime() - now.getTime();
+  }
+  // pega tempo restante do próximo dia.
+  target.setDate(target.getDate() + 1);
+  return target.getTime() - now.getTime();
 }

@@ -15,6 +15,15 @@ let current_interface: { [key: string]: string } = {}; // Interface que deve imp
 let temp_data: { [key: string]: register_temp } = {}; // variavel para criação de registro do usuário.
 let tasks = [ '', 'Nenhum.', '19:00 às 07:00', 'Provérbios', 'Nenhuma.' ]; // tasks semanais para execução do grupo mix.
 
+export async function reset_chats() {
+  console.log('DEBUG: resetando memória cache.');
+  user_logged = {};
+  current_stage = {};
+  current_interface = {};
+  temp_data = {};
+}
+
+
 interface register_temp {
   name?: string;
   full_name?: string;
@@ -317,7 +326,6 @@ export async function interact_interface(client: Whatsapp, message: CustomMessag
       }
     break;
     case 'collect':
-      console.log(current_interface[message.from]);
       await access_interface(client, message, `${current_interface[message.from]}_confirm`, user_logged[message.from].language as keyof typeof interface_on, [ message.body ]);
       current_stage[message.from] = 'interact';
       temp_data[message.from] = {}
@@ -328,8 +336,7 @@ export async function interact_interface(client: Whatsapp, message: CustomMessag
       if (message.type !== 'location' || coords === false || coords[2] === false) { return error(client, message, user_logged[message.from].language as keyof typeof interface_on, 'invalid_location');}
 
       const distance = await calculateDistance(-23.276407679481114, -51.166471360350506, message.lat || 0, message.lng || 0);
-      console.log(distance);
-      if (distance > 0.06) { return error(client, message, user_logged[message.from].language as keyof typeof interface_on, 'invalid_coords') }
+      if (distance > 0.1) { return error(client, message, user_logged[message.from].language as keyof typeof interface_on, 'invalid_coords') }
       
       const db = new Database();
       const currentDate = moment().format('YYYY-MM-DDTHH:mm:ss');
@@ -505,11 +512,24 @@ const actionFunctions: Record<string, ActionFunction> = {
     const start = moment().set({ hour: 19, minute: 0, second: 0 });
     const end = moment().set({ hour: 19, minute: 30, second: 0 });
 
-    // if (now.day() !== 6 || now.isBetween(start, end) === false) {
-    //   return error(client, message, user_logged[message.from].language as keyof typeof interface_on, 'invalid_day');
-    // }
+    if (now.day() !== 6 || now.isBetween(start, end) === false) {
+      return error(client, message, user_logged[message.from].language as keyof typeof interface_on, 'invalid_day');
+    }
+
     await access_interface(client, message, interact.action, user_logged[message.from].language as keyof typeof interface_on);
     current_stage[message.from] = 'collect_checkin';
+  },
+  language_change: async(client, message, interact) => {
+    await access_interface(client, message, interact.action, user_logged[message.from].language as keyof typeof interface_on);
+  },
+  change_lang: async (client, message, interact) => {
+    user_logged[message.from].language = interact.value as keyof typeof interface_on;
+    const db = new Database();
+    db.changeLanguage(message.from, interact.value || 'ptbr');
+    access_interface(client, message, 'main_menu', user_logged[message.from].language  as keyof typeof interface_on);
+  },
+  calendary_events: async(client, message, interact) => {
+    await access_interface(client, message, interact.action, user_logged[message.from].language as keyof typeof interface_on, [ user_logged[message.from].name ]);
   },
 };
 
