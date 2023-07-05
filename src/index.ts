@@ -2,6 +2,7 @@ import { create, Whatsapp, Message, SocketState } from '@wppconnect-team/wppconn
 import { interact_interface, reset_chats } from './entities/Interfaces'
 import { sendDailyDevotional } from './entities/Devotionals';
 import { dataBirthdays } from './entities/Birthdays';
+import { interact_console } from './entities/Commands';
 
 create({
     session: 'joy-session',
@@ -55,14 +56,14 @@ function main(client: Whatsapp) {
         // Evento de reações: Usar para sistema de aprovação.
     });
     client.onMessage(async(message: Message) => { 
-        console.log(message.from)
-        if (message.from !== '554391847843@c.us') { return; } // dev mode message.from !== '554399019197@c.us'
-        // && message.from !== '554388694019@c.us' && message.from !== '554384079458@c.us')
         if (message.isGroupMsg === false) {
+            if (message.from !== '554391847843@c.us') { return; } // dev mode
             if (message.isMedia === true) { return; }
             return interact_interface(client, message);
-        }    
-        // Monitoramento dos grupos
-        console.log(message.chatId, message.from)
+        }
+        
+        if (message.from === "120363069819222921@g.us") {
+            return interact_console(client, message);
+        }
     });
 }

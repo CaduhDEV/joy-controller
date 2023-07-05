@@ -9,7 +9,7 @@ import 'moment/locale/pt-br';
 moment.tz.setDefault('America/Sao_Paulo');
 moment.locale('pt-br');
 
-let user_logged: Record<string, User> = {};
+export let user_logged: Record<string, User> = {};
 let current_stage: { [key: string]: string } = {}; // estágio atual.
 let current_interface: { [key: string]: string } = {}; // Interface que deve imprimir.
 let temp_data: { [key: string]: register_temp } = {}; // variavel para criação de registro do usuário.
@@ -533,7 +533,7 @@ const actionFunctions: Record<string, ActionFunction> = {
   },
 };
 
-async function error(client: Whatsapp, message: Message,language: keyof typeof errors_on, error_name: keyof typeof errors_lang) {
+export async function error(client: Whatsapp, message: Message,language: keyof typeof errors_on, error_name: keyof typeof errors_lang) {
   if (!(error_name in errors_lang[language])) {
     return console.log('Error not found, please contact support.');
   }
@@ -554,4 +554,27 @@ function getRoleName(role: number): string {
     default:
       return 'Novato';
   }
+}
+
+export async function getUser(from: string) {
+  if (!(from in user_logged)) {
+    let db = new Database();
+    let data = await db.getUserData(from);
+    if (!data) { return false; }
+    user_logged[from] = new User({
+        contact: data.contact,
+        name: data.name,
+        full_name: data.full_name,
+        age: data.age,
+        birthday: data.birthday,
+        instagram: data.instagram,
+        email: data.email,
+        address: data.address,
+        complement: data.complement,
+        role: data.role,
+        language: data.language,
+        createdin: data.createdin,
+    });
+    return true
+  }  
 }

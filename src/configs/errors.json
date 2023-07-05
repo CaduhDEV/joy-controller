@@ -10,6 +10,8 @@
         "invalid_day": "⛔ *Algo deu Errado*\n\nO Check-in só fica liberado para ser utilizável aos *Sábados* das *19:00 às 19:00*.",
         "invalid_location": "⛔ *Algo deu Errado*\n\nPor favor envie uma localização válida para prosseguirmos com o seu check-in.",
         "invalid_coords": "⛔ *Algo deu Errado*\n\nSua localização está fora do raio da Igreja Viva, caso isso for um erro contate um líder do MIX.",
-        "invalid_complement": "⛔ *Algo deu Errado*\n\nSeu complemento está muito grande, escreva algo com no máximo 15 dígitos."
+        "invalid_complement": "⛔ *Algo deu Errado*\n\nSeu complemento está muito grande, escreva algo com no máximo 15 dígitos.",
+        "not_permission": "⛔ *Algo deu Errado*\n\nVocê não tem permissão para utilizar os comandos.",
+        "invalid_command": "⛔ *Algo deu Errado*\n\nEsse comando não existe, utilize *!help* para ver todos os comandos existentes."
     }
 }
