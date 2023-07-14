@@ -19,4 +19,4 @@ export async function interact_console(client: Whatsapp, message: Message) {
     const [command, ...args] = message.body.substring(1).split(" ");
     if (commands[command] === undefined || !commands[command]) { return error(client, message, user_logged[message.author].language as keyof typeof interface_on, 'invalid_command'); }
     await commands[command](args, client, message);
-}
+} 
