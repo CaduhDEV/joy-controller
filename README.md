@@ -38,10 +38,14 @@ npm run dev
 
 O Projeto Joy utiliza as seguintes APIs:
 
-- `wppconnect`: API para se conectar ao WhatsApp Business por meio do Node.js.
-- `mysql`: API para interagir com bancos de dados MySQL.
-- `axios`: API para fazer requisições HTTP.
-- `moment`: API para manipular datas e horários em JavaScript.
+- `typescript`: um superset para Javascript.
+- `wppconnect`: Biblioteca para se conectar ao WhatsApp Business por meio do Node.js.
+- `ffmpeg-static`: Biblioteca exigida pela wppconnect para envio de GIFs.
+- `mysql2`: Biblioteca para interagir com bancos de dados MySQL.
+- `axios`: Biblioteca para fazer requisições HTTP.
+- `moment`: Biblioteca para manipular datas e horários em JavaScript.
+- `moment-timezone`: Biblioteca para manipular o fuso horário da biblioteca moment.
+- `nodemailer`: Biblioteca para automoção de envio de emails.
 
 ## Configurações de JOY
 O arquivo interfaces.json contém a extrutura de interpretação de etapa de conversa de joy com o usuário, é totalmente configurável.
@@ -75,5 +79,4 @@ O arquivo interfaces.json contém a extrutura de interpretação de etapa de con
 - `Edvanda Camargo`: supervisora e apoiadora do projeto joy.
 
 ## Autor
-
 O Projeto Joy foi criado por Carlos "Caduh" Eduardo.
