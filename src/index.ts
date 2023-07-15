@@ -57,12 +57,13 @@ function main(client: Whatsapp) {
     });
     client.onMessage(async(message: Message) => { 
         if (message.isGroupMsg === false) {
+            console.log('554391847843@c.us', message.from)
             if (message.from !== '554391847843@c.us') { return; } // dev mode
             if (message.isMedia === true) { return; }
             return interact_interface(client, message);
         }
         
-        if (message.from === "120363069819222921@g.us") {
+        if (message.from === "120363069819222921@g.us") { // se for 1 mensagem do console.
             return interact_console(client, message);
         }
     });

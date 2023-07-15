@@ -2,6 +2,7 @@ import axios from "axios";
 import moment from "moment";
 import nodemailer from 'nodemailer';
 import current_email from '../configs/emails.json'
+import { Database } from "./Db";
 
 export function capitalizeFirstLetter(str: string) {
     let words = str.split(' ');
@@ -36,6 +37,23 @@ export async function collectAddressByCode(input: string) {
   let collect = await axios.get(`https://viacep.com.br/ws/${cep}/json/`)
   return collect.data
 }
+
+export function calculatePing(receivedTime: moment.Moment): number {
+  const currentTime = moment();
+  const ping = currentTime.diff(receivedTime, 'milliseconds');
+  return ping;
+}
+
+export function formatTimestamp(timestamp: number): string {
+  const date = moment(timestamp);
+  return date.format('DD/MM/YYYY');
+}
+
+export async function calculateEngagement(totalMembers: number, newRegistrations: number) {
+  const engagementPercentage = (newRegistrations / totalMembers) * 100;
+  return engagementPercentage.toFixed(2);
+}
+
 
 export function formatAddress(address: { [key: string]: string } | string, number: string | '0'): string {
   if (typeof address === 'string') {

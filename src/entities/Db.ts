@@ -84,6 +84,11 @@ export class Database {
     }
   }
 
+  async getCountDevotional(): Promise<any> {
+    let [ row] = await this.execute(`SELECT date FROM devotionals WHERE id = (SELECT MAX(id) FROM devotionals);`);
+    return row[0].date
+  }
+
   async CheckIn(contact: string, date: string): Promise<void> {
     let query = `INSERT INTO checkin (user_id, date) VALUES (?, ?);`
     let params = [ contact, date ]
@@ -91,6 +96,26 @@ export class Database {
       let [ rows, fields ] = await this.execute(query, params);
     } catch (error) {
       console.error('Error register Checkin:', error);
+    }
+  }
+
+  async getMembers(): Promise<any> {
+    const query = `SELECT COUNT(*) AS total FROM users`;
+    try {
+       const [rows] = await this.execute(query);
+       return rows[0].total;
+    }
+    catch(error){
+      return 0
+     }
+  }
+  async getUsersCreatedLast7Days(): Promise<number> {
+    const query = `SELECT COUNT(*) AS total FROM users WHERE createdin >= NOW() - INTERVAL 7 DAY;`;
+    try {
+      const [rows] = await this.execute(query);
+      return rows[0].total;
+    } catch (error) {
+      return 0;
     }
   }
 

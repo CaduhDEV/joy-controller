@@ -3,7 +3,7 @@ import interface_on from '../configs/interfaces.json';
 import errors_on from '../configs/errors.json';
 import { User } from './User';
 import { Database } from './Db';
-import { calculateAge, calculateDistance, capitalizeFirstLetter, collectAddressByCode, formatAddress, isValidDate, sendEmail } from './Snippets';
+import { calculateAge, calculateDistance, capitalizeFirstLetter, collectAddressByCode, formatAddress, formatTimestamp, isValidDate, sendEmail } from './Snippets';
 import moment from 'moment-timezone';
 import 'moment/locale/pt-br';
 moment.tz.setDefault('America/Sao_Paulo');
@@ -472,7 +472,7 @@ const actionFunctions: Record<string, ActionFunction> = {
       user.instagram,
       user.email,
       getRoleName(user.role),
-      user.createdin
+      formatTimestamp(user.createdin)
     ]);
   },
   warning: async (client, message, interact) => {   

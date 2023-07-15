@@ -10,7 +10,7 @@ interface UserData {
   complement: string;
   role: number;
   language: string;
-  createdin: string;
+  createdin: number;
 }
 
 export class User {
@@ -25,7 +25,7 @@ export class User {
   complement: string;
   role: number;
   language: string;
-  createdin: string;
+  createdin: number;
 
   constructor(props: UserData) {
     this.name = props.name;
