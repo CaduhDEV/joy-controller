@@ -1,5 +1,6 @@
 import moment from 'moment';
 import { createPool, Pool, Connection } from 'mysql2/promise';
+import { User } from './User';
 
 interface MySqlConnection extends Connection {
   release(): void;
@@ -117,6 +118,19 @@ export class Database {
     } catch (error) {
       return 0;
     }
+  }
+
+  async getUsersByName(name: string): Promise<User[]> {
+    const query = `SELECT * FROM users WHERE name LIKE ?`;
+    const values = [`%${name}%`]; // Procura por correspondências parciais do nome
+  
+    try {
+      const [rows] = await this.execute(query, values);
+      return rows as User[];
+    } catch (error) {
+      return [];
+    }
+    
   }
 
   private async getConnection(): Promise<MySqlConnection> {

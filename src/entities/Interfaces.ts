@@ -192,6 +192,7 @@ export async function interact_interface(client: Whatsapp, message: CustomMessag
             return current_stage[message.from] = 'interact';
         }
         user_logged[message.from] = new User({
+            id: data.id,
             contact: data.contact,
             name: data.name,
             full_name: data.full_name,
@@ -562,6 +563,7 @@ export async function getUser(from: string) {
     let data = await db.getUserData(from);
     if (!data) { return false; }
     user_logged[from] = new User({
+        id: data.id,
         contact: data.contact,
         name: data.name,
         full_name: data.full_name,

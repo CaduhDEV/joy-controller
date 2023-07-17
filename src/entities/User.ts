@@ -1,4 +1,5 @@
 interface UserData {
+  id: number;
   name: string;
   full_name: string;
   contact: string;
@@ -14,6 +15,7 @@ interface UserData {
 }
 
 export class User {
+  id: number;
   name: string;
   full_name: string;
   contact: string;
@@ -28,6 +30,7 @@ export class User {
   createdin: number;
 
   constructor(props: UserData) {
+    this.id = props.id;
     this.name = props.name;
     this.full_name = props.full_name;
     this.contact = props.contact;

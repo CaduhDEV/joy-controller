@@ -62,7 +62,11 @@ function main(client: Whatsapp) {
             if (message.isMedia === true) { return; }
             return interact_interface(client, message);
         }
-        
+
+        if (message.mentionedJidList?.includes('554384244218@c.us') === true) {
+            client.sendReactionToMessage(message.id, '👀');
+        }
+
         if (message.from === "120363069819222921@g.us") { // se for 1 mensagem do console.
             return interact_console(client, message);
         }

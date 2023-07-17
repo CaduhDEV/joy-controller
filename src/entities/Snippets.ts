@@ -54,6 +54,14 @@ export async function calculateEngagement(totalMembers: number, newRegistrations
   return engagementPercentage.toFixed(2);
 }
 
+export function formatPhoneNumber(from: string): string {
+  const phoneNumber = from.replace("@c.us", "");
+  const countryCode = phoneNumber.slice(0, 2);
+  const ddd = phoneNumber.slice(2, 4);
+  const number = phoneNumber.slice(4);
+
+  return `+${countryCode}${ddd}9${number}`;
+}
 
 export function formatAddress(address: { [key: string]: string } | string, number: string | '0'): string {
   if (typeof address === 'string') {
