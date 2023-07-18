@@ -1,7 +1,7 @@
 import { Whatsapp } from "@wppconnect-team/wppconnect";
 import { Database } from "./Db";
 import moment from "moment";
-import { calculateAge, calculateTimeRemaining } from "./Snippets";
+import { calculateAge, calculateTimeRemaining, sendEmail } from "./Snippets";
 
 export async function generateBirthdayReport(client: Whatsapp) {
     const db = new Database();
@@ -39,6 +39,9 @@ export async function generateBirthdayReport(client: Whatsapp) {
             upcomingBirthdays.push(`${name} faz *${age}* anos em *1* dia! ${randomEmoji} (${dayMonth}, ${diaDaSemana})`);
         } else if (diffDays === 0) {
             upcomingBirthdays.push(`${name} faz *${age}* anos *hoje*! ${randomEmoji} (${dayMonth}, ${diaDaSemana})`);
+            client.sendText(row.contact, '🎉 *É dia de festa!!*\n\nDesejo um dia repleto de alegria, paz e muitas bênçãos. Que esta nova etapa da sua vida seja marcada por momentos especiais e realizações incríveis. Que você seja sempre abençoado(a) e iluminado(a) por Deus.\n\nFeliz aniversário! 🥳🎂🎈');
+            sendEmail(row.email, row.full_name, row.language, 'birthday', row.gender, 'É Dia de Festa!!! 🎉🎉');
+            db.updateAge(row.id, Number(row.age)+1);
         }
     });
   
@@ -54,7 +57,7 @@ export async function generateBirthdayReport(client: Whatsapp) {
 }
 
 export async function dataBirthdays(client: Whatsapp) {
-    const timeRemaining = calculateTimeRemaining(0, 1);
+    const timeRemaining = calculateTimeRemaining(0, 22);
     setTimeout(async function() {
         generateBirthdayReport(client);
         dataBirthdays(client);

@@ -37,6 +37,9 @@ const commands: Record<string, CommandFunction> = {
     }); 
     const full_msg = `🕵🏼‍♂️ *Pessoas encontradas*\n\nℹ️ Encontrei *${profiles.length}* membro(s) com esse nome, utilize *!profile (id)* para exibir o perfil.\n\n${profiles.join("\n")}`
     client.reply(message.from, full_msg, message.id);
+  },
+  profile: async(args, client, message) => {
+    console.log('criar comando de exibir o perfil de 1 user específico.')
   }
 };
 

@@ -65,9 +65,9 @@ export class Database {
     }
   }
   async getBirthday(): Promise<any> {
-      let query = `SELECT contact,full_name,birthday,age FROM users;`
+      let query = `SELECT id,contact,full_name,email,birthday,age,language,gender FROM users;`
       try {
-        let [ rows, fields ] = await this.execute(query);
+        let [ rows ] = await this.execute(query);
         return rows
       } catch (error){
         console.log(error);
@@ -131,6 +131,16 @@ export class Database {
       return [];
     }
     
+  }
+  async updateAge(from: string, age: number) {
+    const query = `UPDATE users SET age = ? WHERE id = ?`;
+    const values = [ age, from ];
+
+    try {
+      const [rows] = await this.execute(query, values);
+      return rows 
+    } catch (error) {
+    }
   }
 
   private async getConnection(): Promise<MySqlConnection> {

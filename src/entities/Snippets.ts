@@ -82,21 +82,25 @@ export function formatAddress(address: { [key: string]: string } | string, numbe
 }
 
 
-interface EmailConfig<T> {
-  woman: T;
-  man: T;
+interface EmailGender {
+  woman: string;
+  man: string;
 }
 
-interface EmailConfigs<T> {
-  [key: string]: EmailConfig<T>;
+interface EmailConfig {
+  [key: string]: EmailGender;
 }
 
-let body_email = current_email as EmailConfigs<string>
+interface EmailConfigs {
+  [key: string]: EmailConfig;
+}
+
+let body_email: EmailConfigs = current_email as EmailConfigs;
 
 // tipar os args dessa função e criar o sistema de enviar o email especifo para a pessoa.
-export async function sendEmail(email: string, name: string, language: keyof typeof current_email, gender: keyof EmailConfig<string>) {
+export async function sendEmail(email: string, name: string, language: keyof typeof current_email, email_sintax: keyof EmailConfigs, gender: keyof EmailGender, subject: string) {
   // Crie um objeto de transporte de e-mail
-  let body = body_email[language][gender].replace("%%", name);
+  let body = body_email[language][email_sintax][gender].replace("%%", name);
   let full_body = body.replace("@url", "https://i.imgur.com/iSKMhH3.png");
   let transporter = nodemailer.createTransport({
     host: 'smtp.zoho.com',
@@ -112,7 +116,7 @@ export async function sendEmail(email: string, name: string, language: keyof typ
   let mailOptions = {
     from: 'contato@cultomix.com.br',
     to: email,
-    subject: 'Bem-vindo(a) ao Culto MIX!',
+    subject: subject,
     html: full_body,
     attachments: []
   };
@@ -122,6 +126,7 @@ export async function sendEmail(email: string, name: string, language: keyof typ
     let info = await transporter.sendMail(mailOptions);
     console.log('E-mail enviado:', info.messageId);
   } catch (error) {
+    console.log(error)
     console.log('Erro ao enviar o e-mail.');
   }
 

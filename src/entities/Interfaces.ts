@@ -298,7 +298,7 @@ export async function interact_interface(client: Whatsapp, message: CustomMessag
             await db.createUser(message.from, temp_data[message.from]);
             access_interface(client, message, 'finish_register', temp_data[message.from].language as keyof typeof interface_on);
             const gender: keyof EmailConfig<string> = temp_data[message.from].gender as keyof EmailConfig<string> || 'man';
-            sendEmail(temp_data[message.from].email || '', temp_data[message.from].name || '', temp_data[message.from].language as keyof typeof interface_on, gender);
+            sendEmail(temp_data[message.from].email || '', temp_data[message.from].name || '', temp_data[message.from].language as keyof typeof interface_on, 'welcome', gender, 'Bem-vindo(a) ao Culto MIX!');
             delete current_stage[message.from];
             delete current_interface[message.from];
             delete temp_data[message.from];
