@@ -42,6 +42,17 @@ export class Database {
     
     return rows[0];
   }
+
+  async getUserByID(id: number) {
+    let [rows] = await this.execute(`SELECT * FROM users WHERE id = ?`, [id]);
+
+    if (rows.length === 0) {
+      return 0;
+    }
+    
+    return rows[0];
+  }
+
   async changeLanguage(from: string, language: string): Promise<void> {
     let query = ` UPDATE users SET language = ? WHERE contact = ?`;
     let params = [language, from];
@@ -53,9 +64,11 @@ export class Database {
   }
   async createUser(from: string, data: any): Promise<void> {
     
-    let query = `INSERT INTO users (contact, name, full_name, birthday, age, email, gender, instagram, address, complement, language, createdin) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
-    console.log(data);
-    let params = [from, data.name, data.full_name, data.birthday, data.age, data.email, data.gender, data.instagram, data.address, data.complement, data.language, moment().format('DD/MM/YYYY') ];
+    let query = `INSERT INTO users (contact, name, full_name, birthday, age, email, gender, instagram, address, complement, language) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
+    console.log(data.birthday);
+    const birth = moment(data.birthday, 'DD/MM/YYYY').format('YYYY-MM-DD');
+    console.log(birth)
+    let params = [from, data.name, data.full_name, birth, data.age, data.email, data.gender, data.instagram, data.address, data.complement, data.language ];
   
     try {
       let [rows, fields] = await this.execute(query, params);
@@ -65,14 +78,28 @@ export class Database {
     }
   }
   async getBirthday(): Promise<any> {
-      let query = `SELECT id,contact,full_name,email,birthday,age,language,gender FROM users;`
+      let query = `SELECT id, contact, full_name, email, birthday, age, language, gender FROM users WHERE DATE_FORMAT(birthday, '%m-%d') >= DATE_FORMAT(CURDATE(), '%m-%d') AND DATE_FORMAT(birthday, '%m-%d') <= DATE_FORMAT(DATE_ADD(CURDATE(), INTERVAL 20 DAY), '%m-%d') ORDER BY DATE_FORMAT(birthday, '%m-%d') ASC;`
       try {
         let [ rows ] = await this.execute(query);
+        console.log(rows)
         return rows
       } catch (error){
         console.log(error);
       }
   }
+
+  async getUsersByBirthdayMonth(month: number): Promise<any[]> {
+    const query = `SELECT full_name,birthday,age FROM users WHERE MONTH(birthday) = ? ORDER BY DATE_FORMAT(birthday, '%m-%d') >= DATE_FORMAT(CURDATE(), '%m-%d'), DATE_FORMAT(birthday, '%m-%d') ASC;`;
+    const values = [month];
+    
+    try {
+      const [rows] = await this.execute(query, values);
+      return rows;
+    } catch (error) {
+      return [];
+    }
+  }
+
   
   async getDevotional(date: string): Promise<any> {
     const query = `SELECT * FROM devotionals WHERE date = ?`;

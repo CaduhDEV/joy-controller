@@ -3,7 +3,7 @@ import interface_on from '../configs/interfaces.json';
 import errors_on from '../configs/errors.json';
 import { User } from './User';
 import { Database } from './Db';
-import { calculateAge, calculateDistance, capitalizeFirstLetter, collectAddressByCode, formatAddress, formatTimestamp, isValidDate, sendEmail } from './Snippets';
+import { calculateAge, calculateDistance, capitalizeFirstLetter, collectAddressByCode, formatAddress, formatTimestamp, getRoleName, isValidDate, sendEmail } from './Snippets';
 import moment from 'moment-timezone';
 import 'moment/locale/pt-br';
 moment.tz.setDefault('America/Sao_Paulo');
@@ -28,7 +28,7 @@ interface register_temp {
   name?: string;
   full_name?: string;
   contact?: string;
-  birthday?: string;
+  birthday?: string | false;
   age?: string;
   instagram?: string;
   email?: string;
@@ -191,24 +191,13 @@ export async function interact_interface(client: Whatsapp, message: CustomMessag
             await access_interface(client, message, 'select_language', 'ptbr'); // perguntar linguagem 
             return current_stage[message.from] = 'interact';
         }
-        user_logged[message.from] = new User({
-            id: data.id,
-            contact: data.contact,
-            name: data.name,
-            full_name: data.full_name,
-            age: data.age,
-            birthday: data.birthday,
-            instagram: data.instagram,
-            email: data.email,
-            address: data.address,
-            complement: data.complement,
-            role: data.role,
-            language: data.language,
-            createdin: data.createdin,
-        });
-        // enviar para o menu
-        await access_interface(client, message, 'main_menu', user_logged[message.from].language as keyof typeof interface_on, [data.name, tasks[1], tasks[2], tasks[3], tasks[4]]);
-        return current_stage[message.from] = 'interact';
+
+        getUser(message.from);
+        current_stage[message.from] = 'interact';
+        return await access_interface(client, message, 'main_menu', user_logged[message.from].language as keyof typeof interface_on, [data.name, tasks[1], tasks[2], tasks[3], tasks[4]]);
+      } else {
+        current_stage[message.from] = 'interact';
+        return await access_interface(client, message, 'main_menu', user_logged[message.from].language as keyof typeof interface_on, [user_logged[message.from].name, tasks[1], tasks[2], tasks[3], tasks[4]]);
       }
     break;
     case 'register':
@@ -467,7 +456,7 @@ const actionFunctions: Record<string, ActionFunction> = {
     let user = user_logged[message.from]
     await access_interface(client, message, interact.action, user_logged[message.from].language as keyof typeof interface_on, [
       user.full_name,
-      user.birthday,
+      moment(user.birthday || '00/00/0000', 'YYYY-MM-DD').format('DD/MM/YYYY'),
       user.age.toString(),
       user.address, 
       user.instagram,
@@ -542,21 +531,6 @@ export async function error(client: Whatsapp, message: Message,language: keyof t
   await client.sendText(message.from, errors_lang[language][error_name]);
 }
 
-function getRoleName(role: number): string {
-  switch (role) {
-    case 0:
-      return 'Membro';
-    case 1:
-      return 'Líder';
-    case 2:
-      return 'Administrador';
-    case 3:
-      return 'Supervisora Geral';
-    default:
-      return 'Novato';
-  }
-}
-
 export async function getUser(from: string) {
   if (!(from in user_logged)) {
     let db = new Database();
@@ -568,7 +542,7 @@ export async function getUser(from: string) {
         name: data.name,
         full_name: data.full_name,
         age: data.age,
-        birthday: data.birthday,
+        birthday: isValidDate(data.birthday),
         instagram: data.instagram,
         email: data.email,
         address: data.address,

@@ -4,7 +4,7 @@ interface UserData {
   full_name: string;
   contact: string;
   age: number;
-  birthday: string;
+  birthday: string | false;
   instagram: string;
   email: string;
   address: string;
@@ -20,7 +20,7 @@ export class User {
   full_name: string;
   contact: string;
   age: number;
-  birthday: string;
+  birthday: string | false;
   instagram: string;
   email: string;
   address: string;

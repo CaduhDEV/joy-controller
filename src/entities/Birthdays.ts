@@ -19,7 +19,7 @@ export async function generateBirthdayReport(client: Whatsapp) {
         const full_n = row.full_name;
         const split_name = full_n.split(' ');
         const name = `${split_name[0]} ${split_name[1]}`;
-        const birthday = moment(row.birthday, 'DD/MM/YYYY', true).startOf('day');
+        const birthday = moment(row.birthday, 'YYYY-MM-DD', true).startOf('day');
 
         const thisYearBirthday = moment(birthday).year(today.year());
         if (thisYearBirthday.isBefore(today)) {
@@ -57,7 +57,7 @@ export async function generateBirthdayReport(client: Whatsapp) {
 }
 
 export async function dataBirthdays(client: Whatsapp) {
-    const timeRemaining = calculateTimeRemaining(0, 22);
+    const timeRemaining = calculateTimeRemaining(12, 48);
     setTimeout(async function() {
         generateBirthdayReport(client);
         dataBirthdays(client);

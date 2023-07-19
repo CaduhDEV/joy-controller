@@ -31,6 +31,29 @@ export function isValidDate(dateString: string) {
     return false;
 }
 
+enum Role {
+  Membro = 0,
+  Líder = 1,
+  Administrador = 2,
+  Supervisor = 3,
+  Novato = 4,
+}
+
+export function getRoleName(role: Role): string {
+  switch (role) {
+    case Role.Membro:
+      return 'Membro';
+    case Role.Líder:
+      return 'Líder';
+    case Role.Administrador:
+      return 'Administrador(a)';
+    case Role.Supervisor:
+      return 'Supervisor(a) Geral';
+    default:
+      return 'Novato(a)';
+  }
+}
+
 export async function collectAddressByCode(input: string) {
   let cep = input.replace(/[^\d]/g, "")
   if (cep.length !== 8) { return false; }
