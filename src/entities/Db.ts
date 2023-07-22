@@ -117,13 +117,35 @@ export class Database {
     return row[0].date
   }
 
-  async CheckIn(contact: string, date: string): Promise<void> {
-    let query = `INSERT INTO checkin (user_id, date) VALUES (?, ?);`
-    let params = [ contact, date ]
+  async CheckIn(contact: string): Promise<void> {
+    let query = `INSERT INTO checkin (user_id) VALUES (?);`
+    let params = [ contact ]
     try {
-      let [ rows, fields ] = await this.execute(query, params);
+      await this.execute(query, params);
+
     } catch (error) {
       console.error('Error register Checkin:', error);
+    }
+  }
+
+  async getCheckinsByDate(date: string): Promise<any[]>  {
+    const query = `SELECT * FROM checkin WHERE DATE(date) = ?;`;
+    const params = [ date ]
+    try {
+      const [ row ] = await this.execute(query, params);
+      return row;
+
+    } catch(error) {
+      return []
+    }
+  }
+  async getCheckinWarning(): Promise<any[]> {
+    const query = `SELECT * FROM checkin WHERE DATE < DATE_SUB(CURDATE(), INTERVAL 10 DAY) ORDER BY DATEDIFF(CURDATE(), DATE) DESC;`;
+    try {
+      const [ row ] = await this.execute(query);
+      return row
+    } catch (error) {
+      return []
     }
   }
 

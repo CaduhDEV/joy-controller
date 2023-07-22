@@ -192,7 +192,8 @@ export async function interact_interface(client: Whatsapp, message: CustomMessag
             return current_stage[message.from] = 'interact';
         }
 
-        getUser(message.from);
+        const user = await getUser(message.from);
+        if (!user) { return; }
         current_stage[message.from] = 'interact';
         return await access_interface(client, message, 'main_menu', user_logged[message.from].language as keyof typeof interface_on, [data.name, tasks[1], tasks[2], tasks[3], tasks[4]]);
       } else {
@@ -322,20 +323,19 @@ export async function interact_interface(client: Whatsapp, message: CustomMessag
       temp_data[message.from].contact = message.body
     break;
     case 'collect_checkin':
-      const coords = checkinHandler(message);
-      if (message.type !== 'location' || coords === false || coords[2] === false) { return error(client, message, user_logged[message.from].language as keyof typeof interface_on, 'invalid_location');}
+      //const coords = checkinHandler(message);
+      //if (message.type !== 'location' || coords === false || coords[2] === false) { return error(client, message, user_logged[message.from].language as keyof typeof interface_on, 'invalid_location');}
 
-      const distance = await calculateDistance(-23.276407679481114, -51.166471360350506, message.lat || 0, message.lng || 0);
-      if (distance > 0.1) { return error(client, message, user_logged[message.from].language as keyof typeof interface_on, 'invalid_coords') }
+     // const distance = await calculateDistance(-23.276407679481114, -51.166471360350506, message.lat || 0, message.lng || 0);
+      //if (distance > 0.1) { return error(client, message, user_logged[message.from].language as keyof typeof interface_on, 'invalid_coords') }
       
       const db = new Database();
-      const currentDate = moment().format('YYYY-MM-DDTHH:mm:ss');
-      await db.CheckIn(message.from, currentDate);
+      await db.CheckIn(message.from);
       
       current_stage[message.from] = 'interact';
       client.sendReactionToMessage(message.id, '❤️‍🔥');
       await client.sendText(message.from, 'Check-in realizado!! ❤️‍🔥❤️‍🔥❤️‍🔥').then( async() => {
-        client.sendText('120363069819222921@g.us', `🎟️ *MIX Check-in*\n\n*${user_logged[message.from].name}* acaba de realizar check-in no Culto MIX!\n\n*Data e Hora:*\n${currentDate}`)
+        client.sendText('120363069819222921@g.us', `🎟️ *MIX Check-in*\n\n*${user_logged[message.from].name}* acaba de realizar check-in no Culto MIX!\n`)
         access_interface(client, message, 'main_menu', user_logged[message.from].language as keyof typeof interface_on, 
         [ user_logged[message.from].name, tasks[1], tasks[2], tasks[3], tasks[4]  ]);
       });
@@ -456,7 +456,7 @@ const actionFunctions: Record<string, ActionFunction> = {
     let user = user_logged[message.from]
     await access_interface(client, message, interact.action, user_logged[message.from].language as keyof typeof interface_on, [
       user.full_name,
-      moment(user.birthday || '00/00/0000', 'YYYY-MM-DD').format('DD/MM/YYYY'),
+      user.birthday || 'N/A',
       user.age.toString(),
       user.address, 
       user.instagram,
@@ -500,11 +500,11 @@ const actionFunctions: Record<string, ActionFunction> = {
   register_checkin: async (client, message, interact) => {
     const now = moment();
     const start = moment().set({ hour: 19, minute: 0, second: 0 });
-    const end = moment().set({ hour: 19, minute: 30, second: 0 });
+    const end = moment().set({ hour: 20, minute: 0, second: 0 });
 
-    if (now.day() !== 6 || now.isBetween(start, end) === false) {
-      return error(client, message, user_logged[message.from].language as keyof typeof interface_on, 'invalid_day');
-    }
+    // if (now.day() !== 6 || now.isBetween(start, end) === false) {
+    //   return error(client, message, user_logged[message.from].language as keyof typeof interface_on, 'invalid_day');
+    // }
 
     await access_interface(client, message, interact.action, user_logged[message.from].language as keyof typeof interface_on);
     current_stage[message.from] = 'collect_checkin';

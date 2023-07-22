@@ -44,35 +44,89 @@ const commands: Record<string, CommandFunction> = {
     await client.reply(message.from, full_msg, message.id);
   },
   birthdays: async(args, client, message) => { 
-      const month = Number(args[0]);
-      if (args.length === 0 || isNaN(month) || month < 1 || month > 12) {
-       return error(client, message, 'ptbr', 'invalid_month');
-      }
-      const db = new Database();
-      const users = await db.getUsersByBirthdayMonth(month);
-    
-      if (users.length === 0) {
-        return error(client, message, 'ptbr', 'invalid_search_birthday');
-      }
-    
-      let result = `🎉 *Aniversariantes de ${moment(month, 'M').format('MMMM')}*\n\nAqui está um relatório completo para todos os aniversariantes do mês.\n\n`;
-      const today = moment();
-
-      users.forEach((user) => {
-        const birthday = moment(user.birthday, 'YYYY-MM-DD', true).startOf('day');
-
-        const thisYearBirthday = moment(birthday).year(today.year());
-        if (thisYearBirthday.isBefore(today)) {
-            thisYearBirthday.add(1, 'year');
-        }
-        const nextBirthday = moment(thisYearBirthday).startOf('day');
-        const dayMonth = birthday.format("DD [de] MMMM");
-        const diaDaSemana = nextBirthday.format('dddd'); // Nome do dia da semana em português: sexta-feira
-        result += `🎂 *${user.full_name}*\n📅 ${dayMonth} fará *${user.age+1}* anos. (${diaDaSemana})\n\n`;
-      });
-    
-      client.sendText(message.from, result);
+    const month = Number(args[0]);
+    if (args.length === 0 || isNaN(month) || month < 1 || month > 12) {
+      return error(client, message, 'ptbr', 'invalid_month');
     }
+    const db = new Database();
+    const users = await db.getUsersByBirthdayMonth(month);
+  
+    if (users.length === 0) {
+      return error(client, message, 'ptbr', 'invalid_search_birthday');
+    }
+  
+    let result = `🎉 *Aniversariantes de ${moment(month, 'M').format('MMMM')}*\n\nAqui está um relatório completo para todos os aniversariantes do mês.\n\n`;
+    const today = moment();
+
+    users.forEach((user) => {
+      const birthday = moment(user.birthday, 'YYYY-MM-DD', true).startOf('day');
+
+      const thisYearBirthday = moment(birthday).year(today.year());
+      if (thisYearBirthday.isBefore(today)) {
+          thisYearBirthday.add(1, 'year');
+      }
+      const nextBirthday = moment(thisYearBirthday).startOf('day');
+      const dayMonth = birthday.format("DD [de] MMMM");
+      const diaDaSemana = nextBirthday.format('dddd'); // Nome do dia da semana em português: sexta-feira
+      result += `🎂 *${user.full_name}*\n📅 ${dayMonth} fará *${user.age+1}* anos. (${diaDaSemana})\n\n`;
+    });
+  
+    client.sendText(message.from, result);
+  },
+  checkin: async(args, client, message) => {
+    if (args.length === 0 ) { return error(client, message, 'ptbr', 'invalid_sintax'); }
+    const date = isValidDate(args[0]);
+    if (!date) { return error(client, message, 'ptbr', 'invalid_date'); } // criar esse erro.
+    const db = new Database();
+    const check_date = moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD')
+    const checks = await db.getCheckinsByDate(check_date);
+    if (checks.length === 0) { return error(client, message, 'ptbr', 'checkin_notfound') } // criar esse erro.
+    
+    const members = await db.getMembers();
+    
+    let full_msg = `📈 *Relatório do Culto*\n\n🕵️‍♂️ Aqui está o relatório completo solicitado, tomei a liberdade e fiz algumas investigações para auxiliar na melhoria do pastoreio da igreja.\n\n📊 *Estatísticas Gerais:*\n\n🗓️ *Data:* ${date}\n👥 *Membros Cadastrados:* ${members}\n🎟️ *Registros encontrados:* ${checks.length}\n☁️ *Faltas Detectadas:* ${members-checks.length}\n\n🕵️‍♂️ *Preocupações:*\n\n`
+    let warnings = '';
+    let contactMan: { name: string; contact: string }[] = [];
+    let contactWoman: { name: string; contact: string }[] = [];
+
+    const warning_checks = await db.getCheckinWarning();
+
+    for (const check of warning_checks) {
+      const user = await db.getUserData(check.user_id);
+
+      const currentDate = moment();
+      const checkinDate = moment(check.date, 'YYYY-MM-DD');
+      const daysDifference = currentDate.diff(checkinDate, 'days');
+      if (user.gender === 'man') { contactMan.push({ name: user.name, contact: user.contact} );} 
+      else if (user.gender === 'woman') { contactWoman.push({ name: user.name, contact: user.contact}); }
+
+      if (daysDifference > 10) {
+        warnings += `*${user.full_name}* não faz checkin há *${daysDifference}* dias, favor procurá-lo(a).\n`;
+      }
+    }
+
+    if (warnings.length === 0 ) {
+      warnings = `❌ Não detectei nenhuma preocupação.\n`;
+    }
+    
+    full_msg += `${warnings}\n🫡❤️‍🔥 Para ajudar vocês vou montar abaixo 2 listas de Contatos dos sumidos para vocês irem atrás, vou separar por homem e mulher.`;
+
+    client.sendText(message.from, full_msg).then(async() => {
+      const man = await client.sendContactVcardList(message.from, contactMan.map((contact) => ({ id: contact.contact, name: contact.name })));
+      const woman = await client.sendContactVcardList(message.from, contactWoman.map((contact) => ({ id: contact.contact, name: contact.name })));
+      client.sendReactionToMessage(man.id, '👨');
+      client.sendReactionToMessage(woman.id, '👩').then(async()=> {
+        let presence = ``
+        for (const p of checks) {
+          const user = await db.getUserData(p.user_id);
+          const time = moment(p.date).format('HH:mm');
+          presence += `🪪 ${user.full_name}\n⌚️ ${time}\n\n`;
+        }
+    
+        client.sendText(message.from, `✅ *Lista de presenças*\n\n🕵️‍♂️ Aqui está a lista das pessoas que marcaram presença no culto da data informada, fiz a lista por ordem de chegada.\n\n${presence}`);
+      });
+    });
+  }
 };
 
 export async function interact_console(client: Whatsapp, message: Message) {
@@ -82,5 +136,5 @@ export async function interact_console(client: Whatsapp, message: Message) {
   const [command, ...args] = message.body.substring(1).split(" ");
   if (commands[command] === undefined || !commands[command]) { return error(client, message, user_logged[message.author].language as keyof typeof interface_on, 'invalid_command'); }
   await commands[command](args, client, message);
-} 
+}         
 

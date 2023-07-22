@@ -16,6 +16,8 @@
         "invalid_sintax": "⛔ *Algo deu Errado*\n\nA sintax do comando é inválida, por favor utilize !help e verifique a forma correta de executar esse comando.",
         "user_notfound": "⛔ *Algo deu Errado*\n\nNão foi possível encontrar ninguém com esse nome no nosso banco de dados, tente novamente.",
         "invalid_month": "⛔ *Algo deu Errado*\n\nMês inválido. Por favor, forneça um número de 1 a 12.",
-        "invalid_search_birthday": "⛔ *Algo deu Errado*\n\nNão encontrei nenhum aniversáriante para esse mês."
+        "invalid_search_birthday": "⛔ *Algo deu Errado*\n\nNão encontrei nenhum aniversáriante para esse mês.",
+        "invalid_date": "⛔ *Algo deu Errado*\n\nPor favor, forneça uma data válida.",
+        "checkin_notfound": "⛔ *Algo deu Errado*\n\nNão encontrei nenhum registro para a data informada."
     }
 }
