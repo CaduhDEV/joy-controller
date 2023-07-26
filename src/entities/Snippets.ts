@@ -2,7 +2,6 @@ import axios from "axios";
 import moment from "moment";
 import nodemailer from 'nodemailer';
 import current_email from '../configs/emails.json'
-import { Database } from "./Db";
 
 export function capitalizeFirstLetter(str: string) {
     let words = str.split(' ');

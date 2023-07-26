@@ -139,6 +139,18 @@ export class Database {
       return []
     }
   }
+
+  async getUsersNotPresence(date: string) {
+    const query = `SELECT u.full_name FROM users AS u WHERE NOT EXISTS ( SELECT 1 FROM checkin AS c WHERE u.contact = c.user_id AND DATE(c.date) = ?);`;
+    const params = [ date ];
+    try {
+      const [ row ] = await this.execute(query, params);
+      return row;
+    } catch (error){
+      return []
+    }
+  }
+
   async getCheckinWarning(): Promise<any[]> {
     const query = `SELECT * FROM checkin WHERE DATE < DATE_SUB(CURDATE(), INTERVAL 10 DAY) ORDER BY DATEDIFF(CURDATE(), DATE) DESC;`;
     try {

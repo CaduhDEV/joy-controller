@@ -1,9 +1,9 @@
-import { Whatsapp, Message, create, AckType } from '@wppconnect-team/wppconnect';
+import { Whatsapp, Message } from '@wppconnect-team/wppconnect';
 import interface_on from '../configs/interfaces.json';
 import errors_on from '../configs/errors.json';
 import { User } from './User';
 import { Database } from './Db';
-import { calculateAge, calculateDistance, capitalizeFirstLetter, collectAddressByCode, formatAddress, formatTimestamp, getRoleName, isValidDate, sendEmail } from './Snippets';
+import { calculateAge, capitalizeFirstLetter, collectAddressByCode, formatAddress, formatTimestamp, getRoleName, isValidDate, sendEmail } from './Snippets';
 import moment from 'moment-timezone';
 import 'moment/locale/pt-br';
 moment.tz.setDefault('America/Sao_Paulo');
@@ -289,6 +289,9 @@ export async function interact_interface(client: Whatsapp, message: CustomMessag
             access_interface(client, message, 'finish_register', temp_data[message.from].language as keyof typeof interface_on);
             const gender: keyof EmailConfig<string> = temp_data[message.from].gender as keyof EmailConfig<string> || 'man';
             sendEmail(temp_data[message.from].email || '', temp_data[message.from].name || '', temp_data[message.from].language as keyof typeof interface_on, 'welcome', gender, 'Bem-vindo(a) ao Culto MIX!');
+            await client.sendText('120363069819222921@g.us', `✅ *Novato na área!*\n\n*${temp_data[message.from].name}* acabou de se cadastrar, deem aquela recepção MIX style!`).then( () => {
+              client.sendContactVcard('120363069819222921@g.us', message.from, temp_data[message.from].name);
+            });
             delete current_stage[message.from];
             delete current_interface[message.from];
             delete temp_data[message.from];

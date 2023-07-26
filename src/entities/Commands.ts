@@ -1,5 +1,3 @@
-// escrever sistema de console aqui hoje.
-
 import { Message, Whatsapp } from "@wppconnect-team/wppconnect";
 import { error, getUser, user_logged } from "./Interfaces";
 import interface_on from '../configs/interfaces.json';
@@ -11,7 +9,7 @@ type CommandFunction = (args: string[], client: Whatsapp, message: Message) => P
 
 const commands: Record<string, CommandFunction> = {
   help: async (args, client, message) => {
-    client.sendText(message.from, `🤖 *Bem-vindo(a) ao Console*\n\nℹ️ Aqui, você tem acesso a comandos especiais que vão lhe auxiliar a aproveitar ao máximo todas as funcionalidades disponíveis.\n\n🌐 *Comandos Disponíveis:*\n\n*!help:* Exibe informações de ajuda sobre o uso do Console.\n*!stats:* Mostra a dashboard geral, com estatísticas gerais.\n*!search (nome):* Procura membros baseados em uma palavra chave ou letra(!search joão).\n*!profile (id):* Exibe o perfil completo de um usuário específico.\n*!birthdays (mês 1 a 12):*  Obtém 1 relatório de todos os aniversariantes do mês solicitado.\n*!checkin (dia/mes/ano):* Obtém um relatório de presenças feitos numa data específica.\n`);
+    client.sendText(message.from, `🤖 *Bem-vindo(a) ao Console*\n\nℹ️ Aqui, você tem acesso a comandos especiais que vão lhe auxiliar a aproveitar ao máximo todas as funcionalidades disponíveis.\n\n🌐 *Comandos Disponíveis:*\n\n*!help:* Exibe informações de ajuda sobre o uso do Console.\n*!stats:* Mostra a dashboard geral, com estatísticas gerais.\n*!search (nome):* Procura membros baseados em uma palavra chave ou letra(!search joão).\n*!profile (id):* Exibe o perfil completo de um usuário específico.\n*!birthdays (mês 1 a 12):*  Obtém 1 relatório de todos os aniversariantes do mês solicitado.\n*!warning:* Obtém um relatório de pessoas inativas da plataforma.\n*!checkin (dia/mes/ano):* Obtém um relatório avançado do checkin para uma data específica.\n`);
   },
   stats: async(args, client, message) => {
     const ping = calculatePing(moment());
@@ -73,23 +71,18 @@ const commands: Record<string, CommandFunction> = {
   
     client.sendText(message.from, result);
   },
-  checkin: async(args, client, message) => {
-    if (args.length === 0 ) { return error(client, message, 'ptbr', 'invalid_sintax'); }
-    const date = isValidDate(args[0]);
-    if (!date) { return error(client, message, 'ptbr', 'invalid_date'); } // criar esse erro.
-    const db = new Database();
-    const check_date = moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD')
-    const checks = await db.getCheckinsByDate(check_date);
-    if (checks.length === 0) { return error(client, message, 'ptbr', 'checkin_notfound') } // criar esse erro.
-    
+  warning: async(args, client, message) => {
+    const check_date = isValidDate(moment().format('YYYY-MM-DD'));
+    if (!check_date) { return error(client, message, 'ptbr', 'invalid_date'); } // criar esse erro.
+    const db = new Database(); 
     const members = await db.getMembers();
-    
-    let full_msg = `📈 *Relatório do Culto*\n\n🕵️‍♂️ Aqui está o relatório completo solicitado, tomei a liberdade e fiz algumas investigações para auxiliar na melhoria do pastoreio da igreja.\n\n📊 *Estatísticas Gerais:*\n\n🗓️ *Data:* ${date}\n👥 *Membros Cadastrados:* ${members}\n🎟️ *Registros encontrados:* ${checks.length}\n☁️ *Faltas Detectadas:* ${members-checks.length}\n\n🕵️‍♂️ *Preocupações:*\n\n`
+
+    const warning_checks = await db.getCheckinWarning();
+
+    let full_msg = `😴 *Relatório de Inatividade*\n\n🕵️‍♂️ Aqui está o relatório completo solicitado, tomei a liberdade e fiz algumas investigações para auxiliar na melhoria do pastoreio da igreja.\n\n🗓️ *Data:* ${check_date}\n👥 *Membros Cadastrados:* ${members}\n😴 *Membros Inativos:* ${warning_checks.length}\n\n🕵️‍♂️ *Preocupações:*\n\n`
     let warnings = '';
     let contactMan: { name: string; contact: string }[] = [];
     let contactWoman: { name: string; contact: string }[] = [];
-
-    const warning_checks = await db.getCheckinWarning();
 
     for (const check of warning_checks) {
       const user = await db.getUserData(check.user_id);
@@ -106,25 +99,47 @@ const commands: Record<string, CommandFunction> = {
     }
 
     if (warnings.length === 0 ) {
-      warnings = `❌ Não detectei nenhuma preocupação.\n`;
+      full_msg += `❌ Não detectei nenhuma preocupação.\n`;
     }
-    
-    full_msg += `${warnings}\n🫡❤️‍🔥 Para ajudar vocês vou montar abaixo 2 listas de Contatos dos sumidos para vocês irem atrás, vou separar por homem e mulher.`;
-
-    client.sendText(message.from, full_msg).then(async() => {
+    else {
+      full_msg += `${warnings}\n🫡❤️‍🔥 Para ajudar vocês vou montar abaixo 2 listas de Contatos dos sumidos para vocês irem atrás, vou separar por homem e mulher.`;
       const man = await client.sendContactVcardList(message.from, contactMan.map((contact) => ({ id: contact.contact, name: contact.name })));
       const woman = await client.sendContactVcardList(message.from, contactWoman.map((contact) => ({ id: contact.contact, name: contact.name })));
       client.sendReactionToMessage(man.id, '👨');
-      client.sendReactionToMessage(woman.id, '👩').then(async()=> {
-        let presence = ``
-        for (const p of checks) {
-          const user = await db.getUserData(p.user_id);
-          const time = moment(p.date).format('HH:mm');
-          presence += `🪪 ${user.full_name}\n⌚️ ${time}\n\n`;
-        }
+      client.sendReactionToMessage(woman.id, '👩');
+    }
+
+    client.sendText(message.from, full_msg);
+  },
+  checkin: async(args, client, message) => {
+    if (args.length === 0 ) { return error(client, message, 'ptbr', 'invalid_sintax'); }
+    const date = isValidDate(args[0]);
+    if (!date) { return error(client, message, 'ptbr', 'invalid_date'); } // criar esse erro.
+    const db = new Database();
+    const check_date = moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD')
+    const checks = await db.getCheckinsByDate(check_date);
+    if (checks.length === 0) { return error(client, message, 'ptbr', 'checkin_notfound') } // criar esse erro.
     
-        client.sendText(message.from, `✅ *Lista de presenças*\n\n🕵️‍♂️ Aqui está a lista das pessoas que marcaram presença no culto da data informada, fiz a lista por ordem de chegada.\n\n${presence}`);
-      });
+    const members = await db.getMembers();
+    
+    let full_msg = `📈 *Relatório do Culto*\n\n🕵️‍♂️ Aqui está o relatório completo solicitado, tomei a liberdade e fiz algumas investigações para auxiliar na melhoria do pastoreio da igreja.\n\n📊 *Estatísticas Gerais:*\n\n🗓️ *Data:* ${date}\n👥 *Membros Cadastrados:* ${members}\n🎟️ *Registros encontrados:* ${checks.length}\n☁️ *Faltas Detectadas:* ${members-checks.length}\n`
+    client.sendText(message.from, full_msg).then(async() => {
+      let presence = ``
+    for (const p of checks) {
+      const user = await db.getUserData(p.user_id);
+      const time = moment(p.date).format('HH:mm');
+      presence += `🪪 ${user.full_name}\n⌚️ ${time}\n\n`;
+    }
+    client.sendText(message.from, `✅ *Lista de presenças*\n\n🕵️‍♂️ Aqui está a lista das pessoas que marcaram presença no culto da data informada, fiz a lista por ordem de chegada.\n\n${presence}`);
+    const fails = await db.getUsersNotPresence(check_date);
+    if (fails.lenght === 0 ) { return; }
+    
+    let fail = ``
+    for (const f of fails){
+      fail += `🪪 ${f.full_name}\n`
+    }
+
+    client.sendText(message.from, `❌ *Lista de faltas*\n\n🕵️‍♂️ Aqui está a lista das pessoas que faltaram no culto da data informada.\n\n${fail}`);
     });
   }
 };
