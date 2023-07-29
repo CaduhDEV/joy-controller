@@ -18,6 +18,9 @@
         "invalid_month": "⛔ *Algo deu Errado*\n\nMês inválido. Por favor, forneça um número de 1 a 12.",
         "invalid_search_birthday": "⛔ *Algo deu Errado*\n\nNão encontrei nenhum aniversáriante para esse mês.",
         "invalid_date": "⛔ *Algo deu Errado*\n\nPor favor, forneça uma data válida.",
-        "checkin_notfound": "⛔ *Algo deu Errado*\n\nNão encontrei nenhum registro para a data informada."
+        "checkin_notfound": "⛔ *Algo deu Errado*\n\nNão encontrei nenhum registro para a data informada.",
+        "invalid_devotional": "⛔ *Algo deu Errado*\n\nVocê precisa anexar a mensagem do devocional junto com o comando para eu programar o envio.",
+        "has_devotional": "⛔ *Algo deu Errado*\n\nJá existe um devocional criado e programado para a data informada, por favor tente outra.",
+        "is_before": "⛔ *Algo deu Errado*\n\nA data informada já passou, insira uma data no presente ou futuro."
     }
 }

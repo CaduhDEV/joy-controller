@@ -3,6 +3,7 @@ import { interact_interface, reset_chats } from './entities/Interfaces'
 import { sendDailyDevotional } from './entities/Devotionals';
 import { dataBirthdays } from './entities/Birthdays';
 import { interact_console } from './entities/Commands';
+import { loadTasksOnStartup } from './entities/Board';
 
 create({
     session: 'joy-session',
@@ -31,7 +32,8 @@ create({
 
 function main(client: Whatsapp) {
     sendDailyDevotional(client, reset_chats);  
-    dataBirthdays(client);                                                                                        
+    dataBirthdays(client);  
+    loadTasksOnStartup();                                                                                      
     // quando mudar o status do client, faça isso ->
     client.onStateChange((state: SocketState) => {
         if (state === 'CONFLICT') { client.useHere() };

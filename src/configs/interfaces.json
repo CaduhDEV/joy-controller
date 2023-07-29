@@ -10,7 +10,7 @@
     },
     "main_menu": {
       "msg": [
-          { "type": "text", "text": "🖥️ *Menu Principal*\n\nOlá *%%*, bom ver você, aqui estão todas as minhas funções que você possui acesso, fique a vontade para explorar.\n\n👩🏼‍🏫 *Quadro Semanal:*\n\n*Propósito*: %%\n*Jejum:* %%.\n*Livro:* %%.\n*Oração:* %%\n\n*Interações Disponíveis:*" }
+          { "type": "text", "text": "🖥️ *Menu Principal*\n\nOlá *%%*, bom ver você, aqui estão todas as minhas funções que você possui acesso, fique a vontade para explorar.\n\n👩🏼‍🏫 *Quadro Semanal:*\n\n*Propósito*: %%\n*Jejum:* %%\n*Livro:* %%\n*Oração:* %%\n\n*Interações Disponíveis:*" }
       ],
       "interacts": [
         { "emoji": "🙏🏻", "title": "Pedidos de Oração", "action": "pray_request" },

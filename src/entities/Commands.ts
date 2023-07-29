@@ -4,12 +4,13 @@ import interface_on from '../configs/interfaces.json';
 import moment from "moment";
 import { calculateEngagement, calculatePing, formatTimestamp, getRoleName, isValidDate } from "./Snippets";
 import { Database } from "./Db";
+import { loadTasksOnStartup } from "./Board";
 
 type CommandFunction = (args: string[], client: Whatsapp, message: Message) => Promise<string | void>;
 
 const commands: Record<string, CommandFunction> = {
   help: async (args, client, message) => {
-    client.sendText(message.from, `🤖 *Bem-vindo(a) ao Console*\n\nℹ️ Aqui, você tem acesso a comandos especiais que vão lhe auxiliar a aproveitar ao máximo todas as funcionalidades disponíveis.\n\n🌐 *Comandos Disponíveis:*\n\n*!help:* Exibe informações de ajuda sobre o uso do Console.\n*!stats:* Mostra a dashboard geral, com estatísticas gerais.\n*!search (nome):* Procura membros baseados em uma palavra chave ou letra(!search joão).\n*!profile (id):* Exibe o perfil completo de um usuário específico.\n*!birthdays (mês 1 a 12):*  Obtém 1 relatório de todos os aniversariantes do mês solicitado.\n*!warning:* Obtém um relatório de pessoas inativas da plataforma.\n*!checkin (dia/mes/ano):* Obtém um relatório avançado do checkin para uma data específica.\n`);
+    client.sendText(message.from, `🤖 *Bem-vindo(a) ao Console*\n\nℹ️ Aqui, você tem acesso a comandos especiais que vão lhe auxiliar a aproveitar ao máximo todas as funcionalidades disponíveis.\n\n🌐 *Comandos Disponíveis:*\n\n*!help:* Exibe informações de ajuda sobre o uso do Console.\n*!stats:* Mostra a dashboard geral, com estatísticas gerais.\n*!search (nome):* Procura membros baseados em uma palavra chave ou letra(!search joão).\n*!profile (id):* Exibe o perfil completo de um usuário específico.\n*!birthdays (mês 1 a 12):*  Obtém 1 relatório de todos os aniversariantes do mês solicitado.\n*!warning:* Obtém um relatório de pessoas inativas da plataforma.\n*!checkin (dia/mes/ano):* Obtém um relatório avançado do checkin para uma data específica.\n*!devotional (data):* Programa o envio de 1 mensagemd de devocional nova para a data especifica, é necessário mencionar a mensagem que você quer salvar junto com o envio do prompt.\n*!board (Proposito) (Jejum) (Livro) (Oração) (Inicio) (Fim):* atualiza o quadro de tarefas dos membros do joy que exibe no menu principal.`);
   },
   stats: async(args, client, message) => {
     const ping = calculatePing(moment());
@@ -141,6 +142,41 @@ const commands: Record<string, CommandFunction> = {
 
     client.sendText(message.from, `❌ *Lista de faltas*\n\n🕵️‍♂️ Aqui está a lista das pessoas que faltaram no culto da data informada.\n\n${fail}`);
     });
+  },
+  devotional: async (args, client, message) => {
+    if (args.length === 0) { return error(client, message, 'ptbr', 'invalid_sintax'); }
+
+    const date = isValidDate(args[0]);
+    if (!date) { return error(client, message, 'ptbr', 'invalid_date'); }
+    
+    const d_date = moment(date, 'DD/MM/YYYY'); 
+    if (moment().isBefore(moment(date, 'DD/MM/YYYY')) !== true) { return error(client, message, 'ptbr', 'is_before'); }
+
+    const db = new Database();
+    console.log(d_date.format('YYYY-MM-DD'));
+    const hasDevotional = await db.getDevotional(d_date.format('YYYY-MM-DD'));
+    if (hasDevotional.length !== 0) { return error(client, message, 'ptbr', 'has_devotional'); }
+
+    const quotedMessage = message.quotedMsgId;
+    if (!quotedMessage) { return error(client, message, 'ptbr', 'invalid_devotional') }
+
+    const devotionalMessage = await client.getMessageById(quotedMessage);
+    if (!devotionalMessage) { return; }
+
+    const createDevotional = await db.insertDevotional(devotionalMessage.body, d_date.format('YYYY-MM-DD'));
+    if (!createDevotional) { return; }
+
+    await client.sendReactionToMessage(message.id, '✅');
+  },
+  board: async (args, client, message) => {
+    if (args.length === 0 || args.length < 6) { return error(client, message, 'ptbr', 'invalid_sintax'); }  
+    const db = new Database();
+
+    if ( !isValidDate(args[4]) || !isValidDate(args[5]) ) { return error(client, message, 'ptbr', 'invalid_date'); }
+
+    await db.insertTask(args[0], args[1], args[2], args[3], moment(args[4], 'DD/MM/YYYY').format('YYYY-MM-DD'), moment(args[5], 'DD/MM/YYYY').format('YYYY-MM-DD'));
+    await loadTasksOnStartup();
+    client.sendReactionToMessage(message.id, '✅');
   }
 };
 

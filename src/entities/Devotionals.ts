@@ -3,14 +3,6 @@ import { Database } from "./Db";
 import { Whatsapp } from "@wppconnect-team/wppconnect";
 import { calculateTimeRemaining } from "./Snippets";
 
-async function getDevotional(now: string) {
-    const connection = new Database();
-    const rows = await connection.getDevotional(now);
-    if (rows.length <= 0) { return false }
-
-    return { text: rows[0].text, date: moment(rows[0].date).format('YYYY-MM-DD') };
-}
-
 let first_devotional = false;
 
 export async function sendDailyDevotional(client: Whatsapp, cb: Function, date?: string) {
@@ -21,9 +13,10 @@ export async function sendDailyDevotional(client: Whatsapp, cb: Function, date?:
 
   try {
     if (date === undefined) { return console.log("Nenhuma data fornecida para buscar o devocional."); }
-    const devotional = await getDevotional(date);
-
-    if (devotional === false) {
+    const db = new Database();
+    console.log(date)
+    const devotional = await db.getDevotional(date);
+    if (devotional.length === 0) {
       console.log("Nenhum Devocional foi encontrado para hoje.");
       return false;
     }
@@ -32,7 +25,7 @@ export async function sendDailyDevotional(client: Whatsapp, cb: Function, date?:
     
     setTimeout(async function() {
       const connection = new Database();
-      const [ rows, fields ] = await connection.execute(`SELECT contact FROM users;`);
+      const [ rows ] = await connection.execute(`SELECT contact FROM users;`);
 
       if (rows.length <= 0) {
         throw new Error("Nenhum usuário encontrado.");
@@ -40,7 +33,7 @@ export async function sendDailyDevotional(client: Whatsapp, cb: Function, date?:
 
       for (let i = 0; i < rows.length; i++) {
         const contact = rows[i].contact;
-        client.sendText(contact, devotional.text);
+        await client.sendText(contact, devotional.text);
       }
 
       const new_date = moment(date).add(1, 'days').format('YYYY-MM-DD');

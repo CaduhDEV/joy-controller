@@ -6,6 +6,7 @@ import { Database } from './Db';
 import { calculateAge, capitalizeFirstLetter, collectAddressByCode, formatAddress, formatTimestamp, getRoleName, isValidDate, sendEmail } from './Snippets';
 import moment from 'moment-timezone';
 import 'moment/locale/pt-br';
+import { cur_task } from './Board';
 moment.tz.setDefault('America/Sao_Paulo');
 moment.locale('pt-br');
 
@@ -13,7 +14,6 @@ export let user_logged: Record<string, User> = {};
 let current_stage: { [key: string]: string } = {}; // estágio atual.
 let current_interface: { [key: string]: string } = {}; // Interface que deve imprimir.
 let temp_data: { [key: string]: register_temp } = {}; // variavel para criação de registro do usuário.
-let tasks = [ '', 'Nenhum.', '19:00 às 07:00', 'Provérbios', 'Nenhuma.' ]; // tasks semanais para execução do grupo mix.
 
 export async function reset_chats() {
   console.log('DEBUG: resetando memória cache.');
@@ -195,10 +195,10 @@ export async function interact_interface(client: Whatsapp, message: CustomMessag
         const user = await getUser(message.from);
         if (!user) { return; }
         current_stage[message.from] = 'interact';
-        return await access_interface(client, message, 'main_menu', user_logged[message.from].language as keyof typeof interface_on, [data.name, tasks[1], tasks[2], tasks[3], tasks[4]]);
+        return await access_interface(client, message, 'main_menu', user_logged[message.from].language as keyof typeof interface_on, [data.name, cur_task[0], cur_task[1], cur_task[2], cur_task[3]]);
       } else {
         current_stage[message.from] = 'interact';
-        return await access_interface(client, message, 'main_menu', user_logged[message.from].language as keyof typeof interface_on, [user_logged[message.from].name, tasks[1], tasks[2], tasks[3], tasks[4]]);
+        return await access_interface(client, message, 'main_menu', user_logged[message.from].language as keyof typeof interface_on, [user_logged[message.from].name, cur_task[0], cur_task[1], cur_task[2], cur_task[3]]);
       }
     break;
     case 'register':
@@ -340,7 +340,7 @@ export async function interact_interface(client: Whatsapp, message: CustomMessag
       await client.sendText(message.from, 'Check-in realizado!! ❤️‍🔥❤️‍🔥❤️‍🔥').then( async() => {
         client.sendText('120363069819222921@g.us', `🎟️ *MIX Check-in*\n\n*${user_logged[message.from].name}* acaba de realizar check-in no Culto MIX!\n`)
         access_interface(client, message, 'main_menu', user_logged[message.from].language as keyof typeof interface_on, 
-        [ user_logged[message.from].name, tasks[1], tasks[2], tasks[3], tasks[4]  ]);
+        [ user_logged[message.from].name, cur_task[0], cur_task[1], cur_task[2], cur_task[3]  ]);
       });
     break;
   }
@@ -382,7 +382,7 @@ const actionFunctions: Record<string, ActionFunction> = {
   },
   main_menu: async (client, message, interact) => {   
     await access_interface(client, message, 'main_menu', user_logged[message.from].language as keyof typeof interface_on, 
-    [ user_logged[message.from].name, tasks[1], tasks[2], tasks[3], tasks[4]]);
+    [ user_logged[message.from].name, cur_task[0], cur_task[1], cur_task[2], cur_task[3] ]);
   },
   mix_street: async (client, message, interact) => {   
     await access_interface(client, message, interact.action, user_logged[message.from].language as keyof typeof interface_on);
@@ -432,10 +432,10 @@ const actionFunctions: Record<string, ActionFunction> = {
       client.sendText('120363087133589835@g.us', `🙏 *Pedido de Oração*\n\nNovo pedido de oração de *${user_logged[message.from].name}*, ele(a) tem *${user_logged[message.from].age}* anos.\n\n*Descrição:*\n\n${temp_data[message.from].contact}\n`)
       client.sendReactionToMessage(message.id, '🙏');
       await access_interface(client, message, 'main_menu', user_logged[message.from].language as keyof typeof interface_on, 
-      [ user_logged[message.from].name, tasks[1], tasks[2], tasks[3], tasks[4] ]);
+      [ user_logged[message.from].name, cur_task[0], cur_task[1], cur_task[2], cur_task[3]]);
     } else if(interact.value === 'main_menu') {
       await access_interface(client, message, 'main_menu', user_logged[message.from].language as keyof typeof interface_on, 
-      [ user_logged[message.from].name, tasks[1], tasks[2], tasks[3], tasks[4] ]);
+      [ user_logged[message.from].name, cur_task[0], cur_task[1], cur_task[2], cur_task[3]]);
     }
     delete temp_data[message.from];
   },
@@ -448,10 +448,10 @@ const actionFunctions: Record<string, ActionFunction> = {
       client.sendText('120363115685082193@g.us', `🤖 *Feedback*\n\nNovo feedback recebido de *${user_logged[message.from].name}*, ele(a) tem *${user_logged[message.from].age}* anos.\n\n*Descrição:*\n\n${temp_data[message.from].contact}\n`)
       client.sendReactionToMessage(message.id, '🤖');
       await access_interface(client, message, 'main_menu', user_logged[message.from].language as keyof typeof interface_on, 
-      [ user_logged[message.from].name, tasks[1], tasks[2], tasks[3], tasks[4] ]);
+      [ user_logged[message.from].name, cur_task[0], cur_task[1], cur_task[2], cur_task[3]]);
     } else if(interact.value === 'main_menu') {
       await access_interface(client, message, 'main_menu', user_logged[message.from].language as keyof typeof interface_on, 
-      [ user_logged[message.from].name, tasks[1], tasks[2], tasks[3], tasks[4] ]);
+      [ user_logged[message.from].name, cur_task[0], cur_task[1], cur_task[2], cur_task[3] ]);
     }
     delete temp_data[message.from];
   },
@@ -494,7 +494,7 @@ const actionFunctions: Record<string, ActionFunction> = {
 
     await client.sendContactVcard('120363069819222921@g.us', message.from, user_logged[message.from].name).then( async() => {
       await access_interface(client, message, 'main_menu', user_logged[message.from].language as keyof typeof interface_on, 
-    [user_logged[message.from].name, tasks[1], tasks[2], tasks[3], tasks[4]]);
+    [user_logged[message.from].name, cur_task[0], cur_task[1], cur_task[2], cur_task[3]]);
     });
   },
   checkin: async (client, message, interact) => {

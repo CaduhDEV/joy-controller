@@ -64,11 +64,11 @@ export class Database {
   }
   async createUser(from: string, data: any): Promise<void> {
     
-    let query = `INSERT INTO users (contact, name, full_name, birthday, age, email, gender, instagram, address, complement, language) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
+    let query = `INSERT INTO users (contact, name, full_name, birthday, email, gender, instagram, address, complement, language) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
     console.log(data.birthday);
     const birth = moment(data.birthday, 'DD/MM/YYYY').format('YYYY-MM-DD');
     console.log(birth)
-    let params = [from, data.name, data.full_name, birth, data.age, data.email, data.gender, data.instagram, data.address, data.complement, data.language ];
+    let params = [from, data.name, data.full_name, birth, data.email, data.gender, data.instagram, data.address, data.complement, data.language ];
   
     try {
       let [rows, fields] = await this.execute(query, params);
@@ -77,6 +77,7 @@ export class Database {
       console.error('Error creating user:', error);
     }
   }
+  
   async getBirthday(): Promise<any> {
       let query = `SELECT id, contact, full_name, email, birthday, age, language, gender FROM users WHERE DATE_FORMAT(birthday, '%m-%d') >= DATE_FORMAT(CURDATE(), '%m-%d') AND DATE_FORMAT(birthday, '%m-%d') <= DATE_FORMAT(DATE_ADD(CURDATE(), INTERVAL 20 DAY), '%m-%d') ORDER BY DATE_FORMAT(birthday, '%m-%d') ASC;`
       try {
@@ -101,19 +102,29 @@ export class Database {
   }
 
   
-  async getDevotional(date: string): Promise<any> {
-    const query = `SELECT * FROM devotionals WHERE date = ?`;
+  async getDevotional(date: string): Promise<any[] | any> {
+    const query = `SELECT * FROM devotionals WHERE datetime = ?;`;
     const params = [ date ];
     try {
-      let [ rows, fields ] = await this.execute(query, params);
+      const [ rows ] = await this.execute(query, params);
       return rows;
     } catch (error) {
-      console.log(error);
+      return [];
+    }
+  }
+  
+  async insertDevotional(body: string, date: string): Promise<any> {
+    const query = `INSERT INTO devotionals (text, datetime) VALUES (?, ?);`;
+    const params = [ body, date ];
+    try {
+      let [ rows ] = await this.execute(query, params);
+      return rows;
+    } catch (error) {
     }
   }
 
   async getCountDevotional(): Promise<any> {
-    let [ row] = await this.execute(`SELECT date FROM devotionals WHERE id = (SELECT MAX(id) FROM devotionals);`);
+    let [ row] = await this.execute(`SELECT datetime FROM devotionals WHERE id = (SELECT MAX(id) FROM devotionals);`);
     return row[0].date
   }
 
@@ -201,6 +212,25 @@ export class Database {
       const [rows] = await this.execute(query, values);
       return rows 
     } catch (error) {
+    }
+  }
+
+  async insertTask(purpose: string, fast: string, book: string, prayer: string, start: string, finish: string | null): Promise<void> {
+    const query = `INSERT INTO board (purpose, fast, book, prayer, start, finish) VALUES (?, ?, ?, ?, ?, ?)`;
+    const params = [purpose, fast, book, prayer, start, finish];
+    try {
+      await this.execute(query, params);
+    } catch (error) {
+    }
+  }
+
+  async getTasksWithinPeriod() {
+    const query = `SELECT * FROM board WHERE start <= CURDATE() AND (finish IS NULL OR finish >= CURDATE());`;
+    try {
+      const [rows] = await this.execute(query);
+      return rows;
+    } catch (error) {
+      return [];
     }
   }
 
