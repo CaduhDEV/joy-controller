@@ -3,7 +3,7 @@ import interface_on from '../configs/interfaces.json';
 import errors_on from '../configs/errors.json';
 import { User } from './User';
 import { Database } from './Db';
-import { calculateAge, capitalizeFirstLetter, collectAddressByCode, formatAddress, formatTimestamp, getRoleName, isValidDate, sendEmail } from './Snippets';
+import { calculateAge, calculateDistance, capitalizeFirstLetter, collectAddressByCode, formatAddress, formatTimestamp, getRoleName, isValidDate, sendEmail } from './Snippets';
 import moment from 'moment-timezone';
 import 'moment/locale/pt-br';
 import { cur_task } from './Board';
@@ -326,11 +326,11 @@ export async function interact_interface(client: Whatsapp, message: CustomMessag
       temp_data[message.from].contact = message.body
     break;
     case 'collect_checkin':
-      //const coords = checkinHandler(message);
-      //if (message.type !== 'location' || coords === false || coords[2] === false) { return error(client, message, user_logged[message.from].language as keyof typeof interface_on, 'invalid_location');}
+      const coords = checkinHandler(message);
+      if (message.type !== 'location' || coords === false || coords[2] === false) { return error(client, message, user_logged[message.from].language as keyof typeof interface_on, 'invalid_location');}
 
-     // const distance = await calculateDistance(-23.276407679481114, -51.166471360350506, message.lat || 0, message.lng || 0);
-      //if (distance > 0.1) { return error(client, message, user_logged[message.from].language as keyof typeof interface_on, 'invalid_coords') }
+     const distance = await calculateDistance(-23.276407679481114, -51.166471360350506, message.lat || 0, message.lng || 0);
+      if (distance > 0.1) { return error(client, message, user_logged[message.from].language as keyof typeof interface_on, 'invalid_coords') }
       
       const db = new Database();
       await db.CheckIn(message.from);
@@ -505,9 +505,9 @@ const actionFunctions: Record<string, ActionFunction> = {
     const start = moment().set({ hour: 19, minute: 0, second: 0 });
     const end = moment().set({ hour: 20, minute: 0, second: 0 });
 
-    // if (now.day() !== 6 || now.isBetween(start, end) === false) {
-    //   return error(client, message, user_logged[message.from].language as keyof typeof interface_on, 'invalid_day');
-    // }
+    if (now.day() !== 6 || now.isBetween(start, end) === false) {
+      return error(client, message, user_logged[message.from].language as keyof typeof interface_on, 'invalid_day');
+    }
 
     await access_interface(client, message, interact.action, user_logged[message.from].language as keyof typeof interface_on);
     current_stage[message.from] = 'collect_checkin';

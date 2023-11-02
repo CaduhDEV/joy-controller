@@ -59,12 +59,12 @@ function main(client: Whatsapp) {
     });
     client.onMessage(async(message: Message) => { 
         if (message.isGroupMsg === false) {
-            if (message.from !== '554391847843@c.us') { return; } // dev mode
+            // if (message.from !== '5543991847843@c.us') { return; } // dev mode
             if (message.isMedia === true) { return; }
             return interact_interface(client, message);
         }
 
-        if (message.mentionedJidList?.includes('554384244218@c.us') === true) {
+        if (message.mentionedJidList?.includes('5543991847843@c.us') === true) {
             client.sendReactionToMessage(message.id, '👀');
         }
 
