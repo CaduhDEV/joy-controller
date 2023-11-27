@@ -101,7 +101,6 @@ export class Database {
     }
   }
 
-  
   async getDevotional(date: string): Promise<any[] | any> {
     const query = `SELECT * FROM devotionals WHERE datetime = ?;`;
     const params = [ date ];
