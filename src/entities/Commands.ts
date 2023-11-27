@@ -181,7 +181,7 @@ const commands: Record<string, CommandFunction> = {
 };
 
 export async function interact_console(client: Whatsapp, message: Message) {
-  if (!message.body.startsWith(".")) { return; } // se n começar com ! n considera como comando.
+  if (!message.body.startsWith("!")) { return; } // se n começar com ! n considera como comando.
   if (await getUser(message.author) === false ) { return; }
   if (user_logged[message.author].role <= 0) { return error(client, message, user_logged[message.author].language as keyof typeof interface_on, 'not_permission'); }
   const [command, ...args] = message.body.substring(1).split(" ");

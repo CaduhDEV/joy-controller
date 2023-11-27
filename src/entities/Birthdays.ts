@@ -6,10 +6,6 @@ import { calculateAge, calculateTimeRemaining, sendEmail } from "./Snippets";
 export async function generateBirthdayReport(client: Whatsapp) {
     const db = new Database();
     const birth = await db.getBirthday();
-  
-    if (!birth || birth.length <= 0) {
-        return false;
-    }
 
     const today = moment();
     let message = `🎂 *Relatório de Aniversários*\n\n⛅ Bom dia líderes! Aqui está o tão esperado relatório de aniversariantes próximos.\n\n📅 Preparamos essa lista especial para que vocês possam programar e criar cronogramas comemorativos incríveis para o MIX.\n\n🗞️ *Lista de aniversários:*\n\n`;
@@ -25,6 +21,7 @@ export async function generateBirthdayReport(client: Whatsapp) {
         if (thisYearBirthday.isBefore(today)) {
             thisYearBirthday.add(1, 'year');
         }
+        
         const nextBirthday = moment(thisYearBirthday).startOf('day');
         const diffDays = nextBirthday.diff(today.startOf('day'), 'days');
         const dayMonth = birthday.format("DD [de] MMMM");
@@ -53,11 +50,12 @@ export async function generateBirthdayReport(client: Whatsapp) {
 
     message += '\n\n🎁 Aproveitem essa oportunidade para enviar mensagens, preparar surpresas especiais para tornar o aniversário de cada um desses queridos membros do nosso grupo ainda mais especial.\n'
     // Send the report message to the group
-    client.sendText('120363096082046223@g.us', message);
+    client.sendText('120363069819222921@g.us', message);
 }
 
 export async function dataBirthdays(client: Whatsapp) {
-    const timeRemaining = calculateTimeRemaining(12, 48);
+    const timeRemaining = calculateTimeRemaining(5, 30);
+    console.log(` ${timeRemaining} tempo restante para o próxmo relatório...`)
     setTimeout(async function() {
         generateBirthdayReport(client);
         dataBirthdays(client);
