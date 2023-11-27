@@ -54,7 +54,7 @@ export async function generateBirthdayReport(client: Whatsapp) {
 }
 
 export async function dataBirthdays(client: Whatsapp) {
-    const timeRemaining = calculateTimeRemaining(5, 30);
+    const timeRemaining = calculateTimeRemaining(0, 5);
     console.log(` ${timeRemaining} tempo restante para o próxmo relatório...`)
     setTimeout(async function() {
         generateBirthdayReport(client);

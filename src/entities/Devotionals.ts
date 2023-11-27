@@ -14,19 +14,19 @@ export async function sendDailyDevotional(client: Whatsapp, cb: Function, date?:
   try {
     if (date === undefined) { return console.log("Nenhuma data fornecida para buscar o devocional."); }
     const db = new Database();
-    const devotional = await db.getDevotional(date);
-    console.log(devotional)
+    const [devotional] = await db.getDevotional(date);
+
     if (devotional.length === 0) {
       console.log("Nenhum Devocional foi encontrado para hoje.");
       return false;
     }
 
-    const timeRemaining = calculateTimeRemaining(16, 14);
+    const timeRemaining = calculateTimeRemaining(5, 30);
     
     setTimeout(async function() {
       const connection = new Database();
       const [ rows ] = await connection.execute(`SELECT contact,name FROM users;`);
-      console.log(rows)
+
       if (rows.length <= 0) {
         throw new Error("Nenhum usuário encontrado.");
       }
@@ -34,10 +34,10 @@ export async function sendDailyDevotional(client: Whatsapp, cb: Function, date?:
       const randomDelay = Math.floor(Math.random() * 1000) + 1000; // Entre 1000ms (1 segundo) e 2000ms (2 segundos)
 
       for (let i = 0; i < rows.length; i++) {
-        console.log(rows[i])
+
         let contact = rows[i].contact;
         setTimeout(async function () {
-          await client.sendText(contact, `${devotional[1].text}\n\n*${rows[i].name}* Bom dia!`);
+          await client.sendText(contact, `${devotional.text}\n\n*${rows[i].name}* Bom dia!`);
         }, randomDelay);
       }
 
