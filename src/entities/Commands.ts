@@ -153,7 +153,6 @@ const commands: Record<string, CommandFunction> = {
     if (moment().isBefore(moment(date, 'DD/MM/YYYY')) !== true) { return error(client, message, 'ptbr', 'is_before'); }
 
     const db = new Database();
-    console.log(d_date.format('YYYY-MM-DD'));
     const hasDevotional = await db.getDevotional(d_date.format('YYYY-MM-DD'));
     if (hasDevotional.length !== 0) { return error(client, message, 'ptbr', 'has_devotional'); }
 
